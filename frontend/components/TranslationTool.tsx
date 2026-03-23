@@ -40,9 +40,12 @@ type HistoryPreview = {
   translatedName?: string
   languageLabel: string
   completedAt: number
-  originalBlob: Blob
-  translatedBlob: Blob
+  originalBlob?: Blob | null
+  translatedBlob?: Blob | null
+  originalText?: string
+  translatedText?: string
   rowKey: string
+  isDemo?: boolean
 }
 
 type ResultDisplay = {
@@ -98,6 +101,66 @@ const LOCALE_LABELS: Record<string, string> = {
 
 const TERMINAL_STATUSES = new Set(["SUCCEEDED", "FAILED", "CANCELLED"])
 
+const DEMO_TRANSLATION_HISTORY: BackendHistoryItem[] = [
+  {
+    job_id: "demo-summary-kr-en",
+    completed_at: Math.floor(Date.now() / 1000) - 3600,
+    source_locale: "ko-KR",
+    target_locale: "en-US",
+    files: [
+      {
+        file_id: "demo-file-1",
+        original_name: "2026_강원랜드_생성형AI_도입보고서.docx",
+        translated_name: "2026_Kangwonland_Generative_AI_Adoption_Report.docx",
+      },
+    ],
+  },
+]
+
+const DEMO_TRANSLATION_PREVIEWS: Record<string, Omit<HistoryPreview, "jobId" | "rowKey" | "languageLabel" | "completedAt">> = {
+  "demo-summary-kr-en:demo-file-1": {
+    originalName: "2026_강원랜드_생성형AI_도입보고서.docx",
+    translatedName: "2026_Kangwonland_Generative_AI_Adoption_Report.docx",
+    originalText: [
+      "[원문 요약]",
+      "",
+      "문서명: 강원랜드 생성형 AI 도입 검토 보고",
+      "",
+      "1. 추진 배경",
+      "- 고객 응대, 문서 작성, 운영 데이터 분석 업무에서 생성형 AI 활용 수요가 증가하고 있음",
+      "- 부서별 개별 도입보다 단일 포털 기반 서비스 제공이 효율적임",
+      "",
+      "2. 기대 효과",
+      "- 반복 문서 작성 시간 단축",
+      "- 고객 응대 메시지 품질 표준화",
+      "- 운영 지표 분석 지원",
+      "",
+      "3. 검토 의견",
+      "- 시범 운영 후 단계적 확대가 적절함",
+      "- 사내 로그인 및 권한 체계 연동이 필요함",
+    ].join("\n"),
+    translatedText: [
+      "[Summary Translation]",
+      "",
+      "Document: Review Report on Generative AI Adoption at Kangwon Land",
+      "",
+      "1. Background",
+      "- Demand for generative AI is increasing across customer support, document drafting, and operational data analysis.",
+      "- A single portal-based service model is more efficient than department-level standalone adoption.",
+      "",
+      "2. Expected Benefits",
+      "- Reduced time for repetitive document drafting",
+      "- Standardized quality for customer-facing messages",
+      "- Better support for operational KPI analysis",
+      "",
+      "3. Review Notes",
+      "- A phased rollout after pilot operation is recommended.",
+      "- Integration with internal login and permission controls is required.",
+    ].join("\n"),
+    isDemo: true,
+  },
+}
+
 export function TranslationTool() {
   const { toast } = useToast()
   const [files, setFiles] = useState<File[]>([])
@@ -139,14 +202,23 @@ export function TranslationTool() {
         throw new Error(`status ${response.status}`)
       }
       const data = await response.json()
-      setHistory(Array.isArray(data.items) ? data.items : [])
+      const items = Array.isArray(data.items) && data.items.length > 0 ? data.items : DEMO_TRANSLATION_HISTORY
+      setHistory(items)
+      if (!historyPreview && items[0]?.job_id === "demo-summary-kr-en") {
+        const file = items[0].files?.[0]
+        if (file) {
+          setHistoryPreview(buildDemoHistoryPreview(items[0], file))
+        }
+      }
     } catch (error) {
       console.error("[translation] history fetch failed", error)
-      toast({
-        title: "히스토리 로드 실패",
-        description: "번역 기록을 불러오지 못했습니다.",
-        variant: "destructive",
-      })
+      setHistory(DEMO_TRANSLATION_HISTORY)
+      if (!historyPreview) {
+        const file = DEMO_TRANSLATION_HISTORY[0]?.files?.[0]
+        if (file) {
+          setHistoryPreview(buildDemoHistoryPreview(DEMO_TRANSLATION_HISTORY[0], file))
+        }
+      }
     } finally {
       setHistoryLoading(false)
     }
@@ -290,10 +362,17 @@ export function TranslationTool() {
 
   const downloadTranslated = () => {
     if (historyPreview) {
-      triggerDownloadFromBlob(
-        historyPreview.translatedBlob,
-        historyPreview.translatedName || historyPreview.originalName || "translated.docx",
-      )
+      if (historyPreview.translatedBlob) {
+        triggerDownloadFromBlob(
+          historyPreview.translatedBlob,
+          historyPreview.translatedName || historyPreview.originalName || "translated.docx",
+        )
+      } else if (historyPreview.translatedText) {
+        triggerDownloadFromBlob(
+          new Blob([historyPreview.translatedText], { type: "text/plain;charset=utf-8" }),
+          `${stripExt(historyPreview.translatedName || historyPreview.originalName || "translated")}.txt`,
+        )
+      }
       return
     }
     if (!latestResult) return
@@ -361,6 +440,10 @@ export function TranslationTool() {
     const key = `${item.job_id}-${file.file_id || file.translated_name || file.original_name || "file"}`
     setHistoryPreviewLoadingKey(key)
     try {
+      if (item.job_id.startsWith("demo-")) {
+        setHistoryPreview(buildDemoHistoryPreview(item, file))
+        return
+      }
       const query = file.file_id ? `?fileId=${encodeURIComponent(file.file_id)}` : ""
       const [sourceResponse, resultResponse] = await Promise.all([
         fetch(`/api/translation/jobs/${item.job_id}/source${query}`, { cache: "no-store" }),
@@ -406,11 +489,15 @@ export function TranslationTool() {
         <FileText className="h-4 w-4" />
         {historyPreview.originalName || historyPreview.translatedName || "원본 문서"}
       </div>
-      <div className="text-muted-foreground">크기: {formatBytes(historyPreview.originalBlob.size)}</div>
+      <div className="text-muted-foreground">
+        크기: {historyPreview.originalBlob ? formatBytes(historyPreview.originalBlob.size) : "샘플 문서"}
+      </div>
       <div className="text-muted-foreground">
         번역 완료: {new Date(historyPreview.completedAt).toLocaleString()}
       </div>
-      <div className="text-xs text-primary">히스토리에서 선택한 원문을 표시 중입니다.</div>
+      <div className="text-xs text-primary">
+        {historyPreview.isDemo ? "샘플 번역 결과를 표시 중입니다." : "히스토리에서 선택한 원문을 표시 중입니다."}
+      </div>
     </div>
   ) : primaryFile ? (
     <div className="space-y-2 text-sm">
@@ -598,10 +685,17 @@ export function TranslationTool() {
               </CardHeader>
               <CardContent className="space-y-4">
                 {currentFileInfo}
-                <DocxViewer
-                  file={(historyPreview ? historyPreview.originalBlob : primaryFile) || null}
-                  emptyHint="DOCX 파일을 업로드하면 여기에서 미리보기를 확인할 수 있습니다."
-                />
+                {historyPreview?.originalText ? (
+                  <DemoDocumentPreview
+                    title="원문 요약 미리보기"
+                    body={historyPreview.originalText}
+                  />
+                ) : (
+                  <DocxViewer
+                    file={(historyPreview ? historyPreview.originalBlob : primaryFile) || null}
+                    emptyHint="DOCX 파일을 업로드하면 여기에서 미리보기를 확인할 수 있습니다."
+                  />
+                )}
               </CardContent>
             </Card>
 
@@ -631,10 +725,17 @@ export function TranslationTool() {
                 ) : (
                   <div className="text-muted-foreground">번역이 완료되면 결과 정보와 미리보기가 표시됩니다.</div>
                 )}
-                <DocxViewer
-                  file={(historyPreview ? historyPreview.translatedBlob : latestResultBlob) || null}
-                  emptyHint="번역이 완료되면 번역본 미리보기가 표시됩니다."
-                />
+                {historyPreview?.translatedText ? (
+                  <DemoDocumentPreview
+                    title="요약/번역 결과 미리보기"
+                    body={historyPreview.translatedText}
+                  />
+                ) : (
+                  <DocxViewer
+                    file={(historyPreview ? historyPreview.translatedBlob : latestResultBlob) || null}
+                    emptyHint="번역이 완료되면 번역본 미리보기가 표시됩니다."
+                  />
+                )}
               </CardContent>
             </Card>
           </div>
@@ -703,35 +804,39 @@ export function TranslationTool() {
                               ) : (
                                 <span className="text-[11px] text-muted-foreground">보기</span>
                               )}
-                              <Button
-                                size="sm"
-                                variant="outline"
-                                className="h-7 px-2 text-xs"
-                                onClick={(event) => {
-                                  event.stopPropagation()
-                                  downloadHistoryItem(entry, file)
-                                }}
-                              >
-                                <Download className="mr-1 h-3 w-3" /> 다운
-                              </Button>
+                              {!entry.job_id.startsWith("demo-") && (
+                                <Button
+                                  size="sm"
+                                  variant="outline"
+                                  className="h-7 px-2 text-xs"
+                                  onClick={(event) => {
+                                    event.stopPropagation()
+                                    downloadHistoryItem(entry, file)
+                                  }}
+                                >
+                                  <Download className="mr-1 h-3 w-3" /> 다운
+                                </Button>
+                              )}
                             </div>
                           </div>
                         </div>
                       )
                     })}
-                    <div className="mt-2 flex justify-end">
-                      <Button
-                        size="sm"
-                        variant="ghost"
-                        className="h-6 px-2 text-[10px] text-destructive hover:text-destructive"
-                        onClick={(e) => {
-                          e.stopPropagation()
-                          deleteHistoryItem(entry.job_id)
-                        }}
-                      >
-                        <Trash2 className="mr-1 h-3 w-3" /> 기록 삭제
-                      </Button>
-                    </div>
+                    {!entry.job_id.startsWith("demo-") && (
+                      <div className="mt-2 flex justify-end">
+                        <Button
+                          size="sm"
+                          variant="ghost"
+                          className="h-6 px-2 text-[10px] text-destructive hover:text-destructive"
+                          onClick={(e) => {
+                            e.stopPropagation()
+                            deleteHistoryItem(entry.job_id)
+                          }}
+                        >
+                          <Trash2 className="mr-1 h-3 w-3" /> 기록 삭제
+                        </Button>
+                      </div>
+                    )}
                   </div>
                 </div>
               ))}
@@ -740,6 +845,34 @@ export function TranslationTool() {
         </div>
       </SheetContent>
     </Sheet>
+  )
+}
+
+function buildDemoHistoryPreview(item: BackendHistoryItem, file: BackendHistoryFile): HistoryPreview {
+  const previewKey = `${item.job_id}:${file.file_id || "file"}`
+  const preset = DEMO_TRANSLATION_PREVIEWS[previewKey]
+  return {
+    jobId: item.job_id,
+    fileId: file.file_id,
+    originalName: preset?.originalName || file.original_name,
+    translatedName: preset?.translatedName || file.translated_name,
+    languageLabel: formatLocaleLabel(item.target_locale),
+    completedAt: item.completed_at ? item.completed_at * 1000 : Date.now(),
+    rowKey: `${item.job_id}-${file.file_id || file.translated_name || file.original_name || "file"}`,
+    originalText: preset?.originalText,
+    translatedText: preset?.translatedText,
+    isDemo: preset?.isDemo,
+  }
+}
+
+function DemoDocumentPreview({ title, body }: { title: string; body: string }) {
+  return (
+    <div className="rounded-md border border-dashed bg-muted/30 p-4">
+      <div className="mb-3 text-sm font-medium text-foreground">{title}</div>
+      <div className="h-[420px] overflow-auto rounded-md border bg-background px-5 py-4 text-sm leading-7 text-foreground whitespace-pre-wrap">
+        {body}
+      </div>
+    </div>
   )
 }
 
