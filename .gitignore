@@ -1,0 +1,17 @@
+# Node/Next.js artifacts
+**/node_modules/
+**/.next/
+
+# Build outputs (common)
+**/dist/
+**/out/
+
+# Tooling caches
+**/.turbo/
+**/.vercel/
+
+# Environment files
+**/.env
+
+# OS
+.DS_Store

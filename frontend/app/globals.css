@@ -1,0 +1,342 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  --background: oklch(1 0 0); /* Pure white */
+  --foreground: oklch(0.25 0.02 240); /* Dark blue-gray */
+  --card: oklch(1 0 0); /* Pure white */
+  --card-foreground: oklch(0.25 0.02 240);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.25 0.02 240);
+  --primary: #1428a8; /* Specific blue color requested */
+  --primary-foreground: oklch(1 0 0);
+  --secondary: rgb(20 40 168); /* Medium blue */
+  --secondary-foreground: oklch(1 0 0);
+  --muted: oklch(1 0 0); /* Pure white muted */
+  --muted-foreground: oklch(0.45 0.02 240);
+  --accent: rgb(20 40 168); /* Blue accent */
+  --accent-foreground: oklch(1 0 0);
+  --destructive: oklch(0.55 0.15 40); /* Orange warning */
+  --destructive-foreground: oklch(1 0 0);
+  --border: oklch(0.92 0.01 240); /* Light blue border */
+  --input: oklch(0.96 0.01 240); /* Light input background */
+  --ring: rgb(20 40 168); /* Blue focus ring */
+  --chart-1: oklch(0.45 0.15 240); /* Primary chart color */
+  --chart-2: oklch(0.55 0.15 40); /* Orange chart color */
+  --chart-3: oklch(0.35 0.15 240); /* Dark blue chart color */
+  --chart-4: oklch(0.65 0.12 240); /* Light blue chart color */
+  --chart-5: oklch(0.25 0.02 240); /* Dark chart color */
+  --radius: 0.5rem;
+  --sidebar: oklch(1 0 0); /* Pure white sidebar */
+  --sidebar-foreground: oklch(0.25 0.02 240);
+  --sidebar-primary: #1428a8; /* Deep blue primary (rgb(20,40,168)) */
+  --sidebar-primary-foreground: oklch(1 0 0);
+  --sidebar-accent: rgb(20 40 168); /* Blue accent */
+  --sidebar-accent-foreground: oklch(1 0 0);
+  --sidebar-border: oklch(0.92 0.01 240); /* Clean blue border */
+  --sidebar-ring: rgb(20 40 168); /* Blue focus ring */
+  --insight-partner: #0f1f3d; /* Darker blue for insight partner */
+  --insight-partner-foreground: oklch(1 0 0);
+  --supporting-agent: #10b981; /* Bright emerald green for supporting agent */
+  --supporting-agent-foreground: oklch(1 0 0);
+}
+
+.dark {
+  /* Dark mode base background */
+  --background: rgb(33 33 33);
+  --foreground: oklch(0.985 0 0);
+  --card: rgb(33 33 33);
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0.145 0 0);
+  --popover-foreground: oklch(0.985 0 0);
+  --primary: oklch(0.985 0 0);
+  --primary-foreground: oklch(0.205 0 0);
+  --secondary: oklch(0.269 0 0);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.269 0 0);
+  --muted-foreground: oklch(0.708 0 0);
+  --accent: oklch(0.269 0 0);
+  --accent-foreground: oklch(0.985 0 0);
+  --destructive: oklch(0.396 0.141 25.723);
+  --destructive-foreground: oklch(0.637 0.237 25.331);
+  /* Dark mode borders */
+  --border: rgba(255, 255, 255, 0.15);
+  --input: oklch(0.269 0 0);
+  --ring: oklch(0.439 0 0);
+  --chart-1: oklch(0.488 0.243 264.376);
+  --chart-2: oklch(0.696 0.17 162.48);
+  --chart-3: oklch(0.769 0.188 70.08);
+  --chart-4: oklch(0.627 0.265 303.9);
+  --chart-5: oklch(0.645 0.246 16.439);
+  /* Dark mode sidebar background */
+  --sidebar: rgb(24 24 24);
+  --sidebar-foreground: oklch(0.985 0 0);
+  --sidebar-primary: oklch(0.488 0.243 264.376);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.269 0 0);
+  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --sidebar-border: rgba(255, 255, 255, 0.15);
+  --sidebar-ring: oklch(0.439 0 0);
+}
+
+@theme inline {
+  --font-sans: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-insight-partner: var(--insight-partner);
+  --color-insight-partner-foreground: var(--insight-partner-foreground);
+  --color-supporting-agent: var(--supporting-agent);
+  --color-supporting-agent-foreground: var(--supporting-agent-foreground);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+@layer utilities {
+  .w-2\/5 {
+    width: 40%;
+  }
+  .w-1\/5 {
+    width: 20%;
+  }
+}
+
+/* Citation link styles */
+.citation-link {
+  @apply inline-flex items-center px-2 py-1 mx-1 text-xs font-medium text-blue-700 bg-blue-100 border border-blue-300 rounded-full hover:bg-blue-200 transition-colors;
+}
+
+.dark .citation-link {
+  @apply text-blue-200 bg-blue-900 border-blue-700 hover:bg-blue-800;
+}
+
+/* Button chip styles for citations */
+.btn__chip {
+  @apply inline-flex items-center px-3 py-1.5 mx-1 text-sm font-medium;
+  @apply text-white bg-gradient-to-r from-blue-600 to-blue-700;
+  @apply border border-blue-600 rounded-full shadow-sm;
+  @apply hover:from-blue-700 hover:to-blue-800 hover:shadow-md;
+  @apply focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-1;
+  @apply transition-all duration-200 ease-in-out;
+  @apply cursor-pointer select-none;
+  text-decoration: none !important;
+}
+
+.btn__chip:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(59, 130, 246, 0.3);
+}
+
+.btn__chip strong {
+  @apply font-semibold;
+}
+
+.dark .btn__chip {
+  @apply text-blue-100 bg-gradient-to-r from-blue-800 to-blue-900;
+  @apply border-blue-700 hover:from-blue-900 hover:to-blue-800;
+}
+
+.dark .btn__chip:hover {
+  box-shadow: 0 4px 8px rgba(59, 130, 246, 0.2);
+}
+
+/* Line clamp utilities */
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Custom prose styles for markdown */
+.prose {
+  color: inherit;
+}
+
+.prose h1,
+.prose h2,
+.prose h3,
+.prose h4,
+.prose h5,
+.prose h6 {
+  color: inherit;
+}
+
+.prose strong {
+  color: inherit;
+}
+
+.prose code {
+  color: inherit;
+}
+
+.prose pre {
+  color: inherit;
+}
+
+.prose blockquote {
+  color: inherit;
+}
+
+.prose ul,
+.prose ol {
+  color: inherit;
+}
+
+.prose li {
+  color: inherit;
+}
+
+/* Scroll area improvements */
+[data-slot="scroll-area-viewport"] {
+  scroll-behavior: smooth;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+
+[data-slot="scroll-area-viewport"]::-webkit-scrollbar {
+  width: 3px;
+}
+
+[data-slot="scroll-area-viewport"]::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+[data-slot="scroll-area-viewport"]::-webkit-scrollbar-thumb {
+  background-color: var(--border);
+  border-radius: 1.5px;
+}
+
+[data-slot="scroll-area-viewport"]::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+/* Force scroll for insight chat */
+/* Force scroll for insight chat */
+.insight-chat-messages {
+  /* height and overflow removed to allow flex container to handle scrolling */
+  scrollbar-width: thin;
+  scrollbar-color: #d1d5db transparent;
+}
+
+.insight-chat-messages::-webkit-scrollbar {
+  width: 2px;
+}
+
+.insight-chat-messages::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.insight-chat-messages::-webkit-scrollbar-thumb {
+  background-color: #d1d5db;
+  border-radius: 1px;
+}
+
+.insight-chat-messages::-webkit-scrollbar-thumb:hover {
+  background-color: #9ca3af;
+}
+
+/* Removed marquee animation for market ticker */
+
+/* PDF Citation Icon Styles */
+.pdf-citation-wrapper {
+  @apply inline-flex items-center gap-1 mx-1;
+  position: relative;
+}
+
+.pdf-citation-icon.available {
+  @apply text-blue-600 hover:text-blue-800 cursor-pointer transition-all duration-200;
+  width: 16px;
+  height: 16px;
+}
+
+.pdf-citation-icon.available:hover {
+  transform: scale(1.1);
+}
+
+.pdf-citation-icon.unavailable {
+  @apply text-gray-400 cursor-default;
+  width: 16px;
+  height: 16px;
+}
+
+.dark .pdf-citation-icon.available {
+  @apply text-blue-400 hover:text-blue-300;
+}
+
+.dark .pdf-citation-icon.unavailable {
+  @apply text-gray-600;
+}
+
+/* Enhanced tooltip styling for PDF citations */
+.pdf-citation-wrapper:hover::after {
+  content: attr(title);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(0, 0, 0, 0.9);
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  white-space: nowrap;
+  z-index: 1000;
+  margin-bottom: 4px;
+  pointer-events: none;
+}
+
+.pdf-citation-wrapper:hover::before {
+  content: '';
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 4px solid transparent;
+  border-top-color: rgba(0, 0, 0, 0.9);
+  z-index: 1000;
+  pointer-events: none;
+}
