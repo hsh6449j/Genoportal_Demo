@@ -25,8 +25,8 @@ interface KeywordTag {
 export default function MarketSensingSettingsModal({ open, onOpenChange }: SettingsModalProps) {
   const [activeTab, setActiveTab] = useState("widgets")
   const [keywordTags, setKeywordTags] = useState<KeywordTag[]>([
-    { id: "1", text: "리조트예약" },
-    { id: "2", text: "책임도박" }
+    { id: "1", text: "민원접수" },
+    { id: "2", text: "고객보호" }
   ])
   const [keywordInput, setKeywordInput] = useState("")
 
@@ -104,19 +104,19 @@ export default function MarketSensingSettingsModal({ open, onOpenChange }: Setti
           <div className="flex-grow overflow-y-auto">
             {/* 탭 1: 대시보드 위젯 편집 */}
             <TabsContent value="widgets" className="space-y-4 mt-0">
-              <p className="text-xs text-gray-600 mb-4">대시보드에 표시할 운영 지표와 기본 알림 조건을 설정하세요.</p>
+              <p className="text-xs text-gray-600 mb-4">대시보드에 표시할 업무 지표와 기본 알림 조건을 설정하세요.</p>
               
               <div className="space-y-4">
                 {/* 실시간/뉴스 섹션 */}
                 <div>
-                  <h3 className="font-semibold text-base mb-3">실시간/운영 이슈</h3>
+                  <h3 className="font-semibold text-base mb-3">실시간/업무 이슈</h3>
                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
                     {/* 뉴스 트렌드 카드 */}
                     <Card className="p-3 space-y-2 text-sm">
                       <div className="flex justify-between items-start">
                         <div className="flex items-center space-x-2">
                           <i className="fas fa-newspaper text-gray-400"></i>
-                          <h4 className="font-semibold">예약 트렌드</h4>
+                          <h4 className="font-semibold">민원 접수 트렌드</h4>
                         </div>
                         <Checkbox defaultChecked />
                       </div>
@@ -181,14 +181,14 @@ export default function MarketSensingSettingsModal({ open, onOpenChange }: Setti
 
                 {/* 산업/섹터별 데이터 섹션 */}
                 <div>
-                  <h3 className="font-semibold text-base mb-3">운영 데이터 지표</h3>
+                  <h3 className="font-semibold text-base mb-3">업무 데이터 지표</h3>
                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-                    {/* 객실 점유율 카드 */}
+                    {/* 상담 완료율 카드 */}
                     <Card className="p-3 space-y-2 text-sm">
                       <div className="flex justify-between items-start">
                         <div className="flex items-center space-x-2">
                           <i className="fas fa-memory text-gray-400"></i>
-                          <h4 className="font-semibold">객실 점유율</h4>
+                          <h4 className="font-semibold">상담 완료율</h4>
                         </div>
                         <Checkbox defaultChecked />
                       </div>
@@ -216,12 +216,12 @@ export default function MarketSensingSettingsModal({ open, onOpenChange }: Setti
                       </div>
                     </Card>
 
-                    {/* 고객 문의 카드 */}
+                    {/* 민원 해결률 카드 */}
                     <Card className="p-3 space-y-2 text-sm">
                       <div className="flex justify-between items-start">
                         <div className="flex items-center space-x-2">
                           <i className="fas fa-truck text-gray-400"></i>
-                          <h4 className="font-semibold">고객 문의량</h4>
+                          <h4 className="font-semibold">민원 해결률</h4>
                         </div>
                         <Checkbox />
                       </div>
@@ -249,12 +249,12 @@ export default function MarketSensingSettingsModal({ open, onOpenChange }: Setti
                       </div>
                     </Card>
 
-                    {/* 카지노 운영 카드 */}
+                    {/* 채권양수도 추론 요청 카드 */}
                     <Card className="p-3 space-y-2 text-sm">
                       <div className="flex justify-between items-start">
                         <div className="flex items-center space-x-2">
                           <i className="fas fa-car text-gray-400"></i>
-                          <h4 className="font-semibold">카지노 이용 지표</h4>
+                          <h4 className="font-semibold">채권양수도 추론 요청 수</h4>
                         </div>
                         <Checkbox defaultChecked />
                       </div>
@@ -282,12 +282,12 @@ export default function MarketSensingSettingsModal({ open, onOpenChange }: Setti
                       </div>
                     </Card>
 
-                    {/* 셔틀 운영 카드 */}
+                    {/* 협약기관 조회 카드 */}
                     <Card className="p-3 space-y-2 text-sm">
                       <div className="flex justify-between items-start">
                         <div className="flex items-center space-x-2">
                           <i className="fas fa-ship text-gray-400"></i>
-                          <h4 className="font-semibold">셔틀 이용객 수</h4>
+                          <h4 className="font-semibold">협약기관 조회량</h4>
                         </div>
                         <Checkbox />
                       </div>
@@ -315,12 +315,12 @@ export default function MarketSensingSettingsModal({ open, onOpenChange }: Setti
                       </div>
                     </Card>
 
-                    {/* 지역 연계 방문객 카드 */}
+                    {/* 업무담당자 검색 카드 */}
                     <Card className="p-3 space-y-2 text-sm">
                       <div className="flex justify-between items-start">
                         <div className="flex items-center space-x-2">
                           <i className="fas fa-plane text-gray-400"></i>
-                          <h4 className="font-semibold">지역 연계 방문객</h4>
+                          <h4 className="font-semibold">업무담당자 검색량</h4>
                         </div>
                         <Checkbox />
                       </div>

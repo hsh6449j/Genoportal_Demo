@@ -68,7 +68,7 @@ function ReasoningComponent({ content, className, activeSteps }: { content: any,
 
   return (
     <div className={cn("w-full mb-2 pl-4 border-l-2 border-gray-300", className)}>
-      <div className="text-blue-600 font-medium text-sm mb-1">
+      <div className="text-[#FF9100] font-medium text-sm mb-1">
         추론
       </div>
       <div className="text-xs text-gray-600 whitespace-pre-wrap leading-relaxed">
@@ -84,7 +84,7 @@ function QueryGeneratorComponent({ content, className, activeSteps }: { content:
 
   return (
     <div className={cn("w-full mb-2 pl-4 border-l-2 border-gray-300", className)}>
-      <div className="text-blue-600 font-medium text-sm mb-1">
+      <div className="text-[#FF9100] font-medium text-sm mb-1">
         Web Searching
       </div>
       <div className="space-x-2">
@@ -128,7 +128,7 @@ function URLReaderComponent({ content, className, activeSteps }: { content: any,
 
   return (
     <div className={cn("w-full mb-2 pl-4 border-l-2 border-gray-300", className)}>
-      <div className="text-blue-600 font-medium text-sm mb-1">
+      <div className="text-[#FF9100] font-medium text-sm mb-1">
         Reading
       </div>
       <div className="space-x-2">
@@ -171,7 +171,7 @@ function ChartGeneratorComponent({ content, className, activeSteps }: { content:
 
   return (
     <div className={cn("w-full mb-2 pl-4 border-l-2 border-gray-300", className)}>
-      <div className="text-blue-600 font-medium text-sm">
+      <div className="text-[#FF9100] font-medium text-sm">
         Chart Generator
       </div>
     </div>
@@ -190,7 +190,7 @@ function DeepSearchComponent({ nodeLabel, content, className, activeSteps }: { n
 
   return (
     <div className={cn("w-full mb-2 pl-4 border-l-2 border-gray-300", className)}>
-      <div className="text-blue-600 font-medium text-sm">
+      <div className="text-[#FF9100] font-medium text-sm">
         {getDisplayName(nodeLabel)}
       </div>
     </div>
@@ -202,7 +202,7 @@ function DefaultAgentComponent({ nodeLabel, content, className, activeSteps }: {
 
   return (
     <div className={cn("w-full mb-2 pl-4 border-l-2 border-gray-300", className)}>
-      <div className="text-blue-600 font-medium text-sm">
+      <div className="text-[#FF9100] font-medium text-sm">
         {nodeLabel}
       </div>
     </div>
@@ -218,7 +218,7 @@ interface SourceDocumentsProps {
 export function SourceDocumentsComponent({ className }: SourceDocumentsProps) {
   return (
     <div className={cn("w-full mb-2 pl-4 border-l-2 border-gray-300", className)}>
-      <div className="text-blue-600 font-medium text-sm">
+      <div className="text-[#FF9100] font-medium text-sm">
         참고 문서
       </div>
     </div>

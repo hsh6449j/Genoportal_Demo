@@ -25,91 +25,85 @@ import { sampleChartData } from "@/lib/mock/sampleChartData"
 import { mockSNSNews } from "@/lib/mock/mockSNSNews"
 import { aiInsightReports } from "@/lib/mock/aiInsightReports"
 
-// 섹터별 데이터 종류 정의
+// 업무 영역별 데이터 종류 정의
 const sectorData = {
-  "리조트 운영": [
+  "민원 상담": [
     {
-      id: "total-revenue",
-      name: "월별 매출 추이",
-      source: "통합 매출 집계",
+      id: "counseling-volume",
+      name: "상담 접수량",
+      source: "상담시스템",
       enabled: false
     },
     {
-      id: "room-occupancy",
-      name: "객실 점유율",
-      source: "PMS",
+      id: "counseling-completion-rate",
+      name: "상담 완료율",
+      source: "상담이력 DB",
       enabled: false
     },
     {
-      id: "adr",
-      name: "평균 객실 단가",
-      source: "예약 시스템",
-      enabled: false
-    },
-    {
-      id: "package-sales",
-      name: "패키지 판매량",
-      source: "패키지 판매 DB",
+      id: "average-wait-time",
+      name: "평균 응답 대기시간",
+      source: "콜센터 로그",
       enabled: false
     }
   ],
-  "카지노 운영": [
+  "채무조정/지원": [
     {
-      id: "casino-drop",
-      name: "테이블 드롭액",
-      source: "카지노 운영 DB",
+      id: "debt-adjustment-requests",
+      name: "채무조정 신청 건수",
+      source: "채무조정 시스템",
       enabled: false
     },
     {
-      id: "slot-utilization",
-      name: "슬롯 이용률",
-      source: "게임 머신 로그",
+      id: "microloan-linked-cases",
+      name: "소액대출 연계 건수",
+      source: "연계지원 DB",
       enabled: false
     },
     {
-      id: "vip-visitors",
-      name: "VIP 방문객 수",
-      source: "VIP CRM",
+      id: "execution-rate",
+      name: "지원안 실행률",
+      source: "사후관리 지표",
       enabled: false
     }
   ],
-  "고객 서비스": [
+  "민원/고객보호": [
     {
-      id: "voc-resolution",
-      name: "VOC 해결률",
-      source: "고객지원 시스템",
+      id: "complaint-resolution-rate",
+      name: "민원 해결률",
+      source: "민원처리 시스템",
       enabled: false
     },
     {
-      id: "membership-join",
-      name: "멤버십 신규 가입",
-      source: "멤버십 시스템",
+      id: "repeat-inquiry-rate",
+      name: "재문의율",
+      source: "민원 재접수 로그",
       enabled: false
     },
     {
-      id: "app-active-users",
-      name: "앱 활성 이용자",
-      source: "모바일 앱 로그",
+      id: "satisfaction-score",
+      name: "상담 만족도",
+      source: "만족도 설문",
       enabled: false
     }
   ],
-  "관광/지역 연계": [
+  "기관/연계": [
     {
-      id: "visitor-traffic",
-      name: "방문객 추이",
-      source: "입장 데이터",
+      id: "staff-search-count",
+      name: "업무담당자 검색량",
+      source: "인사정보 연동 로그",
       enabled: false
     },
     {
-      id: "shuttle-ridership",
-      name: "셔틀 이용객 수",
-      source: "교통 운영 데이터",
+      id: "partner-search-count",
+      name: "협약기관 조회량",
+      source: "협약기관 DB",
       enabled: false
     },
     {
-      id: "nearby-spending",
-      name: "주변 상권 소비액",
-      source: "지역 연계 통계",
+      id: "debt-transfer-inference-count",
+      name: "채권양수도 추론 요청 수",
+      source: "시범 추론 로그",
       enabled: false
     }
   ]
@@ -117,72 +111,71 @@ const sectorData = {
 
 
 const getSampleData = (dataType: string) => {
-  return sampleChartData[dataType] || sampleChartData["room-occupancy"];
+  return sampleChartData[dataType] || sampleChartData["counseling-volume"];
 }
 
 const dashboardQueryScenarios = [
   {
-    id: "resort-sales",
-    question: "3월 리조트 매출 추이와 객실 점유율 변화를 함께 분석해줘.",
-    summaryTitle: "리조트 운영 매출 분석",
+    id: "counseling-load",
+    question: "최근 민원 접수량과 상담 완료율 변화를 함께 분석해줘.",
+    summaryTitle: "민원상담 운영 분석",
     summaryPoints: [
-      "3월 중순 이후 객실 점유율 상승과 함께 리조트 매출이 동반 증가했습니다.",
-      "주말 패키지 판매량이 늘면서 평균 객실 단가도 함께 개선되는 흐름입니다.",
-      "성수기 직전 수요가 집중되는 구간이라 체크인 운영 인력 보강이 필요해 보입니다.",
+      "민원 접수량이 증가하는 구간에서도 상담 완료율은 비교적 안정적으로 유지되고 있습니다.",
+      "다만 피크 구간에는 평균 응답 대기시간이 함께 확대되어 초기 안내 자동화 필요성이 확인됩니다.",
+      "담당자 검색과 FAQ 연계를 함께 보면 후속 문의를 줄일 수 있는 구간을 더 빨리 찾을 수 있습니다.",
     ],
-    metrics: ["월별 매출 추이", "객실 점유율", "평균 객실 단가"],
-    exampleQuestion: "이 결과를 기준으로 운영 대응 포인트는 뭐야?",
+    metrics: ["상담 접수량", "상담 완료율", "평균 응답 대기시간"],
+    exampleQuestion: "이 결과를 기준으로 우선 대응 포인트는 뭐야?",
     exampleAnswer:
-      "주말 체크인 인력과 현장 안내 채널을 우선 보강하고, 패키지 판매 증가 구간에는 객실 운영과 프런트 대응을 함께 준비하는 것이 좋습니다.",
+      "피크 시간대 인력 배치와 FAQ 자동 응답을 우선 보강하고, 담당자 검색 연결을 함께 제공하면 초기 민원 소화 속도를 높일 수 있습니다.",
     selections: {
-      "리조트 운영-total-revenue": true,
-      "리조트 운영-room-occupancy": true,
-      "리조트 운영-adr": true,
-      "카지노 운영-casino-drop": false,
-      "고객 서비스-voc-resolution": false,
-      "관광/지역 연계-visitor-traffic": false,
+      "민원 상담-counseling-volume": true,
+      "민원 상담-counseling-completion-rate": true,
+      "민원 상담-average-wait-time": true,
+      "민원/고객보호-complaint-resolution-rate": false,
+      "기관/연계-staff-search-count": false,
     },
   },
   {
-    id: "weekend-traffic",
-    question: "주말 방문객 증가가 매출과 VOC에 어떤 영향을 주는지 보여줘.",
-    summaryTitle: "주말 운영 영향 분석",
+    id: "complaint-quality",
+    question: "민원 해결률과 재문의율을 중심으로 상담 품질을 분석해줘.",
+    summaryTitle: "민원 품질 및 고객보호 분석",
     summaryPoints: [
-      "방문객 증가 시 객실과 카지노 매출은 상승하지만 고객센터 문의량도 함께 높아집니다.",
-      "주말 피크 구간에는 셔틀 이용객 수와 VOC 해결률을 동시에 관리할 필요가 있습니다.",
-      "운영 지표를 보면 수요 증가 대비 안내 인력과 응대 채널 보강이 필요한 시점입니다.",
+      "민원 해결률은 점진적으로 개선되고 있지만 일부 주제에서 재문의율이 남아 있습니다.",
+      "상담 만족도와 재문의율을 함께 보면 표준 답변 문구의 보완 필요 구간을 파악할 수 있습니다.",
+      "민원 처리 완료 이후 후속 안내가 부족한 구간이 고객보호 관점의 개선 포인트로 보입니다.",
     ],
-    metrics: ["월별 매출 추이", "VOC 해결률", "방문객 추이"],
-    exampleQuestion: "주말 운영 영향이 큰 구간은 어떻게 대비하는 게 좋을까?",
+    metrics: ["민원 해결률", "재문의율", "상담 만족도"],
+    exampleQuestion: "품질 개선 관점에서는 어떤 액션이 먼저 필요할까?",
     exampleAnswer:
-      "방문객 증가 시점에 맞춰 고객센터 응답 인력과 셔틀·현장 안내를 함께 보강하는 것이 효과적이며, VOC 대응 속도를 별도 지표로 묶어 관리하는 것이 좋습니다.",
+      "자주 반복되는 문의를 FAQ와 표준 스크립트로 먼저 정리하고, 처리 완료 후 후속 안내 문구를 통일하는 것이 재문의율 감소에 효과적입니다.",
     selections: {
-      "리조트 운영-total-revenue": true,
-      "고객 서비스-voc-resolution": true,
-      "관광/지역 연계-visitor-traffic": true,
-      "리조트 운영-room-occupancy": false,
-      "카지노 운영-casino-drop": false,
+      "민원/고객보호-complaint-resolution-rate": true,
+      "민원/고객보호-repeat-inquiry-rate": true,
+      "민원/고객보호-satisfaction-score": true,
+      "민원 상담-counseling-volume": false,
+      "기관/연계-staff-search-count": false,
     },
   },
   {
-    id: "casino-service",
-    question: "카지노 운영 지표와 고객 서비스 지표를 함께 분석해줘.",
-    summaryTitle: "카지노 및 고객 서비스 분석",
+    id: "debt-transfer-tbd",
+    question: "채권양수도 추론 관련 지표를 시범적으로 구성해줘.",
+    summaryTitle: "채권양수도 추론(TBD)",
     summaryPoints: [
-      "카지노 드롭액이 높은 날에는 고객 문의량과 상담 수요도 함께 커지는 경향이 보입니다.",
-      "VIP 방문객 증가 구간에서는 현장 응대 품질과 보호 안내 메시지 품질이 중요합니다.",
-      "고객보호센터 안내와 고객센터 응답 품질을 함께 보는 통합 관제가 효과적입니다.",
+      "채권양수도 추론 기능은 아직 시범 단계이므로 정확도보다 요청 패턴과 조회 흐름을 먼저 보는 것이 적절합니다.",
+      "업무담당자 검색량과 협약기관 조회량을 함께 보면 실제 실무 연결 지점을 파악할 수 있습니다.",
+      "추론 결과의 정합성 검증 기준은 향후 데이터 정비 범위에 맞춰 단계적으로 고도화할 수 있습니다.",
     ],
-    metrics: ["테이블 드롭액", "VOC 해결률", "멤버십 신규 가입"],
-    exampleQuestion: "이 조합으로 보면 어떤 운영 리스크를 먼저 볼 수 있어?",
+    metrics: ["채권양수도 추론 요청 수", "협약기관 조회량", "업무담당자 검색량"],
+    exampleQuestion: "이 기능은 지금 어떤 기준으로 시범 운영하는 게 좋을까?",
     exampleAnswer:
-      "카지노 이용 증가와 고객 문의 증가가 함께 나타나는 구간에서 현장 응대 품질 저하 가능성을 먼저 볼 수 있고, 보호 안내 메시지와 고객센터 연결 체계를 같이 점검하는 것이 좋습니다.",
+      "우선 요청량과 조회 패턴, 담당자 연결 빈도를 기준으로 로그를 축적하고, 이후 실제 양수도 이력 데이터가 정비되면 추론 정확도 지표를 단계적으로 추가하는 방식이 적절합니다.",
     selections: {
-      "카지노 운영-casino-drop": true,
-      "고객 서비스-voc-resolution": true,
-      "고객 서비스-membership-join": true,
-      "리조트 운영-total-revenue": false,
-      "관광/지역 연계-visitor-traffic": false,
+      "기관/연계-debt-transfer-inference-count": true,
+      "기관/연계-partner-search-count": true,
+      "기관/연계-staff-search-count": true,
+      "민원 상담-counseling-volume": false,
+      "채무조정/지원-debt-adjustment-requests": false,
     },
   },
 ]
@@ -190,9 +183,9 @@ const dashboardQueryScenarios = [
 function inferDashboardScenarioId(question: string) {
   const normalized = question.toLowerCase()
 
-  if (normalized.includes("카지노")) return "casino-service"
-  if (normalized.includes("voc") || normalized.includes("방문객") || normalized.includes("주말")) return "weekend-traffic"
-  return "resort-sales"
+  if (normalized.includes("채권") || normalized.includes("양수도") || normalized.includes("협약기관") || normalized.includes("담당자")) return "debt-transfer-tbd"
+  if (normalized.includes("민원") || normalized.includes("재문의") || normalized.includes("해결률") || normalized.includes("고객보호")) return "complaint-quality"
+  return "counseling-load"
 }
 
 function buildEmptySectorSelections() {
@@ -245,12 +238,11 @@ function getMetricKeysForScenario(scenarioId: string) {
 }
 
 function formatMetricValue(metricKey: string, value: number) {
-  if (metricKey === "total-revenue" || metricKey === "casino-drop") return `${value}억원`
-  if (metricKey === "room-occupancy" || metricKey === "voc-resolution" || metricKey === "slot-utilization") return `${value}%`
-  if (metricKey === "adr") return `${value}만원`
-  if (metricKey === "visitor-traffic") return `${value}만명`
-  if (metricKey === "membership-join") return `${value}천명`
-  return `${value}`
+  if (["counseling-volume", "debt-adjustment-requests", "microloan-linked-cases", "staff-search-count", "partner-search-count", "debt-transfer-inference-count"].includes(metricKey)) {
+    return `${value.toLocaleString("ko-KR")}건`
+  }
+  if (metricKey === "average-wait-time") return `${value}초`
+  return `${value}%`
 }
 
 function buildDashboardSummary(
@@ -268,37 +260,45 @@ function buildDashboardSummary(
     const last = series[series.length - 1]
     const peak = series.reduce((max, item) => (item.value > max.value ? item : max), series[0])
 
-    if (metric.key === "total-revenue") {
-      bullets.push(`월별 매출은 ${first.month} ${formatMetricValue(metric.dataId, first.value)}에서 ${peak.month} ${formatMetricValue(metric.dataId, peak.value)}까지 상승했고, 연말 ${last.month}에도 ${formatMetricValue(metric.dataId, last.value)} 수준을 유지했습니다.`)
-    } else if (metric.dataId === "room-occupancy") {
-      bullets.push(`객실 점유율은 ${first.month} ${formatMetricValue(metric.dataId, first.value)}에서 성수기 ${peak.month} ${formatMetricValue(metric.dataId, peak.value)}까지 높아져 수요 집중 구간이 뚜렷하게 나타납니다.`)
-    } else if (metric.dataId === "adr") {
-      bullets.push(`평균 객실 단가는 ${first.month} ${formatMetricValue(metric.dataId, first.value)}에서 ${peak.month} ${formatMetricValue(metric.dataId, peak.value)}까지 상승해 수요 증가가 단가 개선으로 연결된 흐름을 보입니다.`)
-    } else if (metric.dataId === "voc-resolution") {
-      bullets.push(`VOC 해결률은 ${first.month} ${formatMetricValue(metric.dataId, first.value)}에서 ${peak.month} ${formatMetricValue(metric.dataId, peak.value)}까지 개선됐지만, 이후 ${last.month} ${formatMetricValue(metric.dataId, last.value)} 수준으로 조정돼 성수기 응대 부하를 점검할 필요가 있습니다.`)
-    } else if (metric.dataId === "visitor-traffic") {
-      bullets.push(`방문객 추이는 ${first.month} ${formatMetricValue(metric.dataId, first.value)}에서 ${peak.month} ${formatMetricValue(metric.dataId, peak.value)}까지 증가해 주말 및 성수기 운영 부담이 커지는 시점을 설명해줍니다.`)
-    } else if (metric.dataId === "casino-drop") {
-      bullets.push(`테이블 드롭액은 ${first.month} ${formatMetricValue(metric.dataId, first.value)}에서 ${peak.month} ${formatMetricValue(metric.dataId, peak.value)}로 확대돼 카지노 수요가 여름 성수기에 집중되는 패턴을 보입니다.`)
-    } else if (metric.dataId === "membership-join") {
-      bullets.push(`멤버십 신규 가입은 ${first.month} ${formatMetricValue(metric.dataId, first.value)}에서 ${peak.month} ${formatMetricValue(metric.dataId, peak.value)}까지 늘어 신규 고객 유입과 재방문 전환 가능성이 함께 높아졌습니다.`)
+    if (metric.dataId === "counseling-volume") {
+      bullets.push(`상담 접수량은 ${first.month} ${formatMetricValue(metric.dataId, first.value)}에서 ${peak.month} ${formatMetricValue(metric.dataId, peak.value)}까지 증가했고, ${last.month}에도 ${formatMetricValue(metric.dataId, last.value)} 수준을 유지하고 있습니다.`)
+    } else if (metric.dataId === "counseling-completion-rate") {
+      bullets.push(`상담 완료율은 ${first.month} ${formatMetricValue(metric.dataId, first.value)}에서 ${peak.month} ${formatMetricValue(metric.dataId, peak.value)}까지 완만하게 개선돼 기본 처리 품질은 안정적인 흐름을 보입니다.`)
+    } else if (metric.dataId === "average-wait-time") {
+      bullets.push(`평균 응답 대기시간은 ${first.month} ${formatMetricValue(metric.dataId, first.value)}에서 ${peak.month} ${formatMetricValue(metric.dataId, peak.value)}까지 확대돼 접수량이 몰리는 시점의 병목을 보여줍니다.`)
+    } else if (metric.dataId === "debt-adjustment-requests") {
+      bullets.push(`채무조정 신청 건수는 ${first.month} ${formatMetricValue(metric.dataId, first.value)}에서 ${peak.month} ${formatMetricValue(metric.dataId, peak.value)}까지 증가해 관련 설명과 후속 연결 수요가 함께 확대되는 흐름입니다.`)
+    } else if (metric.dataId === "microloan-linked-cases") {
+      bullets.push(`소액대출 연계 건수는 ${first.month} ${formatMetricValue(metric.dataId, first.value)}에서 ${peak.month} ${formatMetricValue(metric.dataId, peak.value)}까지 늘어나 부가 지원 서비스 안내 수요가 커지고 있습니다.`)
+    } else if (metric.dataId === "complaint-resolution-rate") {
+      bullets.push(`민원 해결률은 ${first.month} ${formatMetricValue(metric.dataId, first.value)}에서 ${peak.month} ${formatMetricValue(metric.dataId, peak.value)}까지 개선됐지만, 이후에도 후속 문의 관리가 필요한 수준으로 보입니다.`)
+    } else if (metric.dataId === "repeat-inquiry-rate") {
+      bullets.push(`재문의율은 ${peak.month} ${formatMetricValue(metric.dataId, peak.value)}를 기록한 뒤 최근 ${last.month} ${formatMetricValue(metric.dataId, last.value)} 수준으로 낮아졌지만 반복 주제는 계속 관리가 필요합니다.`)
+    } else if (metric.dataId === "satisfaction-score") {
+      bullets.push(`상담 만족도는 ${first.month} ${formatMetricValue(metric.dataId, first.value)}에서 ${peak.month} ${formatMetricValue(metric.dataId, peak.value)}까지 개선돼 응대 품질 전반은 안정화되고 있습니다.`)
+    } else if (metric.dataId === "staff-search-count") {
+      bullets.push(`업무담당자 검색량은 ${first.month} ${formatMetricValue(metric.dataId, first.value)}에서 ${peak.month} ${formatMetricValue(metric.dataId, peak.value)}까지 늘어 복수 부서 연결 문의가 증가하는 흐름을 보여줍니다.`)
+    } else if (metric.dataId === "partner-search-count") {
+      bullets.push(`협약기관 조회량은 ${first.month} ${formatMetricValue(metric.dataId, first.value)}에서 ${peak.month} ${formatMetricValue(metric.dataId, peak.value)}까지 증가해 외부 기관 정보 확인 수요가 높아지고 있습니다.`)
+    } else if (metric.dataId === "debt-transfer-inference-count") {
+      bullets.push(`채권양수도 추론 요청 수는 ${first.month} ${formatMetricValue(metric.dataId, first.value)}에서 ${peak.month} ${formatMetricValue(metric.dataId, peak.value)}까지 증가해 시범 기능 검토 수요가 누적되고 있습니다.`)
     }
   })
 
   const selectedMetricLabels = selectedMetrics.map((metric) => metric.label)
 
-  if (selectedMetricLabels.includes("월별 매출 추이") && selectedMetricLabels.includes("객실 점유율")) {
-    bullets.push("매출과 객실 점유율이 같은 구간에서 함께 상승해 리조트 수요 증가가 실제 매출 개선으로 연결된 것으로 해석할 수 있습니다.")
+  if (selectedMetricLabels.includes("상담 접수량") && selectedMetricLabels.includes("평균 응답 대기시간")) {
+    bullets.push("접수량이 증가하는 구간과 대기시간이 겹쳐 나타나므로 초기 안내 자동화와 피크 시간대 인력 배치가 핵심 대응 포인트로 보입니다.")
   }
-  if (selectedMetricLabels.includes("월별 매출 추이") && selectedMetricLabels.includes("VOC 해결률")) {
-    bullets.push("매출 상승 구간에 VOC 해결률을 함께 보면 수요 확대가 고객 응대 품질에 미치는 영향을 동시에 관리할 수 있습니다.")
+  if (selectedMetricLabels.includes("민원 해결률") && selectedMetricLabels.includes("재문의율")) {
+    bullets.push("민원 해결률이 개선돼도 재문의율이 남아 있다면 1차 안내 문구나 후속 안내 절차를 함께 손볼 필요가 있습니다.")
   }
-  if (selectedMetricLabels.includes("테이블 드롭액") && selectedMetricLabels.includes("VOC 해결률")) {
-    bullets.push("카지노 이용 지표와 고객 서비스 지표를 함께 보면 현장 응대 품질 저하 가능성과 보호 안내 필요 시점을 더 빨리 포착할 수 있습니다.")
+  if (selectedMetricLabels.includes("채권양수도 추론 요청 수") && selectedMetricLabels.includes("협약기관 조회량")) {
+    bullets.push("추론 요청과 기관 조회가 함께 증가하면 실제 실무에서는 데이터 정합성보다 먼저 조회 편의성과 연결 흐름 개선 요구가 커진 것으로 해석할 수 있습니다.")
   }
 
   if (bullets.length === 0) {
-    bullets.push("선택한 지표를 기준으로 기간별 변화를 비교하면 운영 개선 포인트를 도출할 수 있습니다.")
+    bullets.push("선택한 지표를 기준으로 기간별 변화를 비교하면 상담 품질과 업무 연결 개선 포인트를 도출할 수 있습니다.")
   }
 
   return { summaryTitle, bullets }
@@ -306,21 +306,21 @@ function buildDashboardSummary(
 
 function buildFollowUpAnswer(scenarioId: string, question: string, selectedMetricLabels: string[]) {
   const normalized = question.toLowerCase()
-  const metricText = selectedMetricLabels.length > 0 ? selectedMetricLabels.join(", ") : "선택된 운영 지표"
+  const metricText = selectedMetricLabels.length > 0 ? selectedMetricLabels.join(", ") : "선택된 업무 지표"
 
   if (normalized.includes("원인") || normalized.includes("이유")) {
-    return `${metricText} 기준으로 보면 최근 변화는 성수기 수요 집중, 운영 채널 이용 증가, 고객 접점 확대 영향으로 해석할 수 있습니다.`
+    return `${metricText} 기준으로 보면 최근 변화는 접수량 증가, 반복 문의 주제 집중, 업무 연결 수요 확대 영향으로 해석할 수 있습니다.`
   }
 
   if (normalized.includes("대응") || normalized.includes("조치") || normalized.includes("액션")) {
-    return `${scenarioId === "casino-service" ? "고객보호 안내와 현장 응대 인력" : "운영 인력과 안내 채널"}를 우선 보강하고, 선택 지표를 기준으로 주간 단위 모니터링을 권장합니다.`
+    return `${scenarioId === "debt-transfer-tbd" ? "조회 로그 축적과 기준 데이터 정비" : "초기 안내 문구와 담당자 연결 채널"}를 우선 보강하고, 선택 지표를 기준으로 주간 단위 모니터링을 권장합니다.`
   }
 
   if (normalized.includes("비교") || normalized.includes("함께")) {
-    return `${metricText}를 함께 보면 단일 지표만으로는 보이지 않는 운영 영향도를 비교할 수 있습니다. 특히 매출 지표와 서비스 지표를 묶어서 보는 방식이 유효합니다.`
+    return `${metricText}를 함께 보면 단일 지표만으로는 보이지 않는 처리 품질과 업무 연결 영향도를 비교할 수 있습니다. 접수·처리·연계 지표를 묶어서 보는 방식이 특히 유효합니다.`
   }
 
-  return `${metricText}를 기준으로 보면 현재 질의와 연관된 운영 변화는 계속 설명할 수 있습니다. 필요하면 특정 기간, 운영 영역, 고객 서비스 영향 중심으로 더 좁혀서 분석할 수 있습니다.`
+  return `${metricText}를 기준으로 보면 현재 질의와 연관된 업무 변화는 계속 설명할 수 있습니다. 필요하면 특정 기간, 상담 단계, 민원 주제 기준으로 더 좁혀서 분석할 수 있습니다.`
 }
 
 function buildScenarioFollowUpSeed(scenarioId: string) {
@@ -345,30 +345,30 @@ const generateRandomAlert = () => {
     {
       type: "occupancy",
       icon: TrendingUp,
-      title: "예약 수요 급증",
-      companies: ["객실 예약", "패키지 예약", "워터월드 예약", "주말 프로모션"],
+      title: "민원 접수 증가",
+      companies: ["민원 접수", "상담 예약", "서류 보완", "초기 안내"],
       messages: [
-        "예약 건수가 30분 내 25% 증가했습니다",
-        "성수기 객실 점유율이 목표치를 초과했습니다",
-        "패키지 상품 전환율이 빠르게 상승하고 있습니다"
+        "민원 접수량이 30분 내 25% 증가했습니다",
+        "상담 대기시간이 목표치를 초과했습니다",
+        "서류 보완 문의가 빠르게 늘고 있습니다"
       ]
     },
     {
       type: "volume",
       icon: BarChart3,
-      title: "운영 지표 변동",
-      companies: ["카지노 객장", "셔틀 운영", "멤버십", "고객센터"],
+      title: "업무 지표 변동",
+      companies: ["채무조정", "소액대출", "업무담당자", "협약기관"],
       messages: [
-        "이용량이 일평균 대비 18% 증가했습니다",
-        "고객 문의량이 평소보다 빠르게 늘고 있습니다",
-        "운영 인력 재배치가 필요한 수준으로 지표가 변동 중입니다"
+        "요청량이 일평균 대비 18% 증가했습니다",
+        "조회량이 평소보다 빠르게 늘고 있습니다",
+        "업무 연결 우선순위 재조정이 필요한 수준으로 지표가 변동 중입니다"
       ]
     },
     {
       type: "keyword",
       icon: TrendingUp,
       title: "이슈 키워드 상승",
-      companies: ["리조트예약", "책임도박", "셔틀이용", "고객만족"],
+      companies: ["채무조정", "민원처리", "상담품질", "고객만족"],
       messages: [
         "키워드 언급량이 1시간 내 200% 증가",
         "고객 후기 및 VOC 언급량이 빠르게 증가하고 있습니다",
@@ -547,6 +547,7 @@ export default function MarketSensingPage() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const tabParam = searchParams.get("tab")
+  const feature = searchParams.get("feature")
   const [activeTab, setActiveTab] = useState(
     tabParam === "wordcloud" || tabParam === "ai-insights" ? tabParam : "dashboard"
   )
@@ -561,20 +562,22 @@ export default function MarketSensingPage() {
   const [selectedWord, setSelectedWord] = useState<string | null>(null)
   const [relatedContentTab, setRelatedContentTab] = useState<"news" | "sns">("news")
   const topPopularKeywords = useMemo(() => baseWordData.slice(0, 5), [])
+  const initialScenarioId = feature === "debt-transfer" ? "debt-transfer-tbd" : "counseling-load"
 
   // 섹터 선택 상태 (기본 선택 항목들)
   const [selectedSectors, setSelectedSectors] = useState<{ [key: string]: boolean }>({
-    "리조트 운영-total-revenue": true,
-    "리조트 운영-room-occupancy": true,
-    "카지노 운영-casino-drop": true,
-    "고객 서비스-voc-resolution": true,
-    "관광/지역 연계-visitor-traffic": true
+    "민원 상담-counseling-volume": true,
+    "민원 상담-counseling-completion-rate": true,
+    "민원/고객보호-complaint-resolution-rate": true,
+    "기관/연계-staff-search-count": true
   })
-  const [selectedDashboardScenarioId, setSelectedDashboardScenarioId] = useState("resort-sales")
-  const [dashboardQuestion, setDashboardQuestion] = useState(dashboardQueryScenarios[0].question)
+  const [selectedDashboardScenarioId, setSelectedDashboardScenarioId] = useState(initialScenarioId)
+  const [dashboardQuestion, setDashboardQuestion] = useState(
+    dashboardQueryScenarios.find((item) => item.id === initialScenarioId)?.question ?? dashboardQueryScenarios[0].question
+  )
   const [followUpQuestion, setFollowUpQuestion] = useState("")
   const [followUpResponses, setFollowUpResponses] = useState<Array<{ id: string; question: string; answer: string }>>(
-    buildScenarioFollowUpSeed("resort-sales"),
+    buildScenarioFollowUpSeed(initialScenarioId),
   )
 
   // 알림 관련 상태
@@ -753,6 +756,17 @@ export default function MarketSensingPage() {
     applyDashboardScenario(scenarioId, dashboardQuestion)
   }
 
+  useEffect(() => {
+    if (feature === "debt-transfer") {
+      applyDashboardScenario("debt-transfer-tbd")
+      return
+    }
+
+    if (feature === "data-guide") {
+      applyDashboardScenario("counseling-load")
+    }
+  }, [feature])
+
   const toggleRecommendedMetric = (metricKey: string) => {
     setSelectedSectors((prev) => ({
       ...prev,
@@ -790,8 +804,8 @@ export default function MarketSensingPage() {
         type: "keyword",
         icon: TrendingUp,
         title: "키워드 급상승",
-        company: "리조트예약",
-        message: "예약 문의 언급량이 1시간 내 250% 증가",
+        company: "민원접수",
+        message: "민원 접수 관련 언급량이 1시간 내 250% 증가",
         time: new Date().toLocaleTimeString('ko-KR', {
           hour: '2-digit',
           minute: '2-digit',
@@ -833,7 +847,7 @@ export default function MarketSensingPage() {
     markAlertAsRead(alert.id)
 
     // 핵심 운영 키워드 알림은 워드클라우드 탭으로 이동
-    if (alert.company === "리조트예약" && alert.type === "keyword") {
+    if (alert.company === "민원접수" && alert.type === "keyword") {
       setActiveTab("wordcloud")
       setIsAlertPanelOpen(false) // 알림 패널 닫기
     }
@@ -946,7 +960,7 @@ export default function MarketSensingPage() {
     }
   }, [selectedWord, sourceFilter])
 
-  const tabTriggerClass = "relative h-auto rounded-none border-0 bg-transparent px-0 pb-3 pt-2 text-base font-semibold text-[#5d6470] transition-colors hover:text-[#1a4dd6] data-[state=active]:text-[#1a4dd6] data-[state=active]:bg-transparent data-[state=active]:shadow-none after:absolute after:left-0 after:right-0 after:bottom-[-1px] after:h-[2px] after:bg-transparent data-[state=active]:after:bg-[#1a4dd6]"
+  const tabTriggerClass = "relative h-auto rounded-none border-0 bg-transparent px-0 pb-3 pt-2 text-base font-semibold text-[#7a6a58] transition-colors hover:text-[#FF9100] data-[state=active]:text-[#FF9100] data-[state=active]:bg-transparent data-[state=active]:shadow-none after:absolute after:left-0 after:right-0 after:bottom-[-1px] after:h-[2px] after:bg-transparent data-[state=active]:after:bg-[#FF9100]"
 
   return (
     <div className="h-full overflow-auto">
@@ -968,7 +982,7 @@ export default function MarketSensingPage() {
               <Button
                 onClick={isGenerating ? handleStopGeneration : handleGenerateInsight}
                 variant={isGenerating ? "destructive" : "default"}
-                className={isGenerating ? "" : "bg-[#1a4dd6] hover:bg-[#1540b8] text-white"}
+                className={isGenerating ? "" : "bg-[#FF9100] hover:bg-[#FF7A00] text-white"}
               >
                 {isGenerating ? (
                   <>
@@ -1039,10 +1053,10 @@ export default function MarketSensingPage() {
                     >
                       <div className="flex items-start gap-3">
                         <div className={`rounded-full p-2 ${alert.type === 'stock' ? 'bg-green-100' :
-                          alert.type === 'volume' ? 'bg-blue-100' : 'bg-purple-100'
+                          alert.type === 'volume' ? 'bg-orange-100' : 'bg-amber-100'
                           }`}>
                           <IconComponent className={`h-4 w-4 ${alert.type === 'stock' ? 'text-green-600' :
-                            alert.type === 'volume' ? 'text-blue-600' : 'text-purple-600'
+                            alert.type === 'volume' ? 'text-orange-600' : 'text-amber-600'
                             }`} />
                         </div>
                         <div className="flex-1 min-w-0">
@@ -1085,7 +1099,7 @@ export default function MarketSensingPage() {
                     <Button
                       variant="ghost"
                       size="sm"
-                      className="text-sm text-[#1a4dd6] hover:text-[#153ad4]"
+                      className="text-sm text-[#FF9100] hover:text-[#FF7A00]"
                       onClick={() => setSelectedWord(null)}
                     >
                       선택 초기화
@@ -1104,7 +1118,7 @@ export default function MarketSensingPage() {
                           key={option.value}
                           size="sm"
                           variant={sourceFilter === option.value ? "default" : "outline"}
-                          className={`rounded-full px-4 ${sourceFilter === option.value ? "bg-[#1a4dd6] text-white hover:bg-[#153ad4]" : "border-[#d4d8e3] text-[#4f5665]"}`}
+                          className={`rounded-full px-4 ${sourceFilter === option.value ? "bg-[#FF9100] text-white hover:bg-[#FF7A00]" : "border-[#ecd7bb] text-[#6f665c]"}`}
                           onClick={() => handleFilterChange("source", option.value)}
                         >
                           {option.label}
@@ -1124,7 +1138,7 @@ export default function MarketSensingPage() {
                           key={option.value}
                           size="sm"
                           variant={timeFilter === option.value ? "default" : "outline"}
-                          className={`rounded-full px-4 ${timeFilter === option.value ? "bg-[#1a4dd6] text-white hover:bg-[#153ad4]" : "border-[#d4d8e3] text-[#4f5665]"}`}
+                          className={`rounded-full px-4 ${timeFilter === option.value ? "bg-[#FF9100] text-white hover:bg-[#FF7A00]" : "border-[#ecd7bb] text-[#6f665c]"}`}
                           onClick={() => handleFilterChange("time", option.value)}
                         >
                           {option.label}
@@ -1149,14 +1163,14 @@ export default function MarketSensingPage() {
                   <CardHeader className="bg-card pb-3">
                     <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
                       <div>
-                        <Badge variant="outline" className="mb-1 w-fit border-[#1a4dd6] text-[#1a4dd6]">
+                        <Badge variant="outline" className="mb-1 w-fit border-[#FF9100] text-[#FF9100]">
                           선택 키워드
                         </Badge>
                         <CardTitle className="text-2xl text-[#1a2a5b]">{selectedWord}</CardTitle>
                       </div>
                       <div className="flex gap-2">
                         {sourceFilter !== "all" && (
-                          <Badge variant="secondary" className="bg-[#ecf0ff] text-[#1a4dd6]">
+                          <Badge variant="secondary" className="bg-[#FFF4E5] text-[#FF9100]">
                             {sourceFilter.toUpperCase()}
                           </Badge>
                         )}
@@ -1167,7 +1181,7 @@ export default function MarketSensingPage() {
                     </div>
                   </CardHeader>
                   <CardContent className="space-y-4">
-                    <p className="text-xs font-semibold text-[#1a4dd6]">AI 요약/분석</p>
+                    <p className="text-xs font-semibold text-[#FF9100]">AI 요약/분석</p>
                     <div className="rounded-lg border border-border bg-muted/40 p-4 text-sm leading-relaxed text-foreground">
                       {(() => {
                         const relatedItems = getRelatedItems(selectedWord)
@@ -1206,7 +1220,7 @@ export default function MarketSensingPage() {
                     <Button
                       size="sm"
                       variant={relatedContentTab === "news" ? "default" : "outline"}
-                      className={`rounded-full px-4 ${relatedContentTab === "news" ? "bg-[#1a4dd6] text-white hover:bg-[#153ad4]" : "border-[#d4d8e3] text-[#4f5665]"}`}
+                      className={`rounded-full px-4 ${relatedContentTab === "news" ? "bg-[#FF9100] text-white hover:bg-[#FF7A00]" : "border-[#ecd7bb] text-[#6f665c]"}`}
                       onClick={() => setRelatedContentTab("news")}
                     >
                       뉴스
@@ -1214,7 +1228,7 @@ export default function MarketSensingPage() {
                     <Button
                       size="sm"
                       variant={relatedContentTab === "sns" ? "default" : "outline"}
-                      className={`rounded-full px-4 ${relatedContentTab === "sns" ? "bg-[#1a4dd6] text-white hover:bg-[#153ad4]" : "border-[#d4d8e3] text-[#4f5665]"}`}
+                      className={`rounded-full px-4 ${relatedContentTab === "sns" ? "bg-[#FF9100] text-white hover:bg-[#FF7A00]" : "border-[#ecd7bb] text-[#6f665c]"}`}
                       onClick={() => setRelatedContentTab("sns")}
                     >
                       SNS
@@ -1263,7 +1277,7 @@ export default function MarketSensingPage() {
                         {/* AI 요약을 해당 섹션에서 제거하고, 선택 키워드 패널로 이동 */}
 
                         {listToRender.length === 0 ? (
-                          <div className="rounded-lg border border-dashed border-[#d9def0] bg-[#f6f8ff] p-6 text-center text-sm text-muted-foreground">
+                          <div className="rounded-lg border border-dashed border-[#f0dcc2] bg-[#fff8f0] p-6 text-center text-sm text-muted-foreground">
                             표시할 {relatedContentTab === "news" ? "뉴스" : "SNS"} 콘텐츠가 없습니다.
                           </div>
                         ) : (
@@ -1271,18 +1285,18 @@ export default function MarketSensingPage() {
                             {listToRender.map(item => (
                               <div
                                 key={item.id}
-                                className="group cursor-pointer rounded-lg border border-[#e2e7f3] p-4 transition hover:border-[#1a4dd6] hover:shadow-sm"
+                                className="group cursor-pointer rounded-lg border border-[#f0dcc2] p-4 transition hover:border-[#FF9100] hover:shadow-sm"
                                 onClick={() => handleItemClick(item.url)}
                               >
                                 <div className="flex items-center justify-between text-xs text-muted-foreground">
                                   <span>{item.type}</span>
                                   <span>{item.date}</span>
                                 </div>
-                                <h4 className="mt-2 text-sm font-semibold text-[#1a274f] group-hover:text-[#1a4dd6]">
+                                <h4 className="mt-2 text-sm font-semibold text-[#5f3b16] group-hover:text-[#FF9100]">
                                   {item.title}
                                 </h4>
-                                <p className="mt-1 text-sm text-[#4f5665] line-clamp-2">{item.content}</p>
-                                <div className="mt-3 flex items-center gap-1 text-xs text-[#1a4dd6]">
+                                <p className="mt-1 text-sm text-[#6f665c] line-clamp-2">{item.content}</p>
+                                <div className="mt-3 flex items-center gap-1 text-xs text-[#FF9100]">
                                   자세히 보기
                                   <ExternalLink className="h-3 w-3" />
                                 </div>
@@ -1298,21 +1312,21 @@ export default function MarketSensingPage() {
 
               <Card className="bg-card">
                 <CardHeader className="bg-card pb-4">
-                  <CardTitle className="text-lg">관련 종목</CardTitle>
-                  <CardDescription>워드클라우드와 연관된 글로벌 종목을 빠르게 확인하세요.</CardDescription>
+                  <CardTitle className="text-lg">연관 업무 주제</CardTitle>
+                  <CardDescription>워드클라우드와 함께 자주 언급되는 연관 업무 주제를 빠르게 확인하세요.</CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-3">
                   {[
-                    { symbol: "TSLA", name: "Tesla Inc" },
-                    { symbol: "NVDA", name: "NVIDIA Corp." },
-                    { symbol: "AAPL", name: "Apple Inc." }
+                    { symbol: "POL", name: "사내규정 검색" },
+                    { symbol: "STA", name: "업무담당자 검색" },
+                    { symbol: "PAR", name: "협약기관 검색" }
                   ].map(stock => (
                     <div key={stock.symbol} className="flex items-center justify-between rounded-lg border border-border p-3 bg-card">
                       <div>
-                        <p className="text-sm font-semibold text-[#1a274f]">{stock.symbol}</p>
+                        <p className="text-sm font-semibold text-[#5f3b16]">{stock.symbol}</p>
                         <p className="text-xs text-muted-foreground">{stock.name}</p>
                       </div>
-                      <Button size="sm" variant="outline" className="border-[#d4d8e3] text-[#1a4dd6] hover:border-[#1a4dd6]" onClick={() => handleCorrelationAnalysis(stock.name, stock.symbol)}>
+                      <Button size="sm" variant="outline" className="border-[#ecd7bb] text-[#FF9100] hover:border-[#FF9100]" onClick={() => handleCorrelationAnalysis(stock.name, stock.symbol)}>
                         상관관계 분석
                       </Button>
                     </div>
@@ -1327,18 +1341,22 @@ export default function MarketSensingPage() {
         <TabsContent value="dashboard" className="space-y-6 block">
           <Card className="bg-card">
             <CardHeader>
-              <CardTitle>운영 데이터 질의</CardTitle>
-              <CardDescription>매출 질의를 입력하면 관련 그래프와 분석 요약을 함께 확인할 수 있습니다.</CardDescription>
+              <CardTitle>{feature === "debt-transfer" ? "채권양수도 추론 질의" : "업무 데이터 질의"}</CardTitle>
+              <CardDescription>
+                {feature === "debt-transfer"
+                  ? "시범 지표를 기준으로 채권양수도 추론 요청 흐름과 연관 업무 데이터를 함께 확인할 수 있습니다."
+                  : "업무 질의를 입력하면 관련 그래프와 분석 요약을 함께 확인할 수 있습니다."}
+              </CardDescription>
             </CardHeader>
             <CardContent className="space-y-5">
               <div className="flex flex-col gap-3 lg:flex-row">
                 <Input
                   value={dashboardQuestion}
                   onChange={(event) => setDashboardQuestion(event.target.value)}
-                  placeholder="예: 3월 리조트 매출 추이와 객실 점유율 변화를 함께 분석해줘."
+                  placeholder={feature === "debt-transfer" ? "예: 채권양수도 추론 관련 지표를 시범적으로 구성해줘." : "예: 최근 민원 접수량과 상담 완료율 변화를 함께 분석해줘."}
                   className="h-11"
                 />
-                <Button className="h-11 bg-[#1a4dd6] hover:bg-[#1540b8] text-white" onClick={runDashboardQuestion}>
+                <Button className="h-11 bg-[#FF9100] hover:bg-[#FF7A00] text-white" onClick={runDashboardQuestion}>
                   분석 실행
                 </Button>
               </div>
@@ -1351,7 +1369,7 @@ export default function MarketSensingPage() {
                     onClick={() => applyDashboardScenario(scenario.id)}
                     className={`rounded-full border px-4 py-2 text-sm transition-colors ${
                       selectedDashboardScenarioId === scenario.id
-                        ? "border-[#1a4dd6] bg-[#1a4dd6]/5"
+                        ? "border-[#FF9100] bg-[#FFF4E5]"
                         : "border-border bg-card hover:bg-muted"
                     }`}
                   >
@@ -1364,7 +1382,7 @@ export default function MarketSensingPage() {
                 <Card className="bg-muted/20 py-0">
                   <CardHeader className="pb-2">
                     <CardTitle className="text-base">지표 선택</CardTitle>
-                    <CardDescription>질의와 관련된 운영 지표를 직접 선택해 대시보드와 분석 요약에 반영할 수 있습니다.</CardDescription>
+                    <CardDescription>질의와 관련된 업무 지표를 직접 선택해 대시보드와 분석 요약에 반영할 수 있습니다.</CardDescription>
                   </CardHeader>
                   <CardContent className="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
                     {recommendedMetricKeys.map((metricKey) => {
@@ -1380,7 +1398,7 @@ export default function MarketSensingPage() {
                           onClick={() => toggleRecommendedMetric(metricKey)}
                           className={`rounded-xl border px-4 py-4 text-left transition-all ${
                             active
-                              ? "border-[#1a4dd6] bg-[#1a4dd6]/8 shadow-sm"
+                              ? "border-[#FF9100] bg-[#FFF4E5] shadow-sm"
                               : "border-border bg-background hover:bg-muted"
                           }`}
                         >
@@ -1389,7 +1407,7 @@ export default function MarketSensingPage() {
                               <Checkbox checked={active} className="pointer-events-none" />
                               <div className="text-xs text-muted-foreground">{metric.source}</div>
                             </div>
-                            <div className={`rounded-full px-2 py-1 text-[11px] font-medium ${active ? "bg-[#1a4dd6] text-white" : "bg-muted text-muted-foreground"}`}>
+                            <div className={`rounded-full px-2 py-1 text-[11px] font-medium ${active ? "bg-[#FF9100] text-white" : "bg-muted text-muted-foreground"}`}>
                               {active ? "선택됨" : "선택 안 함"}
                             </div>
                           </div>
@@ -1415,11 +1433,11 @@ export default function MarketSensingPage() {
                           key={message.id}
                           className={`rounded-2xl border px-4 py-4 ${
                             message.role === "user"
-                              ? "ml-8 bg-[#1a4dd6] text-white border-[#1a4dd6]"
+                              ? "ml-8 bg-[#FF9100] text-white border-[#FF9100]"
                               : "mr-8 bg-background border-border"
                           }`}
                         >
-                          <div className={`text-xs font-medium ${message.role === "user" ? "text-white/80" : "text-[#1a4dd6]"}`}>
+                          <div className={`text-xs font-medium ${message.role === "user" ? "text-white/80" : "text-[#FF9100]"}`}>
                             {message.role === "user" ? "질문" : "분석 답변"}
                           </div>
                           {message.role === "user" ? (
@@ -1458,7 +1476,7 @@ export default function MarketSensingPage() {
                         <div className="space-y-3">
                           {followUpResponses.map((item) => (
                             <div key={item.id} className="rounded-lg border bg-background p-4">
-                              <div className="text-xs font-medium text-[#1a4dd6]">추가 질문</div>
+                              <div className="text-xs font-medium text-[#FF9100]">추가 질문</div>
                               <div className="mt-1 text-sm text-foreground">{item.question}</div>
                               <div className="mt-3 text-xs font-medium text-muted-foreground">분석 답변</div>
                               <div className="mt-1 text-sm leading-6 text-muted-foreground">{item.answer}</div>
@@ -1477,7 +1495,7 @@ export default function MarketSensingPage() {
             <CardHeader className="bg-card">
               <div className="flex items-center justify-between gap-3">
                 <div>
-                  <CardTitle>강원랜드 운영 데이터 대시보드</CardTitle>
+                  <CardTitle>신용회복위원회 운영 데이터 대시보드</CardTitle>
                   <CardDescription>
                     선택한 지표를 기준으로 관련 그래프가 자동으로 구성됩니다.
                   </CardDescription>
@@ -1520,10 +1538,10 @@ export default function MarketSensingPage() {
         >
           <div className="flex items-start gap-3">
             <div className={`rounded-full p-2 ${slidingAlert.type === 'stock' ? 'bg-green-100' :
-              slidingAlert.type === 'volume' ? 'bg-blue-100' : 'bg-purple-100'
+              slidingAlert.type === 'volume' ? 'bg-orange-100' : 'bg-amber-100'
               }`}>
               <slidingAlert.icon className={`h-4 w-4 ${slidingAlert.type === 'stock' ? 'text-green-600' :
-                slidingAlert.type === 'volume' ? 'text-blue-600' : 'text-purple-600'
+                slidingAlert.type === 'volume' ? 'text-orange-600' : 'text-amber-600'
                 }`} />
             </div>
             <div className="flex-1 min-w-0">
@@ -1579,92 +1597,92 @@ export default function MarketSensingPage() {
               <div className="prose prose-sm max-w-none">
                 <h2 className="text-lg font-semibold mb-4">1. 이벤트 개요</h2>
                 <p className="mb-4">
-                  이번 운영 리포트는 객실 예약, 카지노 운영, 고객 문의, 지역 연계 데이터를 통합해
-                  최근 강원랜드 주요 운영 지표의 변화를 요약한 결과입니다. 성수기 수요, 고객 체류,
-                  보호 프로그램 안내, 현장 혼잡도까지 함께 살펴보는 데 목적이 있습니다.
+                  이번 리포트는 민원 접수, 상담 처리, 담당자 연결, 규정 검색 데이터를 함께 살펴보며
+                  최근 신용회복위원회 주요 업무 흐름의 변화를 요약한 결과입니다. 상담 수요, 민원 처리 지연,
+                  담당자 연결 병목까지 함께 확인하는 데 목적이 있습니다.
                 </p>
 
                 <h3 className="text-md font-semibold mb-2">주요 발표 포인트</h3>
                 <ul className="mb-6 ml-4 list-disc">
-                  <li>객실 점유율과 평균 객실 단가가 함께 상승하며 성수기 수요가 확인됨</li>
-                  <li>카지노 객장 이용 지표는 안정적이지만 시간대별 혼잡 편차가 큼</li>
-                  <li>고객 문의는 예약 확인, 셔틀, 체크인 동선 문의에 집중됨</li>
-                  <li>책임도박 안내 노출 이후 상담 연계 문의가 점진적으로 증가함</li>
+                  <li>민원 접수량 증가에도 상담 완료율은 비교적 안정적으로 유지됨</li>
+                  <li>피크 시간대 평균 응답 대기시간이 함께 확대되어 병목 구간이 확인됨</li>
+                  <li>규정 검색과 담당자 연결 요청이 같은 주제에서 함께 증가함</li>
+                  <li>표준 안내 문구 정비 이후 재문의율이 완만하게 낮아지는 흐름이 보임</li>
                 </ul>
 
                 <p className="mb-6">
-                  분석 결과 핵심은 단순 매출 증감보다 운영 병목과 고객 경험 저하 구간을 조기에 파악해
-                  현장 대응과 메시지 자동화를 함께 연결하는 데 있습니다.
+                  분석 결과 핵심은 단순 접수량 증감보다 상담 병목과 후속 연결 지점을 조기에 파악해
+                  FAQ, 담당자 연결, 규정 검색 경험을 함께 개선하는 데 있습니다.
                 </p>
 
                 <h2 className="text-lg font-semibold mb-4">2. AI 기반 분석 인사이트</h2>
 
-                <h3 className="text-md font-semibold mb-2">(1) 성수기 매출 기회 포착</h3>
+                <h3 className="text-md font-semibold mb-2">(1) 민원 접수량과 처리 병목 파악</h3>
                 <ul className="mb-4 ml-4 list-disc">
-                  <li>객실 점유율과 패키지 판매량이 함께 오를 때 부가매출 확대 효과가 가장 크게 나타남.</li>
-                  <li>예약 수요가 높은 구간에 부대시설·셔틀 안내를 자동화하면 현장 문의를 줄일 수 있음.</li>
-                  <li>리조트 운영 데이터와 멤버십 전환 데이터를 같이 보면 재방문 유도 포인트가 더 명확해짐.</li>
+                  <li>민원 접수량과 평균 대기시간을 함께 보면 병목이 발생하는 시간대를 빠르게 식별할 수 있습니다.</li>
+                  <li>FAQ 자동 응답과 담당자 연결을 함께 제공하면 초기 문의를 더 효율적으로 분산할 수 있습니다.</li>
+                  <li>민원 상담 데이터와 규정 검색 로그를 같이 보면 반복 문의 주제를 빠르게 정리할 수 있습니다.</li>
                 </ul>
 
-                <h3 className="text-md font-semibold mb-2">(2) 운영 병목 구간 식별</h3>
+                <h3 className="text-md font-semibold mb-2">(2) 민원 품질 개선 구간 식별</h3>
                 <ul className="mb-4 ml-4 list-disc">
-                  <li>고객 문의는 예약 자체보다 체크인 대기, 셔틀 위치, 시설 이용 방법에서 더 많이 발생함.</li>
-                  <li>카지노 운영은 총량보다 시간대별 혼잡 편차가 더 큰 문제로 나타남.</li>
-                  <li>운영 지표 이상 징후를 실시간 알림으로 연결하면 선제적 인력 배치가 가능함.</li>
+                  <li>민원 해결률이 개선돼도 재문의율이 남아 있다면 후속 안내와 문구 정비가 동시에 필요합니다.</li>
+                  <li>상담 만족도와 재문의율을 함께 보면 단순 처리 완료만으로는 보이지 않는 품질 이슈를 확인할 수 있습니다.</li>
+                  <li>업무 지표 이상 징후를 실시간 알림으로 연결하면 선제적 리소스 배분이 가능해집니다.</li>
                 </ul>
 
                 <h3 className="text-md font-semibold mb-2">(3) AI 해석 문구</h3>
-                <div className="bg-blue-50 p-4 rounded-lg mb-6">
-                  <p className="italic">"강원랜드 운영 데이터의 핵심은 수요 증가 자체보다, 고객 경험이 저하되는 병목을 얼마나 빠르게 발견하고 대응하느냐에 있다."</p>
+                <div className="bg-[#FFF4E5] p-4 rounded-lg mb-6">
+                  <p className="italic">"신용회복위원회 데이터 분석의 핵심은 단순 접수량 집계가 아니라, 상담 병목과 민원 지연 요인을 얼마나 빠르게 발견하고 연결 흐름까지 개선하느냐에 있다."</p>
                 </div>
 
                 <h2 className="text-lg font-semibold mb-4">3. 향후 체크 포인트</h2>
 
                 <div className="grid gap-4 mb-6">
                   <div className="bg-gray-50 p-4 rounded-lg">
-                    <h4 className="font-semibold mb-2">성수기 운영 점검</h4>
+                    <h4 className="font-semibold mb-2">민원상담 운영 점검</h4>
                     <ul className="ml-4 list-disc text-sm">
-                      <li>객실 점유율과 평균 객실 단가 동반 상승 여부</li>
-                      <li>패키지 판매가 부대시설 이용으로 이어지는지 여부</li>
+                      <li>상담 접수량과 평균 대기시간이 함께 확대되는 구간 여부</li>
+                      <li>상담 완료율이 피크 시간대에도 안정적으로 유지되는지 여부</li>
                     </ul>
                   </div>
 
                   <div className="bg-gray-50 p-4 rounded-lg">
                     <h4 className="font-semibold mb-2">고객 응대 품질</h4>
                     <ul className="ml-4 list-disc text-sm">
-                      <li>체크인 동선과 셔틀 안내 관련 VOC 감소 여부</li>
-                      <li>예약 안내 메시지 자동화 이후 문의량 변화</li>
-                      <li>책임도박 안내 메시지 노출 이후 상담 연계율 변화</li>
+                      <li>민원 해결률 개선 이후 재문의율이 함께 낮아지는지 여부</li>
+                      <li>표준 안내 문구 개편 이후 동일 주제 반복 문의가 줄어드는지 여부</li>
+                      <li>상담 만족도와 처리 리드타임이 함께 개선되는지 여부</li>
                     </ul>
                   </div>
 
                   <div className="bg-gray-50 p-4 rounded-lg">
-                    <h4 className="font-semibold mb-2">지역 연계 확장성</h4>
+                    <h4 className="font-semibold mb-2">기관/연계 확장성</h4>
                     <ul className="ml-4 list-disc text-sm">
-                      <li>셔틀 이용객과 주변 상권 소비액의 상관관계</li>
-                      <li>지역 행사 연계 프로모션이 주말 방문객 유입에 미치는 영향</li>
+                      <li>업무담당자 검색량과 협약기관 조회량의 상관관계</li>
+                      <li>채권양수도 추론 요청 수가 실제 담당자 연결 수요와 맞물리는지 여부</li>
                     </ul>
                   </div>
                 </div>
 
                 <h2 className="text-lg font-semibold mb-4">4. 종합 평가</h2>
                 <p className="mb-4">
-                  이번 화면은 강원랜드 운영 데이터를 한 화면에서 질문하고, 주요 KPI 차트와 AI 요약을 함께 보는
+                  이번 화면은 신용회복위원회 운영 데이터를 한 화면에서 질문하고, 주요 KPI 차트와 AI 요약을 함께 보는
                   데이터 분석 에이전트의 예시입니다.
                 </p>
                 <p className="mb-4">
-                  현장 운영팀은 혼잡 구간과 고객 문의 원인을 빠르게 파악할 수 있고, 경영진은 월별 추세와
+                  운영 담당자는 병목 구간과 반복 문의 원인을 빠르게 파악할 수 있고, 관리자는 월별 추세와
                   서비스 개선 우선순위를 함께 확인할 수 있습니다.
                 </p>
                 <p className="mb-6">
-                  실제 서비스 단계에서는 ERP, 예약 시스템, 고객센터, 카지노 운영 DB를 연결해 더 정교한 분석으로 확장할 수 있습니다.
+                  실제 서비스 단계에서는 상담시스템, 규정 문서, 인사정보, 협약기관 DB를 연결해 더 정교한 분석으로 확장할 수 있습니다.
                 </p>
 
                 <div className="bg-yellow-50 p-4 rounded-lg mb-6">
                   <h3 className="font-semibold mb-2">📌 결론</h3>
                   <p>
-                    데이터 분석 에이전트의 가치는 단순 차트 조회가 아니라, 운영 데이터를 바탕으로
-                    <strong>매출 기회, 고객 불편, 보호 이슈를 함께 해석해 실행 포인트까지 제시하는 것</strong>에 있습니다.
+                    데이터길잡이의 가치는 단순 차트 조회가 아니라, 업무 데이터를 바탕으로
+                    <strong>상담 병목, 반복 문의, 연계 필요 구간을 함께 해석해 실행 포인트까지 제시하는 것</strong>에 있습니다.
                   </p>
                 </div>
 
@@ -1683,14 +1701,14 @@ export default function MarketSensingPage() {
                       <div className="flex items-start justify-between gap-4">
                         <div className="flex-1 min-w-0">
                           <div className="flex items-center gap-2 mb-1">
-                            <h3 className="font-semibold text-base">성수기 예약 급증 시 운영 영향 분석</h3>
-                            <Badge variant="outline" className="bg-blue-100 text-blue-800 border-blue-200">
+                            <h3 className="font-semibold text-base">민원 접수 급증 시 처리 영향 분석</h3>
+                            <Badge variant="outline" className="bg-[#FFF4E5] text-[#9A4A00] border-[#FFC98A]">
                               긍정
                             </Badge>
                           </div>
 
                           <p className="text-sm text-muted-foreground mb-3 line-clamp-2">
-                            주말 예약 수요 급증 시 체크인 대기, 셔틀 운영, 고객 문의 증가가 전체 운영에 미치는 영향 시뮬레이션
+                            접수량 급증 시 응답 대기시간, 담당자 연결, 민원 해결률에 미치는 영향을 시뮬레이션합니다.
                           </p>
 
                           <div className="flex flex-wrap gap-2">
@@ -1703,13 +1721,13 @@ export default function MarketSensingPage() {
                               1일
                             </Badge>
                             <Badge className="text-xs" style={{ backgroundColor: '#F0F4FA', color: '#153AD4' }}>
-                              예약
+                              민원
                             </Badge>
                             <Badge className="text-xs" style={{ backgroundColor: '#F0F4FA', color: '#153AD4' }}>
-                              운영
+                              상담
                             </Badge>
                             <Badge className="text-xs" style={{ backgroundColor: '#F0F4FA', color: '#153AD4' }}>
-                              고객경험
+                              처리품질
                             </Badge>
                           </div>
                         </div>
@@ -1743,24 +1761,24 @@ export default function MarketSensingPage() {
                     </thead>
                     <tbody>
                       <tr>
-                        <td className="border border-gray-300 px-4 py-2 font-semibold">리조트 운영</td>
-                        <td className="border border-gray-300 px-4 py-2">객실 점유율, 객단가, 패키지 전환율</td>
-                        <td className="border border-gray-300 px-4 py-2">"성수기 수요를 실제 매출 기회로 얼마나 전환하고 있는가?"</td>
+                        <td className="border border-gray-300 px-4 py-2 font-semibold">민원 상담</td>
+                        <td className="border border-gray-300 px-4 py-2">상담 접수량, 상담 완료율, 평균 응답 대기시간</td>
+                        <td className="border border-gray-300 px-4 py-2">"접수량 증가가 실제 처리 지연으로 이어지는 구간은 어디인가?"</td>
                       </tr>
                       <tr>
-                        <td className="border border-gray-300 px-4 py-2 font-semibold">고객 서비스</td>
-                        <td className="border border-gray-300 px-4 py-2">VOC 해결률, 체크인 문의, 셔틀 안내 문의</td>
-                        <td className="border border-gray-300 px-4 py-2">"고객 불편이 가장 많이 발생하는 지점은 어디인가?"</td>
+                        <td className="border border-gray-300 px-4 py-2 font-semibold">민원/고객보호</td>
+                        <td className="border border-gray-300 px-4 py-2">민원 해결률, 재문의율, 상담 만족도</td>
+                        <td className="border border-gray-300 px-4 py-2">"반복 문의가 남는 지점은 어디이고 어떤 문구를 보완해야 하는가?"</td>
                       </tr>
                       <tr>
-                        <td className="border border-gray-300 px-4 py-2 font-semibold">카지노 운영</td>
-                        <td className="border border-gray-300 px-4 py-2">테이블 드롭액, 슬롯 이용률, VIP 방문객</td>
-                        <td className="border border-gray-300 px-4 py-2">"시간대별 혼잡과 고객 체류를 어떻게 최적화할 것인가?"</td>
+                        <td className="border border-gray-300 px-4 py-2 font-semibold">채무조정/지원</td>
+                        <td className="border border-gray-300 px-4 py-2">채무조정 신청 건수, 소액대출 연계 건수, 지원안 실행률</td>
+                        <td className="border border-gray-300 px-4 py-2">"상담 이후 실제 지원안 연결이 얼마나 이어지고 있는가?"</td>
                       </tr>
                       <tr>
-                        <td className="border border-gray-300 px-4 py-2 font-semibold">보호/연계</td>
-                        <td className="border border-gray-300 px-4 py-2">책임도박 상담 연계율, 지역 연계 소비, 셔틀 이용률</td>
-                        <td className="border border-gray-300 px-4 py-2">"보호 프로그램과 지역 연계 효과를 어떻게 확장할 것인가?"</td>
+                        <td className="border border-gray-300 px-4 py-2 font-semibold">기관/연계</td>
+                        <td className="border border-gray-300 px-4 py-2">업무담당자 검색량, 협약기관 조회량, 채권양수도 추론 요청 수</td>
+                        <td className="border border-gray-300 px-4 py-2">"연계 업무가 많은 영역에서 어떤 검색/추론 기능을 우선 고도화해야 하는가?"</td>
                       </tr>
                     </tbody>
                   </table>

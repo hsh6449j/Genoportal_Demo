@@ -47,29 +47,29 @@ const DEFAULT_FORMAT_TEMPLATES: FormattingTemplate[] = [
   {
     id: "booking-confirmation",
     key: "booking-confirmation",
-    title: "예약 확인 안내",
-    description: "예약 완료 직후 발송하는 확인 메시지",
+    title: "접수 확인 안내",
+    description: "민원 접수 직후 발송하는 기본 확인 메시지",
   },
   {
     id: "check-in-guide",
     key: "check-in-guide",
-    title: "체크인 안내",
-    description: "체크인 시간, 준비사항, 문의처 안내",
+    title: "보완 서류 요청",
+    description: "추가 제출 자료와 기한을 정리한 요청 메시지",
   },
   {
     id: "facility-guide",
     key: "facility-guide",
-    title: "부대시설 안내",
-    description: "셔틀, 조식, 부대시설 이용 정보를 함께 정리",
+    title: "처리 결과 안내",
+    description: "검토 결과와 후속 절차를 정리한 답변 메시지",
   },
 ]
 
 const ROOM_TYPE_OPTIONS = [
-  "하이원 그랜드 호텔 디럭스",
-  "하이원 그랜드 호텔 스위트",
-  "콘도 패밀리룸",
-  "콘도 스위트룸",
-  "하이원 팰리스 스탠다드",
+  "채무조정 문의",
+  "소액대출 문의",
+  "사내규정 문의",
+  "민원 접수",
+  "업무담당자 안내",
   "기타",
 ]
 
@@ -89,26 +89,26 @@ const DEMO_HISTORY: Array<{ template: TemplateKey; form: ReservationForm }> = [
     template: "booking-confirmation",
     form: {
       guestName: "김민수",
-      reservationId: "RSV-20260325-014",
-      roomType: "하이원 그랜드 호텔 디럭스",
+      reservationId: "VOC-20260325-014",
+      roomType: "민원 접수",
       roomTypeDetail: "",
       checkInDate: "2026-03-28",
-      checkOutDate: "2026-03-29",
+      checkOutDate: "2026-03-31",
       contactChannel: "카카오 알림톡",
-      requestNote: "주차 안내와 체크인 시간을 함께 포함",
+      requestNote: "처리 절차와 예상 회신 일정을 함께 안내",
     },
   },
   {
     template: "check-in-guide",
     form: {
       guestName: "이서연",
-      reservationId: "RSV-20260401-021",
-      roomType: "콘도 패밀리룸",
+      reservationId: "VOC-20260401-021",
+      roomType: "채무조정 문의",
       roomTypeDetail: "",
       checkInDate: "2026-04-03",
       checkOutDate: "2026-04-05",
       contactChannel: "문자",
-      requestNote: "늦은 체크인 예정 고객이라 프런트 문의처를 강조",
+      requestNote: "신분증 사본과 소득 증빙 서류 제출 안내를 강조",
     },
   },
 ]
@@ -120,26 +120,26 @@ function formatDateLabel(value: string) {
 
 function getRoomTypeLabel(form: Pick<ReservationForm, "roomType" | "roomTypeDetail">) {
   if (form.roomType === "기타") {
-    return form.roomTypeDetail.trim() || "기타 객실"
+    return form.roomTypeDetail.trim() || "기타 문의"
   }
 
-  return form.roomType || "예약 객실"
+  return form.roomType || "문의 유형"
 }
 
 function buildReservationMessage(template: TemplateKey, form: ReservationForm) {
-  const checkIn = formatDateLabel(form.checkInDate)
-  const checkOut = formatDateLabel(form.checkOutDate)
-  const roomTypeLabel = getRoomTypeLabel(form)
+  const receivedAt = formatDateLabel(form.checkInDate)
+  const responseAt = formatDateLabel(form.checkOutDate)
+  const inquiryTypeLabel = getRoomTypeLabel(form)
 
   if (template === "booking-confirmation") {
     return [
-      `[예약 확인 안내] ${form.guestName || "고객"}님`,
+      `[접수 확인 안내] ${form.guestName || "민원인"}님`,
       "",
-      `안녕하세요. 강원랜드입니다.`,
-      `${checkIn} ~ ${checkOut} 예약이 정상적으로 접수되었습니다.`,
-      `예약번호는 ${form.reservationId || "RSV-XXXX"}이며, 객실은 ${roomTypeLabel} 기준으로 준비될 예정입니다.`,
+      `안녕하세요. 신용회복위원회입니다.`,
+      `${receivedAt} 기준으로 문의가 정상적으로 접수되었습니다.`,
+      `접수번호는 ${form.reservationId || "VOC-XXXX"}이며, 문의 유형은 ${inquiryTypeLabel}입니다.`,
       "",
-      `체크인은 오후 3시부터 가능하며, 이용 전 안내가 필요하신 경우 고객센터로 문의 부탁드립니다.`,
+      `${responseAt ? `${responseAt} 전후로 1차 회신이 진행될 예정입니다.` : "담당 부서 확인 후 순차적으로 회신드릴 예정입니다."}`,
       form.requestNote ? `추가 안내: ${form.requestNote}` : "",
       "",
       `${form.contactChannel} 발송용 기준으로 정리한 메시지입니다.`,
@@ -151,20 +151,20 @@ function buildReservationMessage(template: TemplateKey, form: ReservationForm) {
 
   if (template === "check-in-guide") {
     return [
-      `[체크인 안내] ${form.guestName || "고객"}님`,
+      `[보완 서류 요청] ${form.guestName || "민원인"}님`,
       "",
-      `안녕하세요. 강원랜드입니다.`,
-      `${checkIn} 체크인 예정 고객님께 이용 안내드립니다.`,
-      `객실 유형: ${roomTypeLabel}`,
-      `예약번호: ${form.reservationId || "RSV-XXXX"}`,
+      `안녕하세요. 신용회복위원회입니다.`,
+      `${receivedAt} 접수 건 검토 결과 추가 확인이 필요한 자료를 안내드립니다.`,
+      `문의 유형: ${inquiryTypeLabel}`,
+      `접수번호: ${form.reservationId || "VOC-XXXX"}`,
       "",
-      "1. 체크인 안내",
-      "- 체크인 시작 시간: 오후 3시",
-      "- 체크아웃 시간: 오전 11시",
+      "1. 제출 요청 자료",
+      "- 관련 증빙 서류 또는 확인 가능한 자료",
+      "- 신청 내용 확인을 위한 기본 정보",
       "",
-      "2. 문의 및 유의사항",
-      "- 프런트 데스크 또는 고객센터에서 예약 확인 가능",
-      "- 성수기에는 체크인 대기 시간이 발생할 수 있어 여유 있게 방문 권장",
+      "2. 안내 및 유의사항",
+      `- ${responseAt ? `${responseAt} 전까지 제출 시 검토가 원활합니다.` : "제출 일정은 담당자 회신에 따라 안내드립니다."}`,
+      "- 제출 이후 담당 부서에서 순차 검토 후 다시 안내드립니다.",
       form.requestNote ? `- 추가 메모: ${form.requestNote}` : "",
       "",
       `${form.contactChannel} 발송용 기준으로 정리한 메시지입니다.`,
@@ -174,17 +174,17 @@ function buildReservationMessage(template: TemplateKey, form: ReservationForm) {
   }
 
   return [
-    `[부대시설 안내] ${form.guestName || "고객"}님`,
+    `[처리 결과 안내] ${form.guestName || "민원인"}님`,
     "",
-    `안녕하세요. 강원랜드입니다.`,
-    `${checkIn} ~ ${checkOut} 투숙 기간 중 이용 가능한 주요 부대시설을 안내드립니다.`,
+    `안녕하세요. 신용회복위원회입니다.`,
+    `${receivedAt} 접수 건에 대한 검토 결과를 안내드립니다.`,
     "",
-    "- 조식, 셔틀, 부대시설 운영시간은 현장 상황에 따라 일부 조정될 수 있습니다.",
-    `- 예약 객실: ${roomTypeLabel}`,
-    `- 예약번호: ${form.reservationId || "RSV-XXXX"}`,
+    `- 문의 유형: ${inquiryTypeLabel}`,
+    `- 접수번호: ${form.reservationId || "VOC-XXXX"}`,
+    `- 회신 예정일: ${responseAt || "담당자 확인 후 별도 안내"}`,
     form.requestNote ? `- 참고사항: ${form.requestNote}` : "",
     "",
-    "자세한 내용은 고객센터 또는 체크인 데스크에서 확인 부탁드립니다.",
+    "세부 기준과 후속 절차는 담당 부서 확인 후 추가로 안내드립니다.",
     `${form.contactChannel} 발송용 기준으로 정리한 메시지입니다.`,
   ]
     .filter(Boolean)
@@ -225,7 +225,7 @@ export function FormattingTool() {
           DEFAULT_FORMAT_TEMPLATES.find((templateItem) => templateItem.key === item.template) || DEFAULT_FORMAT_TEMPLATES[0]
 
         return {
-          id: `demo-resort-${item.template}-${index}`,
+          id: `demo-complaint-${item.template}-${index}`,
           timestamp: Date.now() - index * 60 * 60 * 1000,
           template: item.template,
           templateTitle: templateMeta.title,
@@ -274,7 +274,7 @@ export function FormattingTool() {
     }
 
     if (!form.checkInDate.trim()) {
-      toast({ description: "체크인 일자를 입력해주세요." })
+      toast({ description: "접수 일자를 입력해주세요." })
       return
     }
 
@@ -293,7 +293,7 @@ export function FormattingTool() {
         },
         ...prev,
       ].slice(0, 30))
-      toast({ description: "예약 안내 메시지를 생성했습니다." })
+      toast({ description: "민원 안내 메시지를 생성했습니다." })
     } finally {
       setIsGenerating(false)
     }
@@ -322,7 +322,7 @@ export function FormattingTool() {
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Headset className="h-5 w-5" />
-            <h1 className="text-xl font-bold">리조트 예약 안내 작성</h1>
+            <h1 className="text-xl font-bold">민원 답변 초안 작성</h1>
           </div>
           <Button
             variant="ghost"
@@ -357,7 +357,7 @@ export function FormattingTool() {
                       }`}
                     >
                       <div className="flex items-start gap-2">
-                        {active ? <Check className="mt-0.5 h-4 w-4 text-blue-600" /> : <span className="mt-1 inline-block h-4 w-4 rounded border" />}
+                        {active ? <Check className="mt-0.5 h-4 w-4 text-[#FF9100]" /> : <span className="mt-1 inline-block h-4 w-4 rounded border" />}
                         <div>
                           <div className="font-medium">{item.title}</div>
                           <div className="mt-0.5 text-xs text-muted-foreground">{item.description}</div>
@@ -373,12 +373,12 @@ export function FormattingTool() {
           <div className={showHistory ? "lg:col-span-6" : "lg:col-span-9"}>
             <Card className="bg-card">
               <CardHeader>
-                <CardTitle>예약 정보 입력</CardTitle>
+                <CardTitle>민원 정보 입력</CardTitle>
               </CardHeader>
               <CardContent className="space-y-6">
                 <div className="grid gap-4 md:grid-cols-2">
                   <div className="space-y-2">
-                    <Label htmlFor="guest-name">고객명</Label>
+                    <Label htmlFor="guest-name">민원인명</Label>
                     <Input
                       id="guest-name"
                       value={form.guestName}
@@ -387,16 +387,16 @@ export function FormattingTool() {
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="reservation-id">예약번호</Label>
+                    <Label htmlFor="reservation-id">접수번호</Label>
                     <Input
                       id="reservation-id"
                       value={form.reservationId}
                       onChange={(event) => updateField("reservationId", event.target.value)}
-                      placeholder="예: RSV-20260325-014"
+                      placeholder="예: VOC-20260325-014"
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="room-type">객실 유형</Label>
+                    <Label htmlFor="room-type">문의 유형</Label>
                     <Select
                       value={form.roomType}
                       onValueChange={(value) =>
@@ -408,7 +408,7 @@ export function FormattingTool() {
                       }
                     >
                       <SelectTrigger id="room-type">
-                        <SelectValue placeholder="객실 유형 선택" />
+                        <SelectValue placeholder="문의 유형 선택" />
                       </SelectTrigger>
                       <SelectContent>
                         {ROOM_TYPE_OPTIONS.map((option) => (
@@ -433,7 +433,7 @@ export function FormattingTool() {
                     </Select>
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="check-in-date">체크인 일자</Label>
+                    <Label htmlFor="check-in-date">접수 일자</Label>
                     <Input
                       id="check-in-date"
                       value={form.checkInDate}
@@ -442,7 +442,7 @@ export function FormattingTool() {
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="check-out-date">체크아웃 일자</Label>
+                    <Label htmlFor="check-out-date">회신 예정일</Label>
                     <Input
                       id="check-out-date"
                       value={form.checkOutDate}
@@ -453,12 +453,12 @@ export function FormattingTool() {
                   <div className="space-y-2 md:col-span-2">
                     {form.roomType === "기타" ? (
                       <div className="space-y-2">
-                        <Label htmlFor="room-type-detail">객실 유형 직접 입력</Label>
+                        <Label htmlFor="room-type-detail">문의 유형 직접 입력</Label>
                         <Input
                           id="room-type-detail"
                           value={form.roomTypeDetail}
                           onChange={(event) => updateField("roomTypeDetail", event.target.value)}
-                          placeholder="예: 펫 프렌들리 스위트"
+                          placeholder="예: 기타 내부 규정 문의"
                         />
                       </div>
                     ) : null}
@@ -469,7 +469,7 @@ export function FormattingTool() {
                       id="request-note"
                       value={form.requestNote}
                       onChange={(event) => updateField("requestNote", event.target.value)}
-                      placeholder="예: 늦은 체크인 예정이라 문의처를 강조하고, 주차 안내를 함께 포함"
+                      placeholder="예: 제출 기한과 담당 부서 문의처를 함께 포함"
                       className="min-h-[120px]"
                     />
                   </div>
@@ -482,7 +482,7 @@ export function FormattingTool() {
                         <Loader2 className="mr-2 h-4 w-4 animate-spin" /> 생성 중...
                       </>
                     ) : (
-                      "안내 메시지 생성"
+                      "민원 메시지 생성"
                     )}
                   </Button>
                   <Button variant="secondary" onClick={copyOutput} disabled={!output.trim()}>
@@ -496,12 +496,12 @@ export function FormattingTool() {
                 <Separator />
 
                 <div className="space-y-2">
-                  <Label>생성된 예약 안내 메시지</Label>
+                  <Label>생성된 민원 안내 메시지</Label>
                   <Textarea
                     value={output}
                     onChange={(event) => setOutput(event.target.value)}
                     className="min-h-[280px]"
-                    placeholder="여기에 생성된 예약 안내 메시지가 표시됩니다."
+                    placeholder="여기에 생성된 민원 안내 메시지가 표시됩니다."
                   />
                 </div>
               </CardContent>
@@ -514,7 +514,7 @@ export function FormattingTool() {
                 <CardHeader className="flex flex-row items-center justify-between pb-2">
                   <div className="flex items-center gap-2">
                     <History className="h-4 w-4" />
-                    <CardTitle>예약 안내 히스토리</CardTitle>
+                    <CardTitle>민원 처리 히스토리</CardTitle>
                   </div>
                 </CardHeader>
                 <CardContent>
@@ -530,7 +530,7 @@ export function FormattingTool() {
                           <div className="mt-1 inline-flex rounded-full border border-border bg-muted px-2 py-1 text-[11px] font-medium text-muted-foreground">
                             {item.templateTitle}
                           </div>
-                          <div className="mt-2 text-sm font-medium">{item.form.guestName || "고객"}</div>
+                          <div className="mt-2 text-sm font-medium">{item.form.guestName || "민원인"}</div>
                           <div className="mt-1 text-xs text-muted-foreground">
                             {item.form.checkInDate || "-"} / {getRoomTypeLabel(item.form)}
                           </div>

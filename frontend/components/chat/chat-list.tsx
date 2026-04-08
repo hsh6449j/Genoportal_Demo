@@ -101,7 +101,7 @@ export function ChatList({
                 groupedMessages.push(
                     <div key={assistantGroupKey} className="flex gap-4 w-full items-start">
                         <div className="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center">
-                            <img src="/1-ssrc-logo-blue.png" alt="SSRC Logo" className="w-8 h-8" />
+                            <img src="/1-ssrc-logo-orange.png" alt="AI Portal Logo" className="w-8 h-8" />
                         </div>
                         <div className="flex-1 min-w-0 max-w-3xl" onClick={handlePDFCitationClick} onKeyDown={handlePDFCitationKeyDown}>
                             {currentAssistantGroup.map((msg, index) => {

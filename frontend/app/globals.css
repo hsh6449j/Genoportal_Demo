@@ -5,41 +5,41 @@
 
 :root {
   --background: oklch(1 0 0); /* Pure white */
-  --foreground: oklch(0.25 0.02 240); /* Dark blue-gray */
+  --foreground: oklch(0.27 0.03 55); /* Warm dark neutral */
   --card: oklch(1 0 0); /* Pure white */
-  --card-foreground: oklch(0.25 0.02 240);
+  --card-foreground: oklch(0.27 0.03 55);
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.25 0.02 240);
-  --primary: #1428a8; /* Specific blue color requested */
+  --popover-foreground: oklch(0.27 0.03 55);
+  --primary: #ff9100;
   --primary-foreground: oklch(1 0 0);
-  --secondary: rgb(20 40 168); /* Medium blue */
+  --secondary: #ffac33;
   --secondary-foreground: oklch(1 0 0);
   --muted: oklch(1 0 0); /* Pure white muted */
-  --muted-foreground: oklch(0.45 0.02 240);
-  --accent: rgb(20 40 168); /* Blue accent */
+  --muted-foreground: oklch(0.48 0.03 55);
+  --accent: #ffac33;
   --accent-foreground: oklch(1 0 0);
-  --destructive: oklch(0.55 0.15 40); /* Orange warning */
+  --destructive: #e05a00;
   --destructive-foreground: oklch(1 0 0);
-  --border: oklch(0.92 0.01 240); /* Light blue border */
-  --input: oklch(0.96 0.01 240); /* Light input background */
-  --ring: rgb(20 40 168); /* Blue focus ring */
-  --chart-1: oklch(0.45 0.15 240); /* Primary chart color */
-  --chart-2: oklch(0.55 0.15 40); /* Orange chart color */
-  --chart-3: oklch(0.35 0.15 240); /* Dark blue chart color */
-  --chart-4: oklch(0.65 0.12 240); /* Light blue chart color */
-  --chart-5: oklch(0.25 0.02 240); /* Dark chart color */
+  --border: #f0dcc2;
+  --input: #fff6eb;
+  --ring: #ff9100;
+  --chart-1: #ff9100;
+  --chart-2: #ffac33;
+  --chart-3: #ff6b00;
+  --chart-4: #ffd7a3;
+  --chart-5: #8a4b08;
   --radius: 0.5rem;
   --sidebar: oklch(1 0 0); /* Pure white sidebar */
-  --sidebar-foreground: oklch(0.25 0.02 240);
-  --sidebar-primary: #1428a8; /* Deep blue primary (rgb(20,40,168)) */
+  --sidebar-foreground: oklch(0.27 0.03 55);
+  --sidebar-primary: #ff9100;
   --sidebar-primary-foreground: oklch(1 0 0);
-  --sidebar-accent: rgb(20 40 168); /* Blue accent */
+  --sidebar-accent: #ffac33;
   --sidebar-accent-foreground: oklch(1 0 0);
-  --sidebar-border: oklch(0.92 0.01 240); /* Clean blue border */
-  --sidebar-ring: rgb(20 40 168); /* Blue focus ring */
-  --insight-partner: #0f1f3d; /* Darker blue for insight partner */
+  --sidebar-border: #f0dcc2;
+  --sidebar-ring: #ff9100;
+  --insight-partner: #7a3b00;
   --insight-partner-foreground: oklch(1 0 0);
-  --supporting-agent: #10b981; /* Bright emerald green for supporting agent */
+  --supporting-agent: #ffac33;
   --supporting-agent-foreground: oklch(1 0 0);
 }
 
@@ -146,28 +146,35 @@
 
 /* Citation link styles */
 .citation-link {
-  @apply inline-flex items-center px-2 py-1 mx-1 text-xs font-medium text-blue-700 bg-blue-100 border border-blue-300 rounded-full hover:bg-blue-200 transition-colors;
+  @apply inline-flex items-center px-2 py-1 mx-1 text-xs font-medium rounded-full transition-colors;
+  color: #9a4a00;
+  background-color: #fff1df;
+  border: 1px solid #ffc98a;
 }
 
 .dark .citation-link {
-  @apply text-blue-200 bg-blue-900 border-blue-700 hover:bg-blue-800;
+  color: #ffd7a3;
+  background-color: rgba(255, 145, 0, 0.18);
+  border-color: rgba(255, 172, 51, 0.45);
 }
 
 /* Button chip styles for citations */
 .btn__chip {
   @apply inline-flex items-center px-3 py-1.5 mx-1 text-sm font-medium;
-  @apply text-white bg-gradient-to-r from-blue-600 to-blue-700;
-  @apply border border-blue-600 rounded-full shadow-sm;
-  @apply hover:from-blue-700 hover:to-blue-800 hover:shadow-md;
-  @apply focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-1;
+  @apply text-white rounded-full shadow-sm;
+  background-image: linear-gradient(to right, #ff9100, #ff7a00);
+  border: 1px solid #ff9100;
+  @apply hover:shadow-md;
+  @apply focus:outline-none focus:ring-2 focus:ring-offset-1;
   @apply transition-all duration-200 ease-in-out;
   @apply cursor-pointer select-none;
   text-decoration: none !important;
+  --tw-ring-color: #ff9100;
 }
 
 .btn__chip:hover {
   transform: translateY(-1px);
-  box-shadow: 0 4px 8px rgba(59, 130, 246, 0.3);
+  box-shadow: 0 4px 12px rgba(255, 145, 0, 0.28);
 }
 
 .btn__chip strong {
@@ -175,12 +182,13 @@
 }
 
 .dark .btn__chip {
-  @apply text-blue-100 bg-gradient-to-r from-blue-800 to-blue-900;
-  @apply border-blue-700 hover:from-blue-900 hover:to-blue-800;
+  color: #fff2df;
+  background-image: linear-gradient(to right, #e56f00, #c95f00);
+  border-color: #f38d22;
 }
 
 .dark .btn__chip:hover {
-  box-shadow: 0 4px 8px rgba(59, 130, 246, 0.2);
+  box-shadow: 0 4px 8px rgba(255, 145, 0, 0.2);
 }
 
 /* Line clamp utilities */
@@ -288,7 +296,9 @@
 }
 
 .pdf-citation-icon.available {
-  @apply text-blue-600 hover:text-blue-800 cursor-pointer transition-all duration-200;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: #ff9100;
   width: 16px;
   height: 16px;
 }
@@ -304,7 +314,7 @@
 }
 
 .dark .pdf-citation-icon.available {
-  @apply text-blue-400 hover:text-blue-300;
+  color: #ffac33;
 }
 
 .dark .pdf-citation-icon.unavailable {

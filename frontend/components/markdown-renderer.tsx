@@ -82,7 +82,7 @@ export function MarkdownRenderer({
           href={href}
           target="_blank"
           rel="noopener noreferrer"
-          className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 underline"
+          className="text-[#FF9100] hover:text-[#FF7A00] dark:text-[#FFAC33] dark:hover:text-[#FFD199] underline"
         >
           {children}
         </a>
@@ -156,7 +156,7 @@ export function MarkdownRenderer({
       </h3>
     ),
     blockquote: ({ children }: { children: React.ReactNode }) => (
-      <blockquote className="border-l-4 border-blue-500 pl-4 italic text-gray-600 dark:text-gray-400 my-4">
+      <blockquote className="border-l-4 border-[#FF9100] pl-4 italic text-gray-600 dark:text-gray-400 my-4">
         {children}
       </blockquote>
     ),

@@ -104,7 +104,7 @@ export default function InsightView({ insight: propInsight, onBack }: InsightVie
                         <Button
                             variant="ghost"
                             onClick={onBack}
-                            className="pl-0 pr-4 text-sm font-medium text-[#1a2a5b] dark:text-slate-200 hover:bg-transparent hover:text-blue-600 dark:hover:text-blue-400"
+                            className="pl-0 pr-4 text-sm font-medium text-[#6B4423] dark:text-slate-200 hover:bg-transparent hover:text-[#FF9100] dark:hover:text-[#FFAC33]"
                         >
                             <ArrowLeft className="mr-2 h-4 w-4" /> 목록으로 돌아가기
                         </Button>
@@ -134,7 +134,7 @@ export default function InsightView({ insight: propInsight, onBack }: InsightVie
             {/* Header Section */}
             <div ref={heroSectionRef} className="space-y-3 pt-2">
                 <div className="flex flex-wrap items-center gap-2 text-sm">
-                    <Badge variant="default" className="bg-[#1a4dd6] hover:bg-[#153ad4]">
+                    <Badge variant="default" className="bg-[#FF9100] hover:bg-[#FF7A00]">
                         Today's Insight
                     </Badge>
                     <Badge variant="outline" className="dark:border-slate-700 dark:text-slate-300">{insight.category}</Badge>
@@ -177,7 +177,7 @@ export default function InsightView({ insight: propInsight, onBack }: InsightVie
             {insight.related_companies && insight.related_companies.length > 0 && (
                 <div className="mt-8 pt-8 border-t dark:border-zinc-700">
                     <h2 className="text-xl font-bold mb-6 flex items-center gap-2 dark:text-white">
-                        <TrendingUp className="h-5 w-5 text-[#1a4dd6]" />
+                        <TrendingUp className="h-5 w-5 text-[#FF9100]" />
                         관련 기업 영향 분석
                     </h2>
 

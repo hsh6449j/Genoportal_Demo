@@ -17,16 +17,14 @@ import {
   Languages,
   FileText,
   Headset,
-  TriangleAlert,
-  Code2,
+  Search,
+  MessageCircleMore,
 } from "lucide-react"
 import Link from "next/link"
 import { usePathname, useSearchParams } from "next/navigation"
 import { useAuth } from "@/contexts/auth-context"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { assistantHistoryPresets } from "@/lib/assistant-demo-history"
-import { complianceHistoryPresets } from "@/lib/compliance-demo-history"
-import { developmentHistoryPresets } from "@/lib/development-demo-history"
 import { PortalLogo } from "@/components/portal-logo"
 
 interface SidebarProps {
@@ -37,9 +35,7 @@ export function Sidebar({ className }: SidebarProps) {
   const [isCollapsed, setIsCollapsed] = useState(false)
   const [showUserMenu, setShowUserMenu] = useState(false)
   const [expandedMenus, setExpandedMenus] = useState<Record<string, boolean>>({
-    "일반 질의응답": true,
-    "법령/사규 질의응답": true,
-    "개발 코드 생성": true,
+    "민원상담 어시스턴트": true,
   })
   const pathname = usePathname()
   const searchParams = useSearchParams()
@@ -65,20 +61,13 @@ export function Sidebar({ className }: SidebarProps) {
   const agent = searchParams?.get("agent")
   const preset = searchParams?.get("preset")
   const tab = searchParams?.get("tab")
+  const feature = searchParams?.get("feature")
 
   useEffect(() => {
-    if (pathname === "/insight-chat" && agent === "assistant" && preset) {
-      setExpandedMenus((prev) => ({ ...prev, "일반 질의응답": true }))
+    if (pathname === "/insight-chat" && agent === "assistant" && feature === "counseling" && preset) {
+      setExpandedMenus((prev) => ({ ...prev, "민원상담 어시스턴트": true }))
     }
-
-    if (pathname === "/insight-chat" && agent === "compliance" && preset) {
-      setExpandedMenus((prev) => ({ ...prev, "법령/사규 질의응답": true }))
-    }
-
-    if (pathname === "/insight-chat" && agent === "development" && preset) {
-      setExpandedMenus((prev) => ({ ...prev, "개발 코드 생성": true }))
-    }
-  }, [pathname, agent, preset])
+  }, [pathname, agent, feature, preset])
 
   const serviceSections = [
     {
@@ -93,99 +82,121 @@ export function Sidebar({ className }: SidebarProps) {
       ],
     },
     {
-      title: "AI 업무비서",
+      title: "핵심 에이전트",
       items: [
         {
-          name: "일반 질의응답",
-          href: "/insight-chat?agent=assistant",
-          icon: MessageSquare,
-          isActive: pathname === "/insight-chat" && (!agent || agent === "assistant"),
+          name: "민원상담 어시스턴트",
+          href: "/insight-chat?agent=assistant&feature=counseling",
+          icon: Headset,
+          isActive: pathname === "/insight-chat" && (!agent || agent === "assistant") && (!feature || feature === "counseling"),
           children: assistantHistoryPresets.map((item) => ({
             name: item.title,
-            href: `/insight-chat?agent=assistant&preset=${item.id}`,
-            isActive: pathname === "/insight-chat" && (!agent || agent === "assistant") && preset === item.id,
+            href: `/insight-chat?agent=assistant&feature=counseling&preset=${item.id}`,
+            isActive:
+              pathname === "/insight-chat" &&
+              (!agent || agent === "assistant") &&
+              (!feature || feature === "counseling") &&
+              preset === item.id,
           })),
         },
         {
-          name: "문서 요약/번역/정리",
+          name: "상담지식 에이전트",
+          href: "/insight-chat?agent=compliance&feature=knowledge",
+          icon: Shield,
+          isActive: pathname === "/insight-chat" && agent === "compliance" && (!feature || feature === "knowledge"),
+        },
+        {
+          name: "표준 상담 스크립트 개발",
+          href: "/documentation?feature=script-studio",
+          icon: FileText,
+          isActive:
+            pathname === "/documentation" &&
+            searchParams?.get("feature") === "script-studio",
+        },
+      ],
+    },
+    {
+      title: "데이터/지식 활용",
+      items: [
+        {
+          name: "데이터길잡이",
+          href: "/market-sensing?tab=dashboard&feature=data-guide",
+          icon: BarChart3,
+          isActive: pathname === "/market-sensing" && tab === "dashboard" && (!feature || feature === "data-guide"),
+        },
+        {
+          name: "사내규정 검색",
+          href: "/insight-chat?agent=compliance&feature=policy-search",
+          icon: Shield,
+          isActive: pathname === "/insight-chat" && agent === "compliance" && feature === "policy-search",
+        },
+        {
+          name: "채권양수도 추론",
+          href: "/market-sensing?tab=dashboard&feature=debt-transfer",
+          icon: BarChart3,
+          isActive: pathname === "/market-sensing" && tab === "dashboard" && feature === "debt-transfer",
+        },
+        {
+          name: "문서분석 지원",
           href: "/translation",
-          icon: Languages,
+          icon: Search,
           isActive: pathname === "/translation" || (pathname === "/" && searchParams?.get("task") === "translation"),
         },
+      ],
+    },
+    {
+      title: "업무 지원",
+      items: [
         {
-          name: "문서 작성 지원",
-          href: "/documentation",
+          name: "문서작성 지원",
+          href: "/documentation?feature=document-writing",
           icon: FileText,
-          isActive: pathname === "/documentation" || (pathname === "/" && searchParams?.get("task") === "documentation"),
-        },
-        {
-          name: "법령/사규 질의응답",
-          href: "/insight-chat?agent=compliance",
-          icon: Shield,
-          isActive: pathname === "/insight-chat" && agent === "compliance",
-          children: complianceHistoryPresets.map((item) => ({
-            name: item.title,
-            href: `/insight-chat?agent=compliance&preset=${item.id}`,
-            isActive: pathname === "/insight-chat" && agent === "compliance" && preset === item.id,
-          })),
-        },
-      ],
-    },
-    {
-      title: "데이터 분석 에이전트",
-      items: [
-        {
-          name: "사내(시스템) 정보 분석",
-          href: "/market-sensing?tab=dashboard",
-          icon: BarChart3,
-          isActive: pathname === "/market-sensing" && tab === "dashboard",
-        },
-      ],
-    },
-    {
-      title: "고객 지원 에이전트",
-      items: [
-        {
-          name: "리조트 예약 안내",
-          href: "/customer-support/resort",
-          icon: Headset,
           isActive:
-            pathname === "/customer-support/resort" ||
+            pathname === "/documentation" &&
+            (!searchParams?.get("feature") || searchParams?.get("feature") === "document-writing"),
+        },
+        {
+          name: "민원처리 지원",
+          href: "/formatting",
+          icon: MessageCircleMore,
+          isActive:
             pathname === "/formatting" ||
             (pathname === "/" && searchParams?.get("task") === "formatting"),
         },
         {
-          name: "도박중독 메시지 생성",
-          href: "/customer-support/responsible-gaming",
-          icon: TriangleAlert,
-          isActive: pathname === "/customer-support/responsible-gaming",
+          name: "업무담당자 검색",
+          href: "/insight-chat?agent=assistant&feature=staff-search",
+          icon: MessageSquare,
+          isActive: pathname === "/insight-chat" && (!agent || agent === "assistant") && feature === "staff-search",
+        },
+        {
+          name: "협약기관 검색",
+          href: "/insight-chat?agent=assistant&feature=partner-search",
+          icon: Search,
+          isActive: pathname === "/insight-chat" && (!agent || agent === "assistant") && feature === "partner-search",
         },
       ],
     },
     {
-      title: "개발 에이전트",
+      title: "운영 관리",
       items: [
         {
-          name: "개발 코드 생성",
-          href: "/insight-chat?agent=development",
-          icon: Code2,
-          isActive: pathname === "/insight-chat" && agent === "development",
-          children: developmentHistoryPresets.map((item) => ({
-            name: item.title,
-            href: `/insight-chat?agent=development&preset=${item.id}`,
-            isActive: pathname === "/insight-chat" && agent === "development" && preset === item.id,
-          })),
-        },
-      ],
-    },
-    {
-      title: "플랫폼 설정",
-      items: [
-        {
-          name: "관리자",
-          href: "/admin",
+          name: "품질 모니터링",
+          href: "/admin?feature=quality-monitoring",
           icon: Shield,
-          isActive: pathname === "/admin",
+          isActive: pathname === "/admin" && (!feature || feature === "quality-monitoring"),
+        },
+        {
+          name: "프롬프트 라이브러리",
+          href: "/prompt-hub",
+          icon: FileText,
+          isActive: pathname === "/prompt-hub",
+        },
+        {
+          name: "자원 관리",
+          href: "/admin?feature=resource-management",
+          icon: Shield,
+          isActive: pathname === "/admin" && feature === "resource-management",
         },
       ],
     },

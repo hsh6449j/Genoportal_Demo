@@ -49,7 +49,7 @@ function createSeedMessages(agent: string | null): Message[] {
       {
         id: "development-user-1",
         role: "user",
-        content: "리조트 예약 안내 메시지 생성 API를 만든다고 가정하면 요청/응답 구조를 예시로 작성해줘.",
+        content: "상담 안내 메시지 생성 API를 만든다고 가정하면 요청/응답 구조를 예시로 작성해줘.",
         timestamp: baseTime,
         sessionId,
       },
@@ -68,15 +68,15 @@ function createSeedMessages(agent: string | null): Message[] {
           '  "customerName": "홍길동",',
           '  "checkInDate": "2026-03-28",',
           '  "checkOutDate": "2026-03-29",',
-          '  "scenario": "체크인 안내 및 부대시설 공지"',
+          '  "scenario": "민원 접수 후 초기 안내"',
           "}",
           "```",
           "",
           "응답 예시",
           "```json",
           "{",
-          '  "messageTitle": "체크인 안내",',
-          '  "messageBody": "안녕하세요. 강원랜드입니다. 3월 28일 체크인 안내와 부대시설 이용 정보를 보내드립니다.",',
+          '  "messageTitle": "민원 안내",',
+          '  "messageBody": "안녕하세요. 신용회복위원회입니다. 상담 일정과 준비 서류를 안내드립니다.",',
           '  "channels": ["sms", "kakao"],',
           '  "generatedAt": "2026-03-23T09:01:00+09:00"',
           "}",
@@ -97,12 +97,19 @@ function InsightChatPageContent() {
   const initialMessage = searchParams.get('message') || undefined
   const agent = searchParams.get("agent")
   const preset = searchParams.get("preset")
+  const feature = searchParams.get("feature")
   const title =
     agent === "compliance"
-      ? "법령/사규 질의응답"
+      ? feature === "policy-search"
+        ? "사내규정 검색"
+        : "상담지식 에이전트"
       : agent === "development"
-        ? "개발 에이전트"
-        : "AI 업무비서"
+        ? "개발 지원"
+        : feature === "staff-search"
+          ? "업무담당자 검색"
+          : feature === "partner-search"
+            ? "협약기관 검색"
+            : "민원상담 어시스턴트"
   const historyKey =
     agent === "compliance"
       ? preset
@@ -112,9 +119,13 @@ function InsightChatPageContent() {
         ? preset
           ? `genportal.chat.development.preset.${preset}.v1`
           : "genportal.chat.development.current.v1"
+        : feature === "staff-search"
+          ? "genportal.chat.assistant.staff-search.current.v1"
+          : feature === "partner-search"
+            ? "genportal.chat.assistant.partner-search.current.v1"
         : preset
-          ? `genportal.chat.assistant.preset.${preset}.v2`
-          : "genportal.chat.assistant.current.v2"
+          ? `genportal.chat.assistant.preset.${preset}.v3`
+          : "genportal.chat.assistant.current.v3"
   const seedMessages = useMemo(() => createSeedMessages(agent), [agent])
   const presetMessages = useMemo(
     () =>
@@ -122,15 +133,29 @@ function InsightChatPageContent() {
         ? getDevelopmentPresetMessages(preset)
         : agent === "compliance"
           ? getCompliancePresetMessages(preset)
-          : getAssistantPresetMessages(preset),
-    [agent, preset],
+          : feature === "counseling" || !feature
+            ? getAssistantPresetMessages(preset)
+            : null,
+    [agent, feature, preset],
   )
   const promptSuggestions =
     agent === "development"
       ? developmentPromptSuggestions
       : agent === "compliance"
         ? compliancePromptSuggestions
-        : assistantPromptSuggestions
+        : feature === "staff-search"
+          ? [
+              "개인회생 상담 관련 담당 부서를 찾아줘.",
+              "소액대출 문의를 어디로 연결해야 하는지 알려줘.",
+              "민원 접수 후 후속 검토 담당자를 찾는 예시를 보여줘.",
+            ]
+          : feature === "partner-search"
+            ? [
+                "신용회복 지원 협약기관 검색 예시를 보여줘.",
+                "기관명이 정확하지 않을 때 후보 목록을 제시하는 예시를 보여줘.",
+                "협약기관 담당자 정보를 찾는 질의 예시를 보여줘.",
+              ]
+            : assistantPromptSuggestions
 
   const {
     message,

@@ -66,7 +66,7 @@ export function Login() {
         </div>
 
         {wasRedirected && (
-          <div className="rounded-lg border border-blue-200 bg-blue-50 px-4 py-3 text-sm text-blue-900 dark:border-blue-500/30 dark:bg-blue-500/10 dark:text-blue-200 flex items-start gap-2">
+          <div className="rounded-lg border border-[#ffc98a] bg-[#fff4e5] px-4 py-3 text-sm text-[#9a4a00] dark:border-[#ffac33]/30 dark:bg-[#ff9100]/10 dark:text-[#ffd7a3] flex items-start gap-2">
             <AlertCircle className="h-4 w-4 mt-0.5 flex-shrink-0" />
             <div>
               <p className="font-medium">로그인이 필요합니다</p>

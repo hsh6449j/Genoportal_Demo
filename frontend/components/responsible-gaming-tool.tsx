@@ -61,7 +61,7 @@ const DELIVERY_OPTIONS = ["현장 포스터", "문자", "카카오 알림톡"]
 const TONE_OPTIONS = ["강한 경고", "차분한 안내", "보호 중심 안내"]
 
 const CONTACT_OPTIONS = [
-  "강원랜드 고객보호센터 1588-7789",
+  "고객보호센터 1588-7789",
   "현장 고객보호센터",
   "24시간 도움전화 1336",
 ]
@@ -71,7 +71,7 @@ const INITIAL_FORM: ResponsibleGamingForm = {
   deliveryChannel: "현장 포스터",
   tone: "강한 경고",
   campaignTitle: "",
-  supportContact: "강원랜드 고객보호센터 1588-7789",
+  supportContact: "고객보호센터 1588-7789",
   note: "",
 }
 
@@ -82,8 +82,8 @@ const DEMO_HISTORY: Array<{ template: TemplateKey; form: ResponsibleGamingForm }
       audienceGroup: "장시간 이용 고객",
       deliveryChannel: "현장 포스터",
       tone: "강한 경고",
-      campaignTitle: "강원랜드 이용 시 주의사항 권고 알림",
-      supportContact: "강원랜드 고객보호센터 1588-7789",
+      campaignTitle: "이용 시 주의사항 권고 알림",
+      supportContact: "고객보호센터 1588-7789",
       note: "휴식 유도 문구와 상담 연결 문장을 함께 강조",
     },
   },
@@ -106,7 +106,7 @@ function buildHistoryTitle(template: TemplateKey, form: ResponsibleGamingForm) {
 }
 
 function buildResponsibleGamingMessage(template: TemplateKey, form: ResponsibleGamingForm) {
-  const title = form.campaignTitle.trim() || (template === "poster" ? "강원랜드 이용 시 주의사항 권고 알림" : "상담 연계 안내")
+  const title = form.campaignTitle.trim() || (template === "poster" ? "이용 시 주의사항 권고 알림" : "상담 연계 안내")
 
   if (template === "poster") {
     const headline =
@@ -139,7 +139,7 @@ function buildResponsibleGamingMessage(template: TemplateKey, form: ResponsibleG
   return [
     "[상담 연계 메시지]",
     "",
-    `안녕하세요. 강원랜드 고객보호 안내입니다.`,
+    `안녕하세요. 고객보호 안내입니다.`,
     `${form.audienceGroup} 고객님의 최근 이용 패턴을 고려해 보호 안내를 드립니다.`,
     "",
     "안내 내용",
@@ -171,13 +171,13 @@ function getPosterPreviewCopy(form: ResponsibleGamingForm) {
         : "지금 확인하는 보호 안내가 더 안전한 선택이 될 수 있습니다."
 
   return {
-    eyebrow: "책임도박 안내",
+    eyebrow: "고객보호 안내",
     accentWord,
     lead,
     audience: form.audienceGroup,
     channel: form.deliveryChannel,
     contactPrimary: form.supportContact,
-    contactSecondary: form.supportContact === "24시간 도움전화 1336" ? "강원랜드 고객보호센터 1588-7789" : "24시간 도움전화 1336",
+    contactSecondary: form.supportContact === "24시간 도움전화 1336" ? "고객보호센터 1588-7789" : "24시간 도움전화 1336",
   }
 }
 
@@ -292,7 +292,7 @@ export function ResponsibleGamingTool() {
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <ShieldAlert className="h-5 w-5" />
-            <h1 className="text-xl font-bold">책임도박 안내 메시지 생성</h1>
+            <h1 className="text-xl font-bold">고객보호 안내 메시지 생성</h1>
           </div>
           <Button
             variant="ghost"
@@ -324,7 +324,7 @@ export function ResponsibleGamingTool() {
                       }`}
                     >
                       <div className="flex items-start gap-2">
-                        {active ? <Check className="mt-0.5 h-4 w-4 text-blue-600" /> : <span className="mt-1 inline-block h-4 w-4 rounded border" />}
+                        {active ? <Check className="mt-0.5 h-4 w-4 text-[#FF9100]" /> : <span className="mt-1 inline-block h-4 w-4 rounded border" />}
                         <div>
                           <div className="font-medium">{item.title}</div>
                           <div className="mt-0.5 text-xs text-muted-foreground">{item.description}</div>
@@ -340,7 +340,7 @@ export function ResponsibleGamingTool() {
           <div className={showHistory ? "lg:col-span-6" : "lg:col-span-9"}>
             <Card className="bg-card">
               <CardHeader>
-                <CardTitle>책임도박 안내 제작</CardTitle>
+                <CardTitle>고객보호 안내 제작</CardTitle>
               </CardHeader>
               <CardContent className="space-y-6">
                 <div className="rounded-lg border bg-muted/30 p-4 text-sm text-muted-foreground">
@@ -354,7 +354,7 @@ export function ResponsibleGamingTool() {
                       id="campaign-title"
                       value={form.campaignTitle}
                       onChange={(event) => updateField("campaignTitle", event.target.value)}
-                      placeholder={template === "poster" ? "예: 강원랜드 이용 시 주의사항 권고 알림" : "예: 상담 연계 안내"}
+                      placeholder={template === "poster" ? "예: 이용 시 주의사항 권고 알림" : "예: 상담 연계 안내"}
                     />
                   </div>
                   <div className="space-y-2">
@@ -463,7 +463,7 @@ export function ResponsibleGamingTool() {
                           <div className="relative aspect-[4/7] w-full">
                             <Image
                               src={POSTER_IMAGE_SRC}
-                              alt="책임도박 경고 포스터 예시"
+                              alt="고객보호 경고 포스터 예시"
                               fill
                               className="object-cover"
                               sizes="(max-width: 1024px) 100vw, 700px"
@@ -518,7 +518,7 @@ export function ResponsibleGamingTool() {
                           <div className="relative mt-3 aspect-[4/7] overflow-hidden rounded-lg border bg-slate-950">
                             <Image
                               src={POSTER_IMAGE_SRC}
-                              alt="책임도박 포스터 히스토리 예시"
+                              alt="고객보호 포스터 히스토리 예시"
                               fill
                               className="object-cover"
                               sizes="220px"

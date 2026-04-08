@@ -63,7 +63,7 @@ export function ChatInput({ message, setMessage, handleSend, isLoading }: ChatIn
                             size="icon"
                             onClick={handleSend}
                             disabled={!message.trim() || isLoading}
-                            className="h-10 w-10 rounded-full bg-blue-600 text-white hover:bg-blue-700"
+                            className="h-10 w-10 rounded-full bg-[#FF9100] text-white hover:bg-[#FF7A00]"
                         >
                             <ArrowUp className="h-4 w-4" />
                         </Button>

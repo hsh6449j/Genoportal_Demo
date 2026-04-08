@@ -110,7 +110,7 @@ const DEMO_TRANSLATION_HISTORY: BackendHistoryItem[] = [
     files: [
       {
         file_id: "demo-file-1",
-        original_name: "2026_강원랜드_생성형AI_도입보고서.docx",
+        original_name: "2026_신용회복위원회_생성형AI_도입보고서.docx",
         translated_name: "2026_Kangwonland_Generative_AI_Adoption_Report.docx",
       },
     ],
@@ -119,12 +119,12 @@ const DEMO_TRANSLATION_HISTORY: BackendHistoryItem[] = [
 
 const DEMO_TRANSLATION_PREVIEWS: Record<string, Omit<HistoryPreview, "jobId" | "rowKey" | "languageLabel" | "completedAt">> = {
   "demo-summary-kr-en:demo-file-1": {
-    originalName: "2026_강원랜드_생성형AI_도입보고서.docx",
+    originalName: "2026_신용회복위원회_생성형AI_도입보고서.docx",
     translatedName: "2026_Kangwonland_Generative_AI_Adoption_Report.docx",
     originalText: [
       "[원문 요약]",
       "",
-      "문서명: 강원랜드 생성형 AI 도입 검토 보고",
+      "문서명: 신용회복위원회 생성형 AI 도입 검토 보고",
       "",
       "1. 추진 배경",
       "- 고객 응대, 문서 작성, 운영 데이터 분석 업무에서 생성형 AI 활용 수요가 증가하고 있음",

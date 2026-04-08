@@ -76,7 +76,7 @@ export function ChatInterface({ className, initialTaskMode }: ChatInterfaceProps
   const [attachedDocuments, setAttachedDocuments] = useState<AttachedDocument[]>([
     {
       id: "1",
-      name: "강원랜드-고객응대-운영안내.pdf",
+      name: "신용회복위원회-상담응대-운영안내.pdf",
       content: "/report-pdf/삼성증권-현대차-251001.pdf",
       type: "PDF"
     }
@@ -209,11 +209,11 @@ export function ChatInterface({ className, initialTaskMode }: ChatInterfaceProps
     setIsDragOver(false)
 
     const sampleFiles = [
-      "강원랜드-고객응대-운영안내.pdf",
-      "강원랜드-리조트-예약정책.pdf",
-      "강원랜드-책임도박-안내기준.pdf",
-      "강원랜드-운영데이터-월간리포트.pdf",
-      "강원랜드-고객센터-VOC-요약.pdf"
+      "신용회복위원회-상담응대-운영안내.pdf",
+      "신용회복위원회-채무조정-상담매뉴얼.pdf",
+      "신용회복위원회-사내규정-검색기준.pdf",
+      "신용회복위원회-운영데이터-월간리포트.pdf",
+      "신용회복위원회-민원사례-VOC-요약.pdf"
     ]
 
     const selectedFile = sampleFiles[fileIndex % sampleFiles.length]
@@ -397,7 +397,7 @@ export function ChatInterface({ className, initialTaskMode }: ChatInterfaceProps
               <div
                 className={cn(
                   "relative",
-                  isDragOver && "ring-2 ring-blue-500 ring-offset-2 rounded-lg"
+                  isDragOver && "ring-2 ring-[#FF9100] ring-offset-2 rounded-lg"
                 )}
                 onDragEnter={handleDragEnter}
                 onDragLeave={handleDragLeave}
@@ -426,7 +426,7 @@ export function ChatInterface({ className, initialTaskMode }: ChatInterfaceProps
                     size="icon"
                     onClick={handleSend}
                     disabled={!message.trim() || isLoading}
-                    className="h-8 w-8 rounded-full bg-blue-600 text-white hover:bg-blue-700"
+                    className="h-8 w-8 rounded-full bg-[#FF9100] text-white hover:bg-[#FF7A00]"
                   >
                     <ArrowUp className="h-4 w-4" />
                   </Button>
@@ -442,9 +442,9 @@ export function ChatInterface({ className, initialTaskMode }: ChatInterfaceProps
                         <>
                           <div
                             className="text-sm text-muted-foreground hover:text-foreground cursor-pointer p-3 rounded transition-colors text-left w-full overflow-hidden whitespace-nowrap text-ellipsis hover:bg-muted/60"
-                            onClick={() => setMessage("이번 주말 리조트 예약 고객에게 보낼 체크인, 셔틀, 부대시설 안내 메시지를 한 번에 정리해줘.")}
+                            onClick={() => setMessage("채무조정 상담을 처음 문의한 고객에게 보낼 안내 메시지를 정중하고 이해하기 쉽게 정리해줘.")}
                           >
-                            이번 주말 리조트 예약 고객에게 보낼 체크인, 셔틀, 부대시설 안내 메시지를 한 번에 정리해줘.
+                            채무조정 상담을 처음 문의한 고객에게 보낼 안내 메시지를 정중하고 이해하기 쉽게 정리해줘.
                           </div>
                           <div className="w-full h-px bg-border" style={{ height: '0.5px' }}></div>
                           <div
@@ -456,9 +456,9 @@ export function ChatInterface({ className, initialTaskMode }: ChatInterfaceProps
                           <div className="w-full h-px bg-border" style={{ height: '0.5px' }}></div>
                           <div
                             className="text-sm text-muted-foreground hover:text-foreground cursor-pointer p-3 rounded transition-colors text-left w-full overflow-hidden whitespace-nowrap text-ellipsis hover:bg-muted/60"
-                            onClick={() => setMessage("리조트 예약 안내 메시지를 생성하는 API를 만든다고 할 때 요청과 응답 예시를 작성해줘.")}
+                            onClick={() => setMessage("상담 안내 메시지를 생성하는 API를 만든다고 할 때 요청과 응답 예시를 작성해줘.")}
                           >
-                            리조트 예약 안내 메시지를 생성하는 API를 만든다고 할 때 요청과 응답 예시를 작성해줘.
+                            상담 안내 메시지를 생성하는 API를 만든다고 할 때 요청과 응답 예시를 작성해줘.
                           </div>
 
                         </>

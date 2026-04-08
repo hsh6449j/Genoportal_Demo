@@ -13,7 +13,7 @@ const FILTER_TAGS = [
     { label: "운영/매출", keywords: ["운영", "매출", "객실", "패키지"] },
     { label: "고객/서비스", keywords: ["고객", "서비스", "voc", "체크인", "셔틀"] },
     { label: "카지노/운영", keywords: ["카지노", "vip", "체류", "운영"] },
-    { label: "보호/컴플라이언스", keywords: ["보호", "책임도박", "상담", "컴플라이언스"] },
+    { label: "보호/컴플라이언스", keywords: ["보호", "고객보호", "상담", "컴플라이언스"] },
     { label: "관광/지역", keywords: ["관광", "지역", "프로모션", "연계"] },
     { label: "디지털/멤버십", keywords: ["디지털", "앱", "멤버십", "전환율"] },
 ]
@@ -131,8 +131,8 @@ export default function InsightList({ onSelectInsight }: InsightListProps) {
                                         className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
                                     />
                                 ) : (
-                                    <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-950 dark:to-indigo-950">
-                                        <TrendingUp className="h-12 w-12 text-blue-200 dark:text-blue-800" />
+                                    <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-orange-50 to-amber-50 dark:from-orange-950/40 dark:to-amber-950/40">
+                                        <TrendingUp className="h-12 w-12 text-orange-200 dark:text-orange-700" />
                                     </div>
                                 )}
                                 <div className="absolute top-3 left-3">
@@ -153,7 +153,7 @@ export default function InsightList({ onSelectInsight }: InsightListProps) {
                                     </span>
                                 </div>
 
-                                <h3 className="font-bold text-lg mb-2 line-clamp-2 group-hover:text-blue-600 transition-colors">
+                                <h3 className="font-bold text-lg mb-2 line-clamp-2 group-hover:text-[#FF9100] transition-colors">
                                     {insight.title}
                                 </h3>
 

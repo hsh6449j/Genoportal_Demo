@@ -8,12 +8,12 @@ import {
   Bot,
   CloudSun,
   Clock3,
-  Code2,
   FilePenLine,
-  Headset,
   ShieldCheck,
   Sparkles,
   Building2,
+  Search,
+  MessageCircleMore,
 } from "lucide-react"
 
 import { Badge } from "@/components/ui/badge"
@@ -27,52 +27,52 @@ interface GenPortalHomeProps {
 
 const services = [
   {
-    title: "AI 업무비서",
-    description: "일반 질의응답과 문서 요약, 번역, 정리를 지원합니다.",
-    href: "/insight-chat?agent=assistant",
-    label: "기본 서비스",
+    title: "민원상담 어시스턴트",
+    description: "민원 상담 대응 문구와 상담 흐름 가이드를 대화형으로 지원합니다.",
+    href: "/insight-chat?agent=assistant&feature=counseling",
+    label: "핵심 서비스",
     icon: Bot,
-    accent: "from-blue-500/10 to-cyan-500/10",
+    accent: "from-orange-500/12 to-amber-500/12",
   },
   {
-    title: "데이터 분석 에이전트",
-    description: "사내 시스템 데이터를 기반으로 매출과 운영 현황을 분석합니다.",
+    title: "상담지식 에이전트",
+    description: "규정과 상담 지식을 바탕으로 질의 의도에 맞는 답변 근거를 제공합니다.",
+    href: "/insight-chat?agent=compliance",
+    label: "지식 검색",
+    icon: ShieldCheck,
+    accent: "from-amber-500/10 to-orange-400/10",
+  },
+  {
+    title: "데이터길잡이",
+    description: "상담·업무 데이터를 자연어 질의로 분석하고 주요 지표를 시각화합니다.",
     href: "/market-sensing?tab=dashboard",
-    label: "차트 분석",
+    label: "데이터 분석",
     icon: BarChart3,
-    accent: "from-emerald-500/10 to-teal-500/10",
-  },
-  {
-    title: "문서 작성 에이전트",
-    description: "전자결재, 제안요청서, 시방서, 보도자료 초안을 작성합니다.",
-    href: "/?task=documentation",
-    label: "업무 문서",
-    icon: FilePenLine,
-    accent: "from-violet-500/10 to-indigo-500/10",
-  },
-  {
-    title: "고객 지원 에이전트",
-    description: "예약 안내와 고객 응대 메시지, 책임도박 안내 문안을 생성합니다.",
-    href: "/customer-support/resort",
-    label: "응대 지원",
-    icon: Headset,
     accent: "from-amber-500/10 to-orange-500/10",
   },
   {
-    title: "컴플라이언스 에이전트",
-    description: "법령·사규 질의응답과 감사·안전 지적사항 검토를 지원합니다.",
-    href: "/insight-chat?agent=compliance",
-    label: "규정 검토",
-    icon: ShieldCheck,
-    accent: "from-rose-500/10 to-pink-500/10",
+    title: "문서작성 지원",
+    description: "공문, 제안요청서, FAQ 초안 등 업무 문서를 생성하고 수정합니다.",
+    href: "/?task=documentation",
+    label: "업무 문서",
+    icon: FilePenLine,
+    accent: "from-orange-400/10 to-amber-400/15",
   },
   {
-    title: "개발 에이전트",
-    description: "코드 생성과 개발 문서 작성, 구현 아이디어 정리를 돕습니다.",
-    href: "/insight-chat?agent=development",
-    label: "IT 지원",
-    icon: Code2,
-    accent: "from-slate-500/10 to-zinc-500/10",
+    title: "문서분석 지원",
+    description: "업로드한 문서를 요약·발췌·번역해 상담과 업무 처리에 필요한 정보를 정리합니다.",
+    href: "/translation",
+    label: "문서 분석",
+    icon: Search,
+    accent: "from-orange-500/10 to-yellow-400/10",
+  },
+  {
+    title: "민원처리 지원",
+    description: "민원 내용을 바탕으로 유사 사례와 답변 초안을 빠르게 정리합니다.",
+    href: "/formatting",
+    label: "민원 대응",
+    icon: MessageCircleMore,
+    accent: "from-amber-500/10 to-orange-500/10",
   },
 ] as const
 
@@ -104,7 +104,7 @@ export function GenPortalHome({ displayName }: GenPortalHomeProps) {
         <Card className="border-border/70 bg-card/95 py-0">
           <CardContent className="flex flex-col gap-5 px-6 py-5">
             <div className="flex flex-wrap items-center gap-2">
-              <Badge className="bg-blue-600 text-white hover:bg-blue-600">GenPortal</Badge>
+              <Badge className="bg-[#FF9100] text-white hover:bg-[#FF9100]">GenPortal</Badge>
               <Badge variant="outline" className="border-border/70 bg-background/60">
                 생성형 AI 통합 포털
               </Badge>
@@ -116,14 +116,14 @@ export function GenPortalHome({ displayName }: GenPortalHomeProps) {
             <div className="space-y-2 text-left">
               <div className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
                 <Building2 className="h-4 w-4" />
-                강원랜드 생성형 AI 플랫폼
+                신용회복위원회 생성형 AI 포털
               </div>
               <h1 className="text-3xl font-bold tracking-tight text-foreground">
                 {displayName}님, 필요한 서비스를 선택해 바로 업무를 시작하세요.
               </h1>
               <p className="max-w-3xl text-sm leading-6 text-muted-foreground">
-                GenPortal은 사내 로그인과 연계된 단일 포털에서 업무비서, 데이터 분석, 문서 작성,
-                고객 지원, 컴플라이언스, 개발 지원 서비스를 제공하는 데모 환경입니다.
+                GenPortal은 사내 로그인과 연계된 단일 포털에서 민원 상담, 상담지식 검색, 데이터 분석,
+                문서 작성, 문서 분석, 민원 처리 서비스를 통합 제공하는 데모 환경입니다.
               </p>
             </div>
           </CardContent>
@@ -134,14 +134,14 @@ export function GenPortalHome({ displayName }: GenPortalHomeProps) {
             <CardContent className="flex items-center gap-3 px-5 py-4">
               <CloudSun className="h-8 w-8 text-amber-500" />
               <div>
-                <p className="text-xs text-muted-foreground">정선 날씨</p>
-                <p className="text-sm font-semibold text-foreground">맑음 8°C</p>
+                <p className="text-xs text-muted-foreground">서울 날씨</p>
+                <p className="text-sm font-semibold text-foreground">맑음 15°C</p>
               </div>
             </CardContent>
           </Card>
           <Card className="border-border/70 bg-card/95 py-0">
             <CardContent className="flex items-center gap-3 px-5 py-4">
-              <Clock3 className="h-8 w-8 text-blue-500" />
+              <Clock3 className="h-8 w-8 text-[#FF9100]" />
               <div>
                 <p className="text-xs text-muted-foreground">현재 시간</p>
                 <p className="text-sm font-semibold text-foreground">{currentTime || "시간 확인 중"}</p>
@@ -150,7 +150,7 @@ export function GenPortalHome({ displayName }: GenPortalHomeProps) {
           </Card>
           <Card className="border-border/70 bg-card/95 py-0">
             <CardContent className="flex items-center gap-3 px-5 py-4">
-              <Sparkles className="h-8 w-8 text-emerald-500" />
+              <Sparkles className="h-8 w-8 text-[#FFAC33]" />
               <div>
                 <p className="text-xs text-muted-foreground">로그인 정보</p>
                 <p className="text-sm font-semibold text-foreground">{displayName}</p>

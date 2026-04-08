@@ -180,7 +180,7 @@ const DEMO_SCENARIOS: DemoScenario[] = [
     description: "생성형 AI 도입 요구사항 초안",
     templateId: "proposal-request",
     form: {
-      requestTitle: "강원랜드 생성형 AI 도입 제안요청서 초안",
+      requestTitle: "신용회복위원회 생성형 AI 도입 제안요청서 초안",
       purpose: "생성형 AI 도입을 위한 제안요청서 초안 작성\n플랫폼 구성과 주요 서비스 범위를 정리",
       background: "사내 생성형 AI 활용 수요가 증가하고 있으며 문서 작성, 고객 응대, 데이터 분석 업무를 통합 지원할 플랫폼이 필요함\n보안성과 확장성을 고려한 업무형 포털 구성이 요구됨",
       audience: "구매부서, IT기획, 사업수행 후보사",
@@ -214,9 +214,9 @@ const DEMO_SCENARIOS: DemoScenario[] = [
     description: "AI 포털 도입 홍보 초안",
     templateId: "press-release",
     form: {
-      requestTitle: "강원랜드 생성형 AI 포털 도입 보도자료 초안",
+      requestTitle: "신용회복위원회 생성형 AI 포털 도입 보도자료 초안",
       purpose: "생성형 AI 포털 도입 배경과 기대 효과를 외부 홍보용 보도자료 형식으로 작성",
-      background: "강원랜드는 고객 서비스와 내부 업무 생산성 강화를 위해 생성형 AI 기반 포털 도입을 추진하고 있음\n이번 포털은 업무비서, 고객지원, 데이터 분석 등 다양한 서비스를 하나의 플랫폼에서 제공하는 것이 핵심임",
+      background: "신용회복위원회는 상담 품질과 내부 업무 생산성 강화를 위해 생성형 AI 기반 통합 포털 도입을 추진하고 있음\n이번 포털은 상담 지원, 지식 검색, 데이터 분석, 문서 작성 등 다양한 서비스를 하나의 플랫폼에서 제공하는 것이 핵심임",
       audience: "언론사, 대외 홍보 채널",
       tone: "대외 홍보용으로 명료하고 긍정적인 문체",
       keywords: "디지털 혁신, 생성형 AI, 고객 서비스, 업무 생산성",
@@ -232,7 +232,7 @@ const DEMO_SCENARIOS: DemoScenario[] = [
       evaluationCriteria: "",
       projectSchedule: "",
       coreMessage: "고객 서비스 혁신과 내부 업무 생산성 강화를 동시에 추진하는 생성형 AI 포털 도입",
-      quote: "강원랜드는 현장과 고객 접점에서 바로 활용 가능한 AI 서비스를 단계적으로 확대해 나갈 계획입니다.",
+      quote: "신용회복위원회는 상담 현장과 내부 업무 전반에서 바로 활용 가능한 AI 서비스를 단계적으로 확대해 나갈 계획입니다.",
       contactInfo: "홍보팀 033-000-0000 / pr@kangwonland.local",
       systemTarget: "",
       functionalRequirements: "",
@@ -1169,7 +1169,7 @@ export function DocumentationTool() {
                       }`}
                     >
                       <div className="flex items-start gap-3">
-                        {active ? <Check className="mt-1 h-4 w-4 shrink-0 text-blue-600" /> : <span className="mt-1 inline-block h-4 w-4 shrink-0 rounded border" />}
+                        {active ? <Check className="mt-1 h-4 w-4 shrink-0 text-[#FF9100]" /> : <span className="mt-1 inline-block h-4 w-4 shrink-0 rounded border" />}
                         <div className="min-w-0 flex-1">
                           <div className="break-keep text-sm font-semibold leading-6">{t.title}</div>
                           <div className="mt-1 line-clamp-2 break-keep text-xs leading-5 text-muted-foreground">{t.description}</div>
