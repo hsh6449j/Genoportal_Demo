@@ -14,6 +14,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { assistantPromptSuggestions, getAssistantPresetMessages } from "@/lib/assistant-demo-history"
 import { compliancePromptSuggestions, getCompliancePresetMessages } from "@/lib/compliance-demo-history"
 import { developmentPromptSuggestions, getDevelopmentPresetMessages } from "@/lib/development-demo-history"
+import { staffSearchPromptSuggestions, getStaffSearchPresetMessages } from "@/lib/staff-search-demo-history"
 
 function extractLatestCodePreview(messages: Message[]) {
   for (let index = messages.length - 1; index >= 0; index -= 1) {
@@ -40,9 +41,89 @@ function extractLatestCodePreview(messages: Message[]) {
   return null
 }
 
-function createSeedMessages(agent: string | null): Message[] {
+function createSeedMessages(agent: string | null, feature: string | null): Message[] {
   const sessionId = `seed-${agent || "assistant"}`
   const baseTime = new Date("2026-03-23T09:00:00+09:00")
+
+  if (agent === "compliance" && feature === "policy-search") {
+    return [
+      {
+        id: "policy-search-user-1",
+        role: "user",
+        content: "복무규정에서 연차 사용 기준을 규정명과 조항까지 포함해 설명해줘.",
+        timestamp: baseTime,
+        sessionId,
+      },
+      {
+        id: "policy-search-assistant-1",
+        role: "assistant",
+        content: [
+          "연차는 발생 일수와 잔여 일수를 확인한 뒤, 사전 승인 절차에 따라 사용할 수 있습니다.",
+          "",
+          "답변은 아래 기준으로 확인하시면 됩니다.",
+          "",
+          "- 당해 연도 발생 연차와 잔여 일수를 먼저 확인합니다.",
+          "- 부서장 승인 여부와 업무 인수인계 필요성을 함께 검토합니다.",
+          "- 반차·반반차 사용 가능 여부는 운영 지침을 추가 확인합니다.",
+          "",
+          "---",
+          "",
+          "#### 관련 레퍼런스",
+          "",
+          "- 규정명: 복무규정",
+          "- 근거 조항: 제14조(연차휴가) 제1항, 제3항",
+          "- 시행일: 2025-01-01",
+          "",
+          "#### 참고 원문",
+          "",
+          "> 직원은 연차휴가 발생 범위 내에서 소속 부서장의 승인을 받아 휴가를 사용할 수 있다.",
+          "",
+          "※ 본 답변은 AI가 생성한 참고 문안이며, 반드시 담당자의 검토, 승인을 거쳐야 합니다.",
+        ].join("\n"),
+        timestamp: new Date(baseTime.getTime() + 60_000),
+        sessionId,
+        isMarkdown: true,
+      },
+    ]
+  }
+
+  if (agent === "assistant" && feature === "staff-search") {
+    return [
+      {
+        id: "staff-search-user-1",
+        role: "user",
+        content: "개인회생 신청 후 보완 서류 문의가 들어왔어. 우선 연결할 담당자를 찾아줘.",
+        timestamp: baseTime,
+        sessionId,
+      },
+      {
+        id: "staff-search-assistant-1",
+        role: "assistant",
+        content: [
+          "개인회생 보완 서류 문의는 아래 순서로 배정하는 것이 적절합니다.",
+          "",
+          "### 1차 추천 담당자",
+          "- 성명: 김하늘",
+          "- 부서: 채무조정지원부",
+          "- 역할: 개인회생 접수 및 보완 서류 검토",
+          "- 연락처: 내선 2184 / 02-0000-2184",
+          "",
+          "### 2차 협업 담당자",
+          "- 성명: 박정우",
+          "- 부서: 민원지원센터",
+          "- 역할: 접수 상태 확인 및 민원 응대",
+          "- 연락처: 내선 1107",
+          "",
+          "### 배정 기준",
+          "- 보완 서류의 적정성 검토가 필요한 경우 채무조정지원부를 우선 배정합니다.",
+          "- 진행 상태 확인만 필요한 경우 민원지원센터에서 1차 응대 후 이관할 수 있습니다.",
+        ].join("\n"),
+        timestamp: new Date(baseTime.getTime() + 60_000),
+        sessionId,
+        isMarkdown: true,
+      },
+    ]
+  }
 
   if (agent === "development") {
     return [
@@ -126,13 +207,15 @@ function InsightChatPageContent() {
         : preset
           ? `genportal.chat.assistant.preset.${preset}.v3`
           : "genportal.chat.assistant.current.v3"
-  const seedMessages = useMemo(() => createSeedMessages(agent), [agent])
+  const seedMessages = useMemo(() => createSeedMessages(agent, feature), [agent, feature])
   const presetMessages = useMemo(
     () =>
       agent === "development"
         ? getDevelopmentPresetMessages(preset)
         : agent === "compliance"
           ? getCompliancePresetMessages(preset)
+          : feature === "staff-search"
+            ? getStaffSearchPresetMessages(preset)
           : feature === "counseling" || !feature
             ? getAssistantPresetMessages(preset)
             : null,
@@ -141,14 +224,10 @@ function InsightChatPageContent() {
   const promptSuggestions =
     agent === "development"
       ? developmentPromptSuggestions
-      : agent === "compliance"
-        ? compliancePromptSuggestions
+        : agent === "compliance"
+          ? compliancePromptSuggestions
         : feature === "staff-search"
-          ? [
-              "개인회생 상담 관련 담당 부서를 찾아줘.",
-              "소액대출 문의를 어디로 연결해야 하는지 알려줘.",
-              "민원 접수 후 후속 검토 담당자를 찾는 예시를 보여줘.",
-            ]
+          ? staffSearchPromptSuggestions
           : feature === "partner-search"
             ? [
                 "신용회복 지원 협약기관 검색 예시를 보여줘.",

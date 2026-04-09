@@ -330,7 +330,7 @@ const TEMPLATE_FIELDS: Record<string, FormFieldConfig[]> = {
     {
       key: "systemTarget",
       label: "대상 시스템/서비스",
-      placeholder: "예: 예약 안내 서비스, 관리자 포털",
+      placeholder: "예: 민원상담 포털, 규정 검색 서비스",
       multiline: true,
     },
     {

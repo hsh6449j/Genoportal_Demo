@@ -19,12 +19,16 @@ import {
   Headset,
   Search,
   MessageCircleMore,
+  Briefcase,
+  Settings2,
 } from "lucide-react"
 import Link from "next/link"
 import { usePathname, useSearchParams } from "next/navigation"
 import { useAuth } from "@/contexts/auth-context"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { assistantHistoryPresets } from "@/lib/assistant-demo-history"
+import { complianceHistoryPresets } from "@/lib/compliance-demo-history"
+import { staffAssignmentHistoryPresets } from "@/lib/staff-assignment-demo"
 import { PortalLogo } from "@/components/portal-logo"
 
 interface SidebarProps {
@@ -36,6 +40,8 @@ export function Sidebar({ className }: SidebarProps) {
   const [showUserMenu, setShowUserMenu] = useState(false)
   const [expandedMenus, setExpandedMenus] = useState<Record<string, boolean>>({
     "민원상담 어시스턴트": true,
+    "사내규정 검색": true,
+    "업무담당자 배정": true,
   })
   const pathname = usePathname()
   const searchParams = useSearchParams()
@@ -67,11 +73,18 @@ export function Sidebar({ className }: SidebarProps) {
     if (pathname === "/insight-chat" && agent === "assistant" && feature === "counseling" && preset) {
       setExpandedMenus((prev) => ({ ...prev, "민원상담 어시스턴트": true }))
     }
+    if (pathname === "/insight-chat" && agent === "compliance" && feature === "policy-search" && preset) {
+      setExpandedMenus((prev) => ({ ...prev, "사내규정 검색": true }))
+    }
+    if (pathname === "/staff-assignment" && preset) {
+      setExpandedMenus((prev) => ({ ...prev, "업무담당자 배정": true }))
+    }
   }, [pathname, agent, feature, preset])
 
   const serviceSections = [
     {
       title: "플랫폼 홈",
+      titleIcon: Home,
       items: [
         {
           name: "GenPortal 홈",
@@ -83,6 +96,7 @@ export function Sidebar({ className }: SidebarProps) {
     },
     {
       title: "핵심 에이전트",
+      titleIcon: Headset,
       items: [
         {
           name: "민원상담 어시스턴트",
@@ -117,6 +131,7 @@ export function Sidebar({ className }: SidebarProps) {
     },
     {
       title: "데이터/지식 활용",
+      titleIcon: BarChart3,
       items: [
         {
           name: "데이터길잡이",
@@ -129,6 +144,15 @@ export function Sidebar({ className }: SidebarProps) {
           href: "/insight-chat?agent=compliance&feature=policy-search",
           icon: Shield,
           isActive: pathname === "/insight-chat" && agent === "compliance" && feature === "policy-search",
+          children: complianceHistoryPresets.map((item) => ({
+            name: item.title,
+            href: `/insight-chat?agent=compliance&feature=policy-search&preset=${item.id}`,
+            isActive:
+              pathname === "/insight-chat" &&
+              agent === "compliance" &&
+              feature === "policy-search" &&
+              preset === item.id,
+          })),
         },
         {
           name: "채권양수도 추론",
@@ -146,6 +170,7 @@ export function Sidebar({ className }: SidebarProps) {
     },
     {
       title: "업무 지원",
+      titleIcon: Briefcase,
       items: [
         {
           name: "문서작성 지원",
@@ -164,10 +189,15 @@ export function Sidebar({ className }: SidebarProps) {
             (pathname === "/" && searchParams?.get("task") === "formatting"),
         },
         {
-          name: "업무담당자 검색",
-          href: "/insight-chat?agent=assistant&feature=staff-search",
+          name: "업무담당자 배정",
+          href: "/staff-assignment?view=new",
           icon: MessageSquare,
-          isActive: pathname === "/insight-chat" && (!agent || agent === "assistant") && feature === "staff-search",
+          isActive: pathname === "/staff-assignment" && !preset,
+          children: staffAssignmentHistoryPresets.map((item) => ({
+            name: item.title,
+            href: `/staff-assignment?preset=${item.id}`,
+            isActive: pathname === "/staff-assignment" && preset === item.id,
+          })),
         },
         {
           name: "협약기관 검색",
@@ -179,6 +209,7 @@ export function Sidebar({ className }: SidebarProps) {
     },
     {
       title: "운영 관리",
+      titleIcon: Settings2,
       items: [
         {
           name: "품질 모니터링",
@@ -235,8 +266,9 @@ export function Sidebar({ className }: SidebarProps) {
         {serviceSections.map((section, index) => (
           <div key={section.title}>
             {!isCollapsed && (
-              <div className="px-3 pb-2 pt-4 text-[11px] font-medium text-sidebar-foreground/60">
-                {section.title}
+              <div className="flex items-center gap-2 px-3 pb-2 pt-4 text-[11px] font-medium text-sidebar-foreground/60">
+                {section.titleIcon ? <section.titleIcon className="h-3.5 w-3.5" /> : null}
+                <span>{section.title}</span>
               </div>
             )}
             <nav className="space-y-1 px-2">

@@ -14,6 +14,7 @@ import {
   Building2,
   Search,
   MessageCircleMore,
+  Users,
 } from "lucide-react"
 
 import { Badge } from "@/components/ui/badge"
@@ -73,6 +74,14 @@ const services = [
     label: "민원 대응",
     icon: MessageCircleMore,
     accent: "from-amber-500/10 to-orange-500/10",
+  },
+  {
+    title: "업무담당자 배정",
+    description: "민원·업무 내용을 기준으로 적정 부서와 담당자를 추천하고 배정 근거를 제공합니다.",
+    href: "/staff-assignment?view=new",
+    label: "업무 배정",
+    icon: Users,
+    accent: "from-orange-500/10 to-amber-500/10",
   },
 ] as const
 

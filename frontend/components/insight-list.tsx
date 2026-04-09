@@ -10,12 +10,12 @@ import { Search, Calendar, Clock, TrendingUp, Loader2 } from "lucide-react"
 
 const FILTER_TAGS = [
     { label: "전체", keywords: [] },
-    { label: "운영/매출", keywords: ["운영", "매출", "객실", "패키지"] },
-    { label: "고객/서비스", keywords: ["고객", "서비스", "voc", "체크인", "셔틀"] },
-    { label: "카지노/운영", keywords: ["카지노", "vip", "체류", "운영"] },
-    { label: "보호/컴플라이언스", keywords: ["보호", "고객보호", "상담", "컴플라이언스"] },
-    { label: "관광/지역", keywords: ["관광", "지역", "프로모션", "연계"] },
-    { label: "디지털/멤버십", keywords: ["디지털", "앱", "멤버십", "전환율"] },
+    { label: "민원/상담", keywords: ["민원", "상담", "대기시간", "접수"] },
+    { label: "규정/지식", keywords: ["규정", "faq", "복무", "지식"] },
+    { label: "기관/연계", keywords: ["협약기관", "업무담당자", "연계", "기관"] },
+    { label: "민원/품질", keywords: ["민원해결", "재문의율", "표준답변", "품질"] },
+    { label: "채권양수도/TBD", keywords: ["채권양수도", "tbd", "시범구축"] },
+    { label: "문서/분석", keywords: ["문서분석", "요약", "faq", "문서"] },
 ]
 
 interface InsightListProps {
