@@ -126,9 +126,9 @@ export function Sidebar({ className }: SidebarProps) {
         },
         {
           name: "상담지식 에이전트",
-          href: "/insight-chat?agent=compliance&feature=knowledge",
+          href: "/counseling-knowledge",
           icon: Shield,
-          isActive: pathname === "/insight-chat" && agent === "compliance" && (!feature || feature === "knowledge"),
+          isActive: pathname === "/counseling-knowledge",
         },
         {
           name: "표준 상담 스크립트 개발",
@@ -146,9 +146,9 @@ export function Sidebar({ className }: SidebarProps) {
       items: [
         {
           name: "데이터길잡이",
-          href: "/market-sensing?tab=dashboard&feature=data-guide",
+          href: "/data-guide",
           icon: BarChart3,
-          isActive: pathname === "/market-sensing" && tab === "dashboard" && (!feature || feature === "data-guide"),
+          isActive: pathname === "/data-guide",
         },
         {
           name: "사내규정 검색",
@@ -219,9 +219,9 @@ export function Sidebar({ className }: SidebarProps) {
         },
         {
           name: "협약기관 검색",
-          href: "/insight-chat?agent=assistant&feature=partner-search",
+          href: "/partner-search",
           icon: Search,
-          isActive: pathname === "/insight-chat" && (!agent || agent === "assistant") && feature === "partner-search",
+          isActive: pathname === "/partner-search",
         },
       ],
     },
