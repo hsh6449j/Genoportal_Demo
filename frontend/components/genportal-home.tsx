@@ -9,6 +9,7 @@ import {
   CloudSun,
   Clock3,
   FilePenLine,
+  GitFork,
   ShieldCheck,
   Sparkles,
   Building2,
@@ -60,6 +61,14 @@ const services = [
     accent: "from-orange-400/10 to-amber-400/15",
   },
   {
+    title: "문서작성 지원 에이전트",
+    description: "글다듬이, 번역, FAQ 문서 생성을 한 화면에서 지원합니다.",
+    href: "/insight-chat?agent=document-writer&tool=polish",
+    label: "Agent",
+    icon: FilePenLine,
+    accent: "from-amber-400/10 to-orange-400/12",
+  },
+  {
     title: "문서분석 지원",
     description: "업로드한 문서를 요약·발췌·번역해 상담과 업무 처리에 필요한 정보를 정리합니다.",
     href: "/translation",
@@ -82,6 +91,14 @@ const services = [
     label: "업무 배정",
     icon: Users,
     accent: "from-orange-500/10 to-amber-500/10",
+  },
+  {
+    title: "채권양수도 추론 에이전트",
+    description: "양수도 이력 지식베이스를 바탕으로 채권 현재 보유 기관을 그래프 추론하고 역방향 탐색합니다.",
+    href: "/debt-transfer",
+    label: "채권 추론",
+    icon: GitFork,
+    accent: "from-orange-500/10 to-amber-600/10",
   },
 ] as const
 

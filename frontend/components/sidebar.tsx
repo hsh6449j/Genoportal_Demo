@@ -16,6 +16,7 @@ import {
   Home,
   Languages,
   FileText,
+  GitFork,
   Headset,
   Search,
   MessageCircleMore,
@@ -29,6 +30,7 @@ import { ThemeToggle } from "@/components/theme-toggle"
 import { assistantHistoryPresets } from "@/lib/assistant-demo-history"
 import { complianceHistoryPresets } from "@/lib/compliance-demo-history"
 import { staffAssignmentHistoryPresets } from "@/lib/staff-assignment-demo"
+import { documentWritingHistoryPresets } from "@/lib/document-writing-demo-history"
 import { PortalLogo } from "@/components/portal-logo"
 
 interface SidebarProps {
@@ -42,6 +44,8 @@ export function Sidebar({ className }: SidebarProps) {
     "민원상담 어시스턴트": true,
     "사내규정 검색": true,
     "업무담당자 배정": true,
+    "문서작성 지원 에이전트": true,
+    "채권양수도 추론 에이전트": true,
   })
   const pathname = usePathname()
   const searchParams = useSearchParams()
@@ -68,6 +72,7 @@ export function Sidebar({ className }: SidebarProps) {
   const preset = searchParams?.get("preset")
   const tab = searchParams?.get("tab")
   const feature = searchParams?.get("feature")
+  const tool = searchParams?.get("tool")
 
   useEffect(() => {
     if (pathname === "/insight-chat" && agent === "assistant" && feature === "counseling" && preset) {
@@ -78,6 +83,12 @@ export function Sidebar({ className }: SidebarProps) {
     }
     if (pathname === "/staff-assignment" && preset) {
       setExpandedMenus((prev) => ({ ...prev, "업무담당자 배정": true }))
+    }
+    if (pathname === "/insight-chat" && agent === "document-writer" && preset) {
+      setExpandedMenus((prev) => ({ ...prev, "문서작성 지원 에이전트": true }))
+    }
+    if (pathname === "/insight-chat" && agent === "debt-transfer") {
+      setExpandedMenus((prev) => ({ ...prev, "채권양수도 추론 에이전트": true }))
     }
   }, [pathname, agent, feature, preset])
 
@@ -155,10 +166,14 @@ export function Sidebar({ className }: SidebarProps) {
           })),
         },
         {
-          name: "채권양수도 추론",
-          href: "/market-sensing?tab=dashboard&feature=debt-transfer",
-          icon: BarChart3,
-          isActive: pathname === "/market-sensing" && tab === "dashboard" && feature === "debt-transfer",
+          name: "채권양수도 추론 에이전트",
+          href: "/debt-transfer?tab=knowledge",
+          icon: GitFork,
+          isActive: pathname === "/debt-transfer" || (pathname === "/insight-chat" && agent === "debt-transfer"),
+          children: [
+            { name: "이력 데이터 관리", href: "/debt-transfer?tab=knowledge", isActive: pathname === "/debt-transfer" },
+            { name: "양수도 추적", href: "/insight-chat?agent=debt-transfer", isActive: pathname === "/insight-chat" && agent === "debt-transfer" },
+          ],
         },
         {
           name: "문서분석 지원",
@@ -173,12 +188,15 @@ export function Sidebar({ className }: SidebarProps) {
       titleIcon: Briefcase,
       items: [
         {
-          name: "문서작성 지원",
-          href: "/documentation?feature=document-writing",
+          name: "문서작성 지원 에이전트",
+          href: "/insight-chat?agent=document-writer&tool=polish",
           icon: FileText,
-          isActive:
-            pathname === "/documentation" &&
-            (!searchParams?.get("feature") || searchParams?.get("feature") === "document-writing"),
+          isActive: pathname === "/insight-chat" && agent === "document-writer",
+          children: [
+            { name: "글다듬이", href: "/insight-chat?agent=document-writer&tool=polish", isActive: pathname === "/insight-chat" && agent === "document-writer" && tool === "polish" },
+            { name: "번역", href: "/insight-chat?agent=document-writer&tool=translation", isActive: pathname === "/insight-chat" && agent === "document-writer" && tool === "translation" },
+            { name: "FAQ 자동생성기", href: "/insight-chat?agent=document-writer&tool=faq", isActive: pathname === "/insight-chat" && agent === "document-writer" && tool === "faq" },
+          ],
         },
         {
           name: "민원처리 지원",

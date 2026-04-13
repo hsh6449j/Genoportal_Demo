@@ -172,18 +172,29 @@ export function ChatList({
             }
         }
 
+        let userMsgIndex = 0
+
         messages.forEach((msg) => {
             if (msg.role === "user") {
                 flushAssistantGroup()
+                const roundNum = ++userMsgIndex
                 groupedMessages.push(
-                    <div
-                        key={msg.id}
-                        id={`message-${msg.id}`}
-                        className="flex gap-4 w-full ml-auto flex-row-reverse scroll-mt-56"
-                    >
-                        <div className="flex-shrink-0 w-8 h-8"></div>
-                        <div className="px-4 py-3 max-w-md bg-[#F0F4FA] text-black rounded-2xl">
-                            <div className="whitespace-pre-wrap text-sm leading-relaxed">{msg.content}</div>
+                    <div key={msg.id} className="space-y-2">
+                        {roundNum > 1 && (
+                            <div className="flex items-center gap-3 py-1">
+                                <div className="flex-1 h-px bg-border/60" />
+                                <span className="text-[10px] text-muted-foreground/60 font-medium tracking-wide">질의 {roundNum}</span>
+                                <div className="flex-1 h-px bg-border/60" />
+                            </div>
+                        )}
+                        <div
+                            id={`message-${msg.id}`}
+                            className="flex gap-4 w-full ml-auto flex-row-reverse scroll-mt-56"
+                        >
+                            <div className="flex-shrink-0 w-8 h-8"></div>
+                            <div className="px-4 py-3 max-w-md bg-[#F0F4FA] text-black rounded-2xl">
+                                <div className="whitespace-pre-wrap text-sm leading-relaxed">{msg.content}</div>
+                            </div>
                         </div>
                     </div>
                 )

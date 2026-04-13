@@ -1,12 +1,12 @@
 "use client"
 
-import { useEffect, useState, useRef } from "react"
+import { Suspense, useEffect, useState, useRef } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
 import { useAuth } from "@/contexts/auth-context"
 import { Loader2, AlertCircle } from "lucide-react"
 import { getResearchApiBaseUrl } from "@/lib/api-endpoints"
 
-export default function AuthCallbackPage() {
+function AuthCallbackPageContent() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const { isLoading, isAuthenticated } = useAuth()
@@ -99,5 +99,13 @@ export default function AuthCallbackPage() {
       <Loader2 className="mb-4 h-8 w-8 animate-spin" />
       <p className="text-sm text-muted-foreground">구글 계정을 확인하고 있습니다...</p>
     </div>
+  )
+}
+
+export default function AuthCallbackPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-background" />}>
+      <AuthCallbackPageContent />
+    </Suspense>
   )
 }

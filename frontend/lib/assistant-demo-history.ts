@@ -29,9 +29,9 @@ function buildMessages(sessionId: string, baseTimeIso: string, userContent: stri
 }
 
 export const assistantPromptSuggestions = [
-  "민원 접수 고객에게 보낼 첫 안내 문구를 정중한 톤으로 정리해줘.",
-  "상담 예약 안내 문장을 더 친절하고 간결하게 바꿔줘.",
-  "서류 보완 요청 안내 문구를 짧고 이해하기 쉽게 다듬어줘.",
+  "민원 접수 고객에게 보낼 첫 안내 문구를 정중한 톤으로 정리해 주세요.",
+  "상담 예약 안내 문장을 더 친절하고 간결하게 수정해 주세요.",
+  "서류 보완 요청 안내 문구를 짧고 이해하기 쉽게 다듬어 주세요.",
 ]
 
 export const assistantHistoryPresets: AssistantHistoryPreset[] = [
@@ -42,7 +42,7 @@ export const assistantHistoryPresets: AssistantHistoryPreset[] = [
     messages: buildMessages(
       "assistant-history-notice-title",
       "2026-03-23T09:10:00+09:00",
-      "민원 접수 고객에게 처음 보내는 안내 메시지를 조금 더 정중하고 깔끔하게 다듬어줘. 상담 절차와 준비 서류를 간단히 안내하고 싶어.",
+      "민원 접수 고객에게 보내는 첫 안내 메시지를 보다 정중하고 간결하게 다듬어 주세요. 상담 절차와 준비 서류를 간단히 포함해 주시기 바랍니다.",
       [
         "아래처럼 정리할 수 있습니다.",
         "",
@@ -61,7 +61,7 @@ export const assistantHistoryPresets: AssistantHistoryPreset[] = [
     messages: buildMessages(
       "assistant-history-customer-reply",
       "2026-03-23T10:00:00+09:00",
-      "상담 일정 안내 문장을 조금 더 친절하고 자연스럽게 다듬어줘. 문장은 '상담 일정은 담당자가 확인 후 별도로 안내드립니다.' 이야.",
+      "상담 일정 안내 문장을 보다 친절하고 자연스럽게 수정해 주세요. 원문은 '상담 일정은 담당자가 확인 후 별도로 안내드립니다.' 입니다.",
       [
         "다듬은 문장은 아래처럼 쓸 수 있습니다.",
         "",
@@ -79,7 +79,7 @@ export const assistantHistoryPresets: AssistantHistoryPreset[] = [
     messages: buildMessages(
       "assistant-history-schedule-notice",
       "2026-03-23T10:10:00+09:00",
-      "서류 보완 요청 안내 문구를 부드럽고 간결하게 다듬어줘. 민원인에게 보내는 문자라고 생각하면 돼.",
+      "서류 보완 요청 안내 문구를 부드럽고 간결하게 다듬어 주세요. 민원인에게 발송하는 문자 형식으로 작성 부탁드립니다.",
       [
         "문자 안내용으로는 아래처럼 정리할 수 있습니다.",
         "",
