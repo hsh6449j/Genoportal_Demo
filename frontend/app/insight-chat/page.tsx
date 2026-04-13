@@ -1,20 +1,29 @@
 "use client"
 
-import { Suspense, useEffect, useMemo } from "react"
+import { Suspense, useEffect, useMemo, useState } from "react"
+import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import { Braces, Code2, Home, Sparkles } from "lucide-react"
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
+import { Braces, Code2, FileText, Home, Sparkles } from "lucide-react"
 import Link from "next/link"
-import { useSearchParams } from "next/navigation"
+import { useRouter, useSearchParams } from "next/navigation"
 import PDFViewer from "@/components/pdf-viewer"
 import { useChat } from "@/hooks/use-chat"
 import { ChatList } from "@/components/chat/chat-list"
 import { ChatInput } from "@/components/chat/chat-input"
 import { Message } from "@/lib/event-system"
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { assistantPromptSuggestions, getAssistantPresetMessages } from "@/lib/assistant-demo-history"
 import { compliancePromptSuggestions, getCompliancePresetMessages } from "@/lib/compliance-demo-history"
 import { developmentPromptSuggestions, getDevelopmentPresetMessages } from "@/lib/development-demo-history"
 import { staffSearchPromptSuggestions, getStaffSearchPresetMessages } from "@/lib/staff-search-demo-history"
+import {
+  getDocumentWritingPromptSuggestions,
+  getDocumentWritingTool,
+  getDocumentWritingPresetMessages,
+  type DocumentWritingTool,
+} from "@/lib/document-writing-demo-history"
+import { DocumentWriterTool } from "@/components/DocumentWriterTool"
+import { debtTransferPromptSuggestions, debtTransferSeedMessages, generateDebtTransferResponse } from "@/lib/debt-transfer-demo-history"
 
 function extractLatestCodePreview(messages: Message[]) {
   for (let index = messages.length - 1; index >= 0; index -= 1) {
@@ -41,9 +50,13 @@ function extractLatestCodePreview(messages: Message[]) {
   return null
 }
 
-function createSeedMessages(agent: string | null, feature: string | null): Message[] {
+function createSeedMessages(agent: string | null, feature: string | null, documentTool?: string): Message[] {
   const sessionId = `seed-${agent || "assistant"}`
   const baseTime = new Date("2026-03-23T09:00:00+09:00")
+
+  if (agent === "debt-transfer") {
+    return debtTransferSeedMessages
+  }
 
   if (agent === "compliance" && feature === "policy-search") {
     return [
@@ -170,17 +183,132 @@ function createSeedMessages(agent: string | null, feature: string | null): Messa
     ]
   }
 
+  if (agent === "document-writer") {
+    if (documentTool === "translation") {
+      return [
+        {
+          id: "document-writer-translation-user-1",
+          role: "user",
+          content: "[구어체 변환 요청]\n\n아래 신용회복위원회 안내 문구를 영어로 번역하고 구어체로 바꿔줘. '안녕하세요, 신용회복위원회입니다. 상담을 시작하기 전에 본인 확인이 필요합니다.'",
+          timestamp: baseTime,
+          sessionId,
+        },
+        {
+          id: "document-writer-translation-assistant-1",
+          role: "assistant",
+          content: [
+            "**[번역 결과 — 구어체 변환 적용 / 위원회 도메인 영어사전 반영]**",
+            "",
+            "| 원문 (좌) | 번역문 (우) |",
+            "|-----------|------------|",
+            "| 안녕하세요, 신용회복위원회입니다. | Hello, this is the Credit Counseling & Recovery Service (CCRS). |",
+            "| 상담을 시작하기 전에 본인 확인이 필요합니다. | I'll need to verify your identity before we begin our consultation. |",
+            "",
+            "**전체 번역문:**",
+            "Hello, this is the Credit Counseling & Recovery Service (CCRS). I'll need to verify your identity before we begin our consultation.",
+            "",
+            "> 💡 구어체 변환 및 위원회 도메인 영어사전(CCRS 등)이 적용되었습니다.",
+          ].join("\n"),
+          timestamp: new Date(baseTime.getTime() + 60_000),
+          sessionId,
+          isMarkdown: true,
+        },
+      ]
+    }
+
+    if (documentTool === "faq") {
+      return [
+        {
+          id: "document-writer-faq-user-1",
+          role: "user",
+          content: "[FAQ 5개 생성] [첨부: 신용회복위원회_운영지침.pdf]\n\n첨부한 규정 문서를 바탕으로 내부 직원(신용회복위원회) 관점의 FAQ 5개를 생성해줘. 문서에 없는 내용은 생성하지 마.",
+          timestamp: baseTime,
+          sessionId,
+        },
+        {
+          id: "document-writer-faq-assistant-1",
+          role: "assistant",
+          content: [
+            "**[FAQ 자동생성 결과 — 내부 직원(신용회복위원회) 관점]**",
+            "",
+            "> ⚠️ 본 자료는 AI 생성 참고 자료입니다. 해당 내용을 검토 후 사용해야 합니다.",
+            "",
+            "---",
+            "**Q1. 외부망 접속 시 필요한 인증 절차는 무엇입니까?**",
+            "A. 사전에 승인된 VPN 클라이언트를 통한 접속 및 2FA 인증이 필수입니다.",
+            "",
+            "**Q2. 업무용 PC 비밀번호 변경 주기는 어떻게 됩니까?**",
+            "A. 최소 90일 주기로 변경해야 하며, 기한 7일 전 시스템 안내 팝업이 노출됩니다.",
+            "",
+            "**Q3. 외부 저장 매체 사용이 가능합니까?**",
+            "A. 인가되지 않은 이동식 매체 사용은 전면 금지이며, 부득이한 경우 정보보안팀 사전 승인이 필요합니다.",
+            "",
+            "**Q4. 재택근무 시 사내 시스템 접속 방법은 무엇입니까?**",
+            "A. 승인된 원격 근무 환경(VPN 필수)에서만 접속 가능하며, 개인 기기 사용은 별도 신청 절차가 필요합니다.",
+            "",
+            "**Q5. 이상 징후 발견 시 어떻게 신고해야 합니까?**",
+            "A. 정보보안 침해 신고 채널(내선 보안팀)을 통해 즉시 신고하고, 관련 증빙 자료를 보존해야 합니다.",
+            "",
+            "---",
+            "*근거 문서: 신용회복위원회_운영지침.pdf*",
+          ].join("\n"),
+          timestamp: new Date(baseTime.getTime() + 60_000),
+          sessionId,
+          isMarkdown: true,
+        },
+      ]
+    }
+
+    return [
+      {
+        id: "document-writer-polish-user-1",
+        role: "user",
+        content: "[문서 유형: 공문] [톤: 정중한]\n\n다음 초안을 정중한 공문 형식으로 다듬어 주세요.\n\n'신규 규정 시스템 4월 1일 오픈. 많은 사용 부탁드립니다.'",
+        timestamp: baseTime,
+        sessionId,
+      },
+      {
+        id: "document-writer-polish-assistant-1",
+        role: "assistant",
+        content: [
+          "**[글다듬이 결과 — 문서 유형: 공문 / 톤: 정중한]**",
+          "",
+          "> ⚠️ 본 결과는 AI 생성 참고 초안입니다. 핵심 사실관계를 임의 변경·삭제하지 않았으며, 입력 외 사실을 생성하지 않았습니다.",
+          "",
+          "---",
+          "당 위원회는 신규 규정 시스템 구축을 완료하여 오는 4월부로 정식 운용을 개시할 예정입니다.",
+          "원활한 업무 수행을 위하여 임직원 여러분의 적극적인 활용을 권장해 드립니다.",
+          "---",
+          "",
+          "| 구분 | 내용 |",
+          "|------|------|",
+          "| 원문 | 신규 규정 시스템 4월 1일 오픈. 많은 사용 부탁드립니다. |",
+          "| 정제본 | 신규 규정 시스템 4월 정식 개시 예정, 적극적인 활용 권장 |",
+        ].join("\n"),
+        timestamp: new Date(baseTime.getTime() + 60_000),
+        sessionId,
+        isMarkdown: true,
+      },
+    ]
+  }
+
   return []
 }
 
 function InsightChatPageContent() {
+  const router = useRouter()
   const searchParams = useSearchParams()
-  const initialMessage = searchParams.get('message') || undefined
+  const initialMessage = searchParams.get("message") || undefined
   const agent = searchParams.get("agent")
   const preset = searchParams.get("preset")
   const feature = searchParams.get("feature")
+  const activeDocumentTool = getDocumentWritingTool(searchParams.get("tool"))
   const title =
-    agent === "compliance"
+    agent === "document-writer"
+      ? "문서작성 지원 에이전트"
+      : agent === "debt-transfer"
+      ? "채권양수도 추론 에이전트"
+      : agent === "compliance"
       ? feature === "policy-search"
         ? "사내규정 검색"
         : "상담지식 에이전트"
@@ -192,7 +320,11 @@ function InsightChatPageContent() {
             ? "협약기관 검색"
             : "민원상담 어시스턴트"
   const historyKey =
-    agent === "compliance"
+    agent === "document-writer"
+      ? undefined
+      : agent === "debt-transfer"
+      ? "genportal.chat.debt-transfer.current.v1"
+      : agent === "compliance"
       ? preset
         ? `genportal.chat.compliance.preset.${preset}.v1`
         : "genportal.chat.compliance.current.v1"
@@ -207,10 +339,14 @@ function InsightChatPageContent() {
         : preset
           ? `genportal.chat.assistant.preset.${preset}.v3`
           : "genportal.chat.assistant.current.v3"
-  const seedMessages = useMemo(() => createSeedMessages(agent, feature), [agent, feature])
+  const seedMessages = useMemo(() => createSeedMessages(agent, feature, activeDocumentTool.id), [agent, feature, activeDocumentTool.id])
   const presetMessages = useMemo(
     () =>
-      agent === "development"
+      agent === "document-writer"
+        ? getDocumentWritingPresetMessages(preset)
+        : agent === "debt-transfer"
+        ? null
+        : agent === "development"
         ? getDevelopmentPresetMessages(preset)
         : agent === "compliance"
           ? getCompliancePresetMessages(preset)
@@ -222,7 +358,11 @@ function InsightChatPageContent() {
     [agent, feature, preset],
   )
   const promptSuggestions =
-    agent === "development"
+    agent === "document-writer"
+      ? getDocumentWritingPromptSuggestions(activeDocumentTool.id)
+      : agent === "debt-transfer"
+      ? debtTransferPromptSuggestions
+      : agent === "development"
       ? developmentPromptSuggestions
         : agent === "compliance"
           ? compliancePromptSuggestions
@@ -254,19 +394,56 @@ function InsightChatPageContent() {
     processContentWithPDFCitations
   } = useChat({ initialMessage, disableAutoScroll: true, historyKey, seedMessages })
   const latestCodePreview = useMemo(() => extractLatestCodePreview(messages), [messages])
+  const [debtTransferLoading, setDebtTransferLoading] = useState(false)
+  const activeIsLoading = agent === "debt-transfer" ? debtTransferLoading : isLoading
 
   useEffect(() => {
-    if (agent === "assistant" || !agent || agent === "compliance" || agent === "development") {
+    if (agent === "assistant" || !agent || agent === "compliance" || agent === "development" || agent === "document-writer" || agent === "debt-transfer") {
       if (presetMessages) {
         setMessages(presetMessages)
       }
     }
   }, [agent, presetMessages, setMessages])
 
+  const handleDebtTransferSend = async (text: string) => {
+    const sid = `session-${Date.now()}`
+    const userMsg: Message = {
+      id: `user-${Date.now()}`,
+      content: text.trim(),
+      role: "user",
+      timestamp: new Date(),
+      sessionId: sid,
+    }
+    setMessages((prev) => [...prev, userMsg])
+    setMessage("")
+    setDebtTransferLoading(true)
+
+    await new Promise((r) => setTimeout(r, 1000))
+
+    const assistantMsg: Message = {
+      id: `assistant-${Date.now()}`,
+      content: generateDebtTransferResponse(text),
+      role: "assistant",
+      timestamp: new Date(),
+      sessionId: sid,
+      isMarkdown: true,
+    }
+    setMessages((prev) => [...prev, assistantMsg])
+    setDebtTransferLoading(false)
+  }
+
   const handleSend = () => {
-    if (message.trim()) {
+    if (!message.trim()) return
+    if (agent === "debt-transfer") {
+      handleDebtTransferSend(message)
+    } else {
       handleSendMessage(message)
     }
+  }
+
+  const handleDocumentToolChange = (nextTool: string) => {
+    const target = getDocumentWritingTool(nextTool)
+    router.replace(`/insight-chat?agent=document-writer&tool=${target.id}`)
   }
 
   return (
@@ -288,7 +465,11 @@ function InsightChatPageContent() {
         </div>
       </div>
 
-      {agent === "development" ? (
+      {agent === "document-writer" ? (
+        <DocumentWriterTool
+          activeTool={activeDocumentTool.id}
+        />
+      ) : agent === "development" ? (
         <div className="mx-auto flex h-full w-full max-w-7xl flex-1 gap-6 overflow-hidden px-6 py-6">
           <div className="flex min-h-0 flex-1 flex-col overflow-hidden rounded-2xl border bg-background">
             <div className="border-b border-border px-6 py-4">
@@ -335,7 +516,7 @@ function InsightChatPageContent() {
                   sourceDocuments={sourceDocuments}
                   toolState={toolState}
                   pdfViewer={pdfViewer}
-                  isLoading={isLoading}
+                  isLoading={activeIsLoading}
                   messagesEndRef={messagesEndRef}
                   onPDFClick={showPDFViewer}
                   processContentWithPDFCitations={processContentWithPDFCitations}
@@ -346,7 +527,7 @@ function InsightChatPageContent() {
               message={message}
               setMessage={setMessage}
               handleSend={handleSend}
-              isLoading={isLoading}
+              isLoading={activeIsLoading}
             />
           </div>
 
@@ -433,7 +614,7 @@ function InsightChatPageContent() {
                 sourceDocuments={sourceDocuments}
                 toolState={toolState}
                 pdfViewer={pdfViewer}
-                isLoading={isLoading}
+                isLoading={activeIsLoading}
                 messagesEndRef={messagesEndRef}
                 onPDFClick={showPDFViewer}
                 processContentWithPDFCitations={processContentWithPDFCitations}
@@ -441,12 +622,28 @@ function InsightChatPageContent() {
             )}
           </div>
 
+          {/* Suggestion Pills — debt-transfer only */}
+          {agent === "debt-transfer" && (
+            <div className="shrink-0 px-6 pt-3 pb-2 flex gap-2 flex-wrap">
+              {promptSuggestions.map((s) => (
+                <button
+                  key={s}
+                  type="button"
+                  onClick={() => setMessage(s)}
+                  className="rounded-full border border-border bg-card px-3 py-1.5 text-xs hover:bg-muted transition-colors text-left"
+                >
+                  {s}
+                </button>
+              ))}
+            </div>
+          )}
+
           {/* Input Area */}
           <ChatInput
             message={message}
             setMessage={setMessage}
             handleSend={handleSend}
-            isLoading={isLoading}
+            isLoading={activeIsLoading}
           />
         </>
       )}

@@ -3,6 +3,8 @@ import { getTranslationApiBaseUrl } from "@/lib/api-endpoints"
 
 const BASE_URL = getTranslationApiBaseUrl()
 
+export const dynamic = "force-dynamic"
+
 export async function GET() {
   try {
     const response = await fetch(`${BASE_URL}/history`, {

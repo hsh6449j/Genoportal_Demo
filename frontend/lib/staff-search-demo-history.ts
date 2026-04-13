@@ -30,9 +30,9 @@ function buildMessages(sessionId: string, baseTimeIso: string, userContent: stri
 }
 
 export const staffSearchPromptSuggestions = [
-  "개인회생 신청 후 보완 서류 문의를 어디로 연결해야 하는지 담당자를 찾아줘.",
-  "소액대출 문의가 들어왔을 때 우선 배정할 부서와 담당자를 정리해줘.",
-  "민원인이 진행 상황 확인을 요청할 때 연결 가능한 담당자 후보를 보여줘.",
+  "개인회생 신청 후 보완 서류 문의 건의 연결 가능한 담당자를 확인해 주세요.",
+  "소액대출 관련 문의가 접수되었을 때 우선 배정할 부서와 담당자를 안내해 주세요.",
+  "민원인의 진행 상황 확인 요청 건에 대해 연결 가능한 담당자 후보를 제시해 주세요.",
 ]
 
 export const staffSearchHistoryPresets: StaffSearchHistoryPreset[] = [
@@ -43,7 +43,7 @@ export const staffSearchHistoryPresets: StaffSearchHistoryPreset[] = [
     messages: buildMessages(
       "staff-search-rehab-doc-owner",
       "2026-03-23T13:00:00+09:00",
-      "개인회생 신청 후 보완 서류 문의가 들어왔어. 우선 연결할 담당자를 찾아줘.",
+      "개인회생 신청 후 보완 서류 관련 문의가 접수되었습니다. 우선 연결할 담당자를 확인해 주세요.",
       [
         "개인회생 보완 서류 문의는 아래 순서로 배정하는 것이 적절합니다.",
         "",
@@ -72,7 +72,7 @@ export const staffSearchHistoryPresets: StaffSearchHistoryPreset[] = [
     messages: buildMessages(
       "staff-search-microloan-owner",
       "2026-03-23T13:20:00+09:00",
-      "소액대출 문의가 들어왔을 때 우선 배정할 부서와 담당자를 정리해줘.",
+      "소액대출 관련 문의가 접수되었습니다. 우선 배정할 부서와 담당자를 안내해 주세요.",
       [
         "소액대출 문의는 다음과 같이 배정할 수 있습니다.",
         "",
@@ -101,7 +101,7 @@ export const staffSearchHistoryPresets: StaffSearchHistoryPreset[] = [
     messages: buildMessages(
       "staff-search-status-followup-owner",
       "2026-03-23T13:40:00+09:00",
-      "민원인이 진행 상황 확인을 요청할 때 연결 가능한 담당자 후보를 보여줘.",
+      "민원인으로부터 진행 상황 확인 요청이 접수되었습니다. 연결 가능한 담당자 후보를 제시해 주세요.",
       [
         "진행 상황 확인 요청은 아래 담당자 후보로 연결할 수 있습니다.",
         "",

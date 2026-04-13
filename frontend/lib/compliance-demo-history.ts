@@ -56,9 +56,9 @@ function buildPolicyResponse(answerSummary: string, guidance: string[], regulati
 }
 
 export const compliancePromptSuggestions = [
-  "복무규정에서 연차 사용 기준을 규정명과 조항까지 포함해 설명해줘.",
-  "출장 여비 정산 기준을 관련 규정과 시행일 기준으로 정리해줘.",
-  "유연근무 신청 가능 조건을 근거 조항과 함께 보여줘.",
+  "복무규정에서 연차 사용 기준을 규정명과 조항까지 포함하여 설명해 주세요.",
+  "출장 여비 정산 기준을 관련 규정과 시행일 기준으로 정리해 주세요.",
+  "유연근무 신청 가능 조건을 근거 조항과 함께 안내해 주세요.",
 ]
 
 export const complianceHistoryPresets: ComplianceHistoryPreset[] = [
@@ -69,7 +69,7 @@ export const complianceHistoryPresets: ComplianceHistoryPreset[] = [
     messages: buildMessages(
       "compliance-history-leave-policy",
       "2026-03-23T11:00:00+09:00",
-      "복무규정에서 연차 사용 기준을 규정명과 조항까지 포함해 설명해줘.",
+      "복무규정에서 연차 사용 기준을 규정명과 조항까지 포함하여 설명해 주세요.",
       buildPolicyResponse(
         "연차는 발생 일수와 잔여 일수를 확인한 뒤, 사전 승인 절차에 따라 사용할 수 있습니다.",
         [
@@ -91,7 +91,7 @@ export const complianceHistoryPresets: ComplianceHistoryPreset[] = [
     messages: buildMessages(
       "compliance-history-travel-expense",
       "2026-03-23T11:20:00+09:00",
-      "출장 여비 정산 기준을 관련 규정과 시행일 기준으로 정리해줘.",
+      "출장 여비 정산 기준을 관련 규정과 시행일 기준으로 정리해 주세요.",
       buildPolicyResponse(
         "출장 여비는 사전 승인된 출장에 한해 지급되며, 교통비·식비·숙박비는 정해진 기준 범위 내에서 정산합니다.",
         [
@@ -113,7 +113,7 @@ export const complianceHistoryPresets: ComplianceHistoryPreset[] = [
     messages: buildMessages(
       "compliance-history-flex-work",
       "2026-03-23T11:40:00+09:00",
-      "유연근무 신청 가능 조건을 근거 조항과 함께 보여줘.",
+      "유연근무 신청 가능 조건을 근거 조항과 함께 안내해 주세요.",
       buildPolicyResponse(
         "유연근무는 직무 특성과 부서 운영 상황을 고려해 신청할 수 있으며, 승인 권한자 검토 후 적용됩니다.",
         [

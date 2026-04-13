@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from "next/server"
 import { getRedisClient } from "@/lib/redis"
 import { computeInflectionLines, type InflectionLine } from "@/lib/inflection"
 
+export const dynamic = "force-dynamic"
+
 type StockHistoryPoint = {
   date: string
   price: number

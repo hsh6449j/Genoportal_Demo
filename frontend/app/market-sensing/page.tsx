@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useRef, useEffect, useMemo } from "react"
+import { Suspense, useState, useRef, useEffect, useMemo } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Button } from "@/components/ui/button"
@@ -543,7 +543,7 @@ function DashboardCharts({
   )
 }
 
-export default function MarketSensingPage() {
+function MarketSensingPageContent() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const tabParam = searchParams.get("tab")
@@ -1796,5 +1796,13 @@ export default function MarketSensingPage() {
       />
     </div>
     </div>
+  )
+}
+
+export default function MarketSensingPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-background" />}>
+      <MarketSensingPageContent />
+    </Suspense>
   )
 }

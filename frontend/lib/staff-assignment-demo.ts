@@ -225,9 +225,9 @@ const basePresets: StaffAssignmentPreset[] = [
 ]
 
 export const staffAssignmentPromptSuggestions = [
-  "개인회생 보완 서류 문의를 어디로 배정해야 하는지 추천해줘.",
-  "소액대출 지원 가능 여부 문의가 들어왔을 때 담당자를 찾아줘.",
-  "진행상황 확인 요청 민원을 어느 팀에 배정하면 되는지 알려줘.",
+  "개인회생 보완 서류 문의 건을 배정할 담당자를 추천해 주세요.",
+  "소액대출 지원 가능 여부 문의가 접수되었습니다. 담당자를 확인해 주세요.",
+  "진행상황 확인 요청 민원을 배정할 부서와 담당자를 안내해 주세요.",
 ]
 
 export const staffAssignmentHistoryPresets = basePresets

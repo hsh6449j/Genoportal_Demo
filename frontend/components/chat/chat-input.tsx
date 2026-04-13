@@ -9,9 +9,10 @@ interface ChatInputProps {
     setMessage: (message: string) => void
     handleSend: () => void
     isLoading: boolean
+    compact?: boolean
 }
 
-export function ChatInput({ message, setMessage, handleSend, isLoading }: ChatInputProps) {
+export function ChatInput({ message, setMessage, handleSend, isLoading, compact = false }: ChatInputProps) {
     const textareaRef = useRef<HTMLTextAreaElement>(null)
 
     const handleKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>) => {
@@ -46,7 +47,7 @@ export function ChatInput({ message, setMessage, handleSend, isLoading }: ChatIn
     }
 
     return (
-        <div className="bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 px-6 py-4 pb-20">
+        <div className={`bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 px-6 py-4 ${compact ? "" : "pb-20"}`}>
             <div className="max-w-4xl mx-auto">
                 <div className="relative">
                     <Textarea
