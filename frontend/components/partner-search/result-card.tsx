@@ -19,7 +19,7 @@ function highlightText(text: string, query?: string) {
   return (
     <>
       {text.slice(0, idx)}
-      <span className="rounded-sm bg-yellow-100 px-0.5 text-foreground">
+      <span className="rounded-sm bg-sky-100 px-0.5 text-foreground">
         {text.slice(idx, idx + query.length)}
       </span>
       {text.slice(idx + query.length)}

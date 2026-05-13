@@ -42,7 +42,7 @@ export function DocumentAnalysisMode({ className }: DocumentAnalysisModeProps) {
         {/* 문서 구조 */}
         <section className="space-y-2">
           <div className="flex items-center gap-2 text-sm font-semibold text-foreground">
-            <List className="h-4 w-4 text-[#FF9100]" />
+            <List className="h-4 w-4 text-[#005BAC]" />
             문서 구조
           </div>
           <p className="text-xs text-muted-foreground">
@@ -69,7 +69,7 @@ export function DocumentAnalysisMode({ className }: DocumentAnalysisModeProps) {
         {/* 핵심 요약 — 종합 답변 */}
         <section className="space-y-3">
           <div className="flex items-center gap-2 text-sm font-semibold text-foreground">
-            <FileText className="h-4 w-4 text-[#FF9100]" />
+            <FileText className="h-4 w-4 text-[#005BAC]" />
             핵심 변경 사항 요약
           </div>
 
@@ -96,7 +96,7 @@ export function DocumentAnalysisMode({ className }: DocumentAnalysisModeProps) {
                     <TooltipTrigger asChild>
                       <Badge
                         variant="outline"
-                        className="cursor-help gap-1 border-[#FF9100]/40 bg-[#FFF4E6]/70 font-mono text-[10px] text-[#1B3A4B]"
+                        className="cursor-help gap-1 border-[#005BAC]/40 bg-[#EEF7FF]/70 font-mono text-[10px] text-[#1B3A4B]"
                       >
                         <FileCheck2 className="h-3 w-3" />
                         {citeId}
@@ -123,7 +123,7 @@ export function DocumentAnalysisMode({ className }: DocumentAnalysisModeProps) {
         {/* 주요 인사이트 */}
         <section className="space-y-2">
           <div className="flex items-center gap-2 text-sm font-semibold text-foreground">
-            <Lightbulb className="h-4 w-4 text-[#FF9100]" />
+            <Lightbulb className="h-4 w-4 text-[#005BAC]" />
             주요 인사이트
           </div>
           <ul className="space-y-2">
@@ -132,7 +132,7 @@ export function DocumentAnalysisMode({ className }: DocumentAnalysisModeProps) {
                 key={idx}
                 className="flex gap-2 rounded-lg border border-border/50 bg-background px-3 py-2.5 text-xs leading-5 text-foreground"
               >
-                <span className="mt-0.5 inline-flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-[#FFF4E6] text-[10px] font-semibold text-[#FF9100]">
+                <span className="mt-0.5 inline-flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-[#EEF7FF] text-[10px] font-semibold text-[#005BAC]">
                   {idx + 1}
                 </span>
                 <span>{insight}</span>

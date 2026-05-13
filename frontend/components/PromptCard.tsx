@@ -44,17 +44,13 @@ export function PromptCard({ prompt, onLike, onClick, showDepartmentOnly = false
 
   const getSectorColor = (sector: string) => {
     const colors = {
-      macro: "bg-blue-100 text-blue-800 border-blue-100",
-      semiconductor: "bg-purple-100 text-purple-800 border-purple-100",
-      game: "bg-green-100 text-green-800 border-green-100",
-      automotive: "bg-red-100 text-red-800 border-red-100",
-      petrochemical: "bg-orange-100 text-orange-800 border-orange-100",
-      shipbuilding: "bg-cyan-100 text-cyan-800 border-cyan-100",
-      aviation: "bg-indigo-100 text-indigo-800 border-indigo-100",
-      steel: "bg-gray-100 text-gray-800 border-gray-100",
-      retail: "bg-pink-100 text-pink-800 border-pink-100",
-      culture: "bg-yellow-100 text-yellow-800 border-yellow-100",
-      finance: "bg-emerald-100 text-emerald-800 border-emerald-100"
+      counseling: "bg-blue-100 text-blue-800 border-blue-100",
+      knowledge: "bg-sky-100 text-sky-800 border-sky-100",
+      document: "bg-blue-100 text-blue-800 border-blue-100",
+      complaint: "bg-rose-100 text-rose-800 border-rose-100",
+      assignment: "bg-cyan-100 text-cyan-800 border-cyan-100",
+      analytics: "bg-emerald-100 text-emerald-800 border-emerald-100",
+      operation: "bg-purple-100 text-purple-800 border-purple-100",
     }
     return colors[sector as keyof typeof colors] || "bg-gray-100 text-gray-800 border-gray-100"
   }
@@ -103,17 +99,13 @@ export function PromptCard({ prompt, onLike, onClick, showDepartmentOnly = false
         <div className="flex items-center justify-between mt-3">
           <div className="flex flex-wrap gap-2">
             <Badge variant="outline" className={getSectorColor(prompt.sector)}>
-              {prompt.sector === 'macro' && '매크로'}
-              {prompt.sector === 'semiconductor' && '반도체'}
-              {prompt.sector === 'game' && '게임'}
-              {prompt.sector === 'automotive' && '자동차'}
-              {prompt.sector === 'petrochemical' && '정유/화학'}
-              {prompt.sector === 'shipbuilding' && '조선/해운'}
-              {prompt.sector === 'aviation' && '항공'}
-              {prompt.sector === 'steel' && '철강'}
-              {prompt.sector === 'retail' && '유통'}
-              {prompt.sector === 'culture' && '문화'}
-              {prompt.sector === 'finance' && '금융'}
+              {prompt.sector === "counseling" && "민원 상담"}
+              {prompt.sector === "knowledge" && "규정/지식"}
+              {prompt.sector === "document" && "문서 작성"}
+              {prompt.sector === "complaint" && "민원 처리"}
+              {prompt.sector === "assignment" && "담당자 배정"}
+              {prompt.sector === "analytics" && "데이터 분석"}
+              {prompt.sector === "operation" && "운영 관리"}
             </Badge>
 
             {prompt.tags.slice(0, 2).map((tag, index) => (

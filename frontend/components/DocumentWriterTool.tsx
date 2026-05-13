@@ -164,7 +164,7 @@ function triggerBlobDownload(content: string, filename: string, mime: string) {
 function buildFAQText(items: FAQItem[], title: string, sourceFile?: string): string {
   return [
     title,
-    "신용회복위원회 내부 직원 관점으로 생성된 FAQ입니다.",
+    "신한라이프 내부 직원 관점으로 생성된 FAQ입니다.",
     "※ 본 자료는 AI 생성 참고 자료입니다. 근거 문서에 없는 내용은 포함되지 않으며, 해당 내용을 검토 후 사용해야 합니다.",
     sourceFile ? `근거 문서: ${sourceFile}` : "",
     "",
@@ -200,14 +200,14 @@ const POLISH_RESULTS: Record<string, Record<string, string>> = {
   },
   press: {
     polite:
-      "[보도자료]\n\n신용회복위원회, 신규 규정 관리 시스템 4월 1일 공식 오픈\n\n신용회복위원회(위원장 홍길동)는 내부 업무 효율화를 위해 신규 규정 관리 시스템을 구축하고, 오는 4월 1일부로 정식 서비스를 개시한다고 밝혔다.\n\n이번 시스템 구축을 통해 관련 업무 처리 시간 단축 및 정확도 향상이 기대된다.",
+      "[보도자료]\n\n신한라이프, 신규 규정 관리 시스템 4월 1일 공식 오픈\n\n신한라이프는 내부 업무 효율화를 위해 신규 규정 관리 시스템을 구축하고, 오는 4월 1일부로 정식 서비스를 개시한다고 밝혔다.\n\n이번 시스템 구축을 통해 관련 업무 처리 시간 단축 및 정확도 향상이 기대된다.",
     formal: "[보도자료] 신규 규정 시스템 4월 1일 오픈. 위원회 업무 효율 제고 기대.",
-    friendly: "[보도자료] 신용회복위원회가 새 규정 시스템을 4월 1일 오픈합니다. 많은 관심 바랍니다.",
+    friendly: "[보도자료] 신한라이프가 새 규정 시스템을 4월 1일 오픈합니다. 많은 관심 바랍니다.",
     concise: "[보도자료] 신규 규정 시스템 4/1 오픈. 업무 효율 개선 기대.",
   },
   customer: {
     polite:
-      "안녕하세요, 고객님.\n\n신용회복위원회입니다.\n\n저희 위원회는 더 나은 서비스 제공을 위해 신규 규정 관리 시스템을 도입하였습니다.\n4월 1일부로 개선된 서비스를 경험하실 수 있습니다.\n\n불편 사항은 고객센터(1600-XXXX)로 연락 주시기 바랍니다.",
+      "안녕하세요, 고객님.\n\n신한라이프입니다.\n\n당사는 더 나은 서비스 제공을 위해 신규 규정 관리 시스템을 도입하였습니다.\n4월 1일부로 개선된 서비스를 경험하실 수 있습니다.\n\n불편 사항은 고객센터(1600-XXXX)로 연락 주시기 바랍니다.",
     formal: "신규 규정 시스템 오픈(4/1) 안내. 더 나은 서비스를 제공해 드리겠습니다.",
     friendly: "안녕하세요! 4월 1일부터 새 시스템으로 더 편리한 서비스가 시작됩니다.",
     concise: "4월 1일부터 신규 시스템 오픈. 서비스 개선 예정.",
@@ -326,7 +326,7 @@ export function PolishPanel() {
             onClick={() => setShowDiff(!showDiff)}
             className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full border text-xs transition-colors ${
               showDiff
-                ? "bg-[#FF9100]/10 border-[#FF9100] text-[#FF9100]"
+                ? "bg-[#005BAC]/10 border-[#005BAC] text-[#005BAC]"
                 : "bg-card border-border text-muted-foreground hover:bg-muted"
             }`}
           >
@@ -365,7 +365,7 @@ export function PolishPanel() {
             <Button
               onClick={handlePolish}
               disabled={!draftText.trim() || isLoading}
-              className="bg-[#FF9100] hover:bg-[#FF9100]/90 text-white"
+              className="bg-[#005BAC] hover:bg-[#005BAC]/90 text-white"
             >
               {isLoading ? (
                 <><Loader2 className="h-4 w-4 animate-spin mr-2" />처리 중...</>
@@ -378,13 +378,13 @@ export function PolishPanel() {
 
         {/* Right: Result */}
         <div className="flex-1 flex flex-col min-w-0">
-          <div className="px-5 py-2 bg-[#FF9100]/5 border-b shrink-0 flex items-center justify-between">
-            <span className="text-sm font-semibold text-[#FF9100]">
+          <div className="px-5 py-2 bg-[#005BAC]/5 border-b shrink-0 flex items-center justify-between">
+            <span className="text-sm font-semibold text-[#005BAC]">
               {showDiff ? "원문-교정본 대조" : "다듬기 결과"}
             </span>
             {result && (
               <div className="flex items-center gap-2">
-                <span className="text-[10px] text-[#FF9100] bg-[#FF9100]/10 px-2 py-0.5 rounded-full">AI 생성</span>
+                <span className="text-[10px] text-[#005BAC] bg-[#005BAC]/10 px-2 py-0.5 rounded-full">AI 생성</span>
                 <button
                   type="button"
                   onClick={handleCopy}
@@ -420,7 +420,7 @@ export function PolishPanel() {
           )}
 
           {result && (
-            <div className="px-5 py-2 border-t text-xs text-amber-700 dark:text-amber-400 bg-amber-50/60 dark:bg-amber-900/10 shrink-0 space-y-0.5">
+            <div className="px-5 py-2 border-t text-xs text-sky-700 dark:text-sky-400 bg-sky-50/60 dark:bg-sky-900/10 shrink-0 space-y-0.5">
               <p>※ 본 결과는 AI가 생성한 참고 초안입니다. 담당자 검토 후 활용하시기 바랍니다.</p>
               {showDiff && (
                 <p className="text-[11px] opacity-70">좌측 원문과 우측 교정본을 나란히 비교합니다.</p>
@@ -435,7 +435,7 @@ export function PolishPanel() {
         <DialogContent className="max-w-md">
           <DialogHeader>
             <DialogTitle className="flex items-center gap-2 text-base">
-              <Settings2 className="h-4 w-4 text-[#FF9100]" />
+              <Settings2 className="h-4 w-4 text-[#005BAC]" />
               자원 관리 설정
             </DialogTitle>
           </DialogHeader>
@@ -455,7 +455,7 @@ export function PolishPanel() {
                       step={500}
                       value={resourceSettings.maxInputChars}
                       onChange={(e) => setResourceSettings((s) => ({ ...s, maxInputChars: Math.min(20000, Math.max(500, parseInt(e.target.value) || 500)) }))}
-                      className="w-20 h-7 text-center text-sm font-medium rounded-lg border border-border bg-card outline-none focus:ring-2 focus:ring-[#FF9100]/30"
+                      className="w-20 h-7 text-center text-sm font-medium rounded-lg border border-border bg-card outline-none focus:ring-2 focus:ring-[#005BAC]/30"
                     />
                     <span className="text-xs text-muted-foreground">자</span>
                   </div>
@@ -483,7 +483,7 @@ export function PolishPanel() {
                         type="checkbox"
                         checked={resourceSettings[key] as boolean}
                         onChange={(e) => setResourceSettings((s) => ({ ...s, [key]: e.target.checked }))}
-                        className="accent-[#FF9100] h-3.5 w-3.5"
+                        className="accent-[#005BAC] h-3.5 w-3.5"
                       />
                       {label}
                     </label>
@@ -508,7 +508,7 @@ export function PolishPanel() {
                 <button
                   type="button"
                   onClick={handleResourceSave}
-                  className="flex items-center gap-1.5 rounded-lg bg-[#FF9100] px-3.5 py-1.5 text-xs font-semibold text-white hover:bg-[#FF9100]/90 transition-colors"
+                  className="flex items-center gap-1.5 rounded-lg bg-[#005BAC] px-3.5 py-1.5 text-xs font-semibold text-white hover:bg-[#005BAC]/90 transition-colors"
                 >
                   <Save className="h-3.5 w-3.5" />
                   저장
@@ -532,7 +532,7 @@ const LANGS = [
 ]
 
 const SAMPLE_ORIGINAL =
-  "안녕하세요, 신용회복위원회입니다.\n상담을 시작하기 전에 본인 확인이 필요합니다.\n신분증을 제시해 주시겠습니까?\n\n현재 귀하의 채무 현황을 확인하고, 개인별 맞춤형 채무 조정 방안을 안내해 드리겠습니다."
+  "안녕하세요, 신한라이프입니다.\n상담을 시작하기 전에 본인 확인이 필요합니다.\n신분증을 제시해 주시겠습니까?\n\n현재 계약 및 요청 내용을 확인한 뒤, 고객별 상황에 맞는 안내를 제공해 드리겠습니다."
 
 const DEMO_TRANSLATIONS: Record<string, { normal: string; colloquial: string }> = {
   en: {
@@ -594,7 +594,7 @@ function TranslationSideBySideView({ original, translated }: { original: string;
       {/* Header row */}
       <div className="grid grid-cols-2 border-b bg-muted/40 sticky top-0 z-10">
         <div className="px-4 py-2 text-xs font-semibold text-muted-foreground border-r">원문</div>
-        <div className="px-4 py-2 text-xs font-semibold text-[#FF9100]">번역문</div>
+        <div className="px-4 py-2 text-xs font-semibold text-[#005BAC]">번역문</div>
       </div>
       {Array.from({ length: len }, (_, i) => {
         const orig = origParagraphs[i] ?? ""
@@ -605,7 +605,7 @@ function TranslationSideBySideView({ original, translated }: { original: string;
               <span className="shrink-0 w-5 text-right text-[11px] text-muted-foreground/50 select-none pt-0.5 leading-relaxed">{i + 1}</span>
               <p className="leading-relaxed whitespace-pre-wrap text-foreground/90">{orig}</p>
             </div>
-            <div className="flex gap-3 px-4 py-3 bg-[#FF9100]/[0.02]">
+            <div className="flex gap-3 px-4 py-3 bg-[#005BAC]/[0.02]">
               <span className="shrink-0 w-5 text-right text-[11px] text-muted-foreground/50 select-none pt-0.5 leading-relaxed">{trans ? i + 1 : ""}</span>
               <p className="leading-relaxed whitespace-pre-wrap text-foreground">{trans}</p>
             </div>
@@ -670,7 +670,7 @@ export function TranslationPanel() {
           onClick={() => setIsColloquial(!isColloquial)}
           className={`flex items-center gap-1.5 px-3 py-1 rounded-full border text-xs transition-colors ${
             isColloquial
-              ? "bg-[#FF9100]/10 border-[#FF9100] text-[#FF9100]"
+              ? "bg-[#005BAC]/10 border-[#005BAC] text-[#005BAC]"
               : "bg-card border-border text-muted-foreground hover:bg-muted"
           }`}
         >
@@ -682,7 +682,7 @@ export function TranslationPanel() {
           onClick={() => setIsDomainDict(!isDomainDict)}
           className={`flex items-center gap-1.5 px-3 py-1 rounded-full border text-xs transition-colors ${
             isDomainDict
-              ? "bg-[#FF9100]/10 border-[#FF9100] text-[#FF9100]"
+              ? "bg-[#005BAC]/10 border-[#005BAC] text-[#005BAC]"
               : "bg-card border-border text-muted-foreground hover:bg-muted"
           }`}
         >
@@ -728,7 +728,7 @@ export function TranslationPanel() {
             <Button
               onClick={handleTranslate}
               disabled={!hasInput || isLoading}
-              className="bg-[#FF9100] hover:bg-[#FF9100]/90 text-white"
+              className="bg-[#005BAC] hover:bg-[#005BAC]/90 text-white"
             >
               {isLoading ? (
                 <><Loader2 className="h-4 w-4 animate-spin mr-2" />번역 중...</>
@@ -741,10 +741,10 @@ export function TranslationPanel() {
 
         {/* Right: Result */}
         <div className="flex-1 flex flex-col min-w-0">
-          <div className="px-5 py-2 bg-[#FF9100]/5 border-b shrink-0 flex items-center justify-between">
-            <span className="text-sm font-semibold text-[#FF9100]">원문 · 번역문 대조</span>
+          <div className="px-5 py-2 bg-[#005BAC]/5 border-b shrink-0 flex items-center justify-between">
+            <span className="text-sm font-semibold text-[#005BAC]">원문 · 번역문 대조</span>
             {result && (
-              <span className="text-[10px] text-[#FF9100] bg-[#FF9100]/10 px-2 py-0.5 rounded-full">
+              <span className="text-[10px] text-[#005BAC] bg-[#005BAC]/10 px-2 py-0.5 rounded-full">
                 {LANGS.find((l) => l.value === lang)?.label}
                 {isColloquial ? " · 구어체" : ""}
               </span>
@@ -764,7 +764,7 @@ export function TranslationPanel() {
             </div>
           )}
           {result && (
-            <div className="px-5 py-2 border-t text-xs text-[#FF9100]/80 dark:text-[#FF9100]/60 bg-[#FF9100]/5 dark:bg-[#FF9100]/10 shrink-0">
+            <div className="px-5 py-2 border-t text-xs text-[#005BAC]/80 dark:text-[#005BAC]/60 bg-[#005BAC]/5 dark:bg-[#005BAC]/10 shrink-0">
               ※ {[isDomainDict && "위원회 도메인 영어사전", isColloquial && "구어체 변환"].filter(Boolean).join(" · ") || "기본 번역"}이 적용된 번역 결과입니다.
             </div>
           )}
@@ -791,19 +791,19 @@ const FAQ_DEMO_BANK: FAQItem[] = [
   { q: "문서 보존 기간은 어떻게 됩니까?", a: "문서 종류에 따라 3~10년 이상의 보존 기간이 적용되며, 전자문서 관리 시스템에 의무적으로 등록해야 합니다." },
   { q: "사내 메신저에서 개인정보 공유가 가능합니까?", a: "승인된 내부 채널에서 업무 목적으로만 허용되며, 외부 메신저(카카오톡 등)를 통한 개인정보 전송은 금지됩니다." },
   { q: "정보보안 교육은 언제, 어떻게 이수해야 합니까?", a: "연 1회 이상 의무 이수이며, 사내 교육 시스템을 통해 온라인으로 완료할 수 있습니다. 미이수 시 경고 처분이 부과됩니다." },
-  { q: "채무 조정 신청 자격 요건은 무엇입니까?", a: "신용회복위원회 채무 조정은 연체 기간 3개월 이상, 총 채무액 15억 원 이하인 개인 채무자를 대상으로 하며, 상환 능력이 인정되어야 합니다." },
-  { q: "프리워크아웃 신청 시 필요한 서류는 무엇입니까?", a: "소득 증빙 자료(근로소득원천징수영수증 등), 채무 현황 자료, 신분증 사본이 기본 서류이며, 개인 상황에 따라 추가 서류가 요구될 수 있습니다." },
-  { q: "채무 조정 합의 후 이행 불이행 시 어떻게 됩니까?", a: "합의된 상환 조건을 3회 이상 불이행할 경우 조정 합의가 해지되며, 채권자는 원래 조건으로 채권을 행사할 수 있습니다." },
-  { q: "채무 조정 진행 중 추가 대출이 가능합니까?", a: "채무 조정 신청 접수 이후 신규 신용 거래는 원칙적으로 제한되며, 위원회 심사 결과에 따라 일부 예외가 인정될 수 있습니다." },
-  { q: "신용회복위원회 상담은 유료입니까?", a: "기본 채무 조정 상담 및 신청 서비스는 무료로 제공됩니다. 단, 일부 법적 절차 대행 서비스는 별도 비용이 발생할 수 있습니다." },
-  { q: "온라인으로 채무 조정을 신청할 수 있습니까?", a: "신용회복위원회 홈페이지(www.ccrs.or.kr) 및 모바일 앱을 통해 온라인 신청이 가능하며, 서류 제출은 우편 또는 방문으로 처리합니다." },
-  { q: "개인 회생과 채무 조정의 차이는 무엇입니까?", a: "개인 회생은 법원을 통한 법적 절차이며, 채무 조정은 신용회복위원회를 통한 자율적 협약 절차입니다. 채무 조정이 신용 영향이 상대적으로 적습니다." },
-  { q: "채무 조정 완료 후 신용 회복 기간은 얼마나 됩니까?", a: "채무 조정 완료(전액 상환) 후 신용 기록은 통상 5년 이내에 정상화됩니다. 단, 신용평가기관별 기준이 상이할 수 있습니다." },
-  { q: "위원회 직원이 채무자 정보를 외부에 공개할 수 있습니까?", a: "직원은 업무상 취득한 채무자 정보를 외부에 공개하거나 제3자에게 제공하는 것이 엄격히 금지되며, 위반 시 형사 처벌을 받을 수 있습니다." },
-  { q: "채무 조정 신청 후 처리 기간은 얼마나 됩니까?", a: "접수 후 통상 2~4주 이내에 심사 결과가 통보됩니다. 복잡한 사안의 경우 최대 3개월까지 소요될 수 있으며, 진행 상황은 홈페이지에서 확인 가능합니다." },
+  { q: "보험금 청구 시 기본 제출 서류는 무엇입니까?", a: "청구 유형에 따라 다르지만 통상 청구서, 신분증 사본, 진단서 또는 입퇴원 확인서, 영수증 등이 기본 서류로 요구될 수 있습니다." },
+  { q: "추가 서류 요청을 받으면 어떻게 대응해야 합니까?", a: "안내받은 보완 서류를 준비해 고객센터나 모바일 채널을 통해 제출하면 되며, 접수 후 심사 일정은 별도 안내됩니다." },
+  { q: "심사 진행 중 보완 요청이 반복되면 어떻게 됩니까?", a: "사안별로 필요한 근거 자료를 다시 요청할 수 있으며, 제출 완료 후 순차적으로 재심사가 진행됩니다." },
+  { q: "보험금 청구 진행 중 다른 계약 변경도 동시에 요청할 수 있습니까?", a: "가능 여부는 업무 유형과 처리 단계에 따라 달라질 수 있어, 고객센터 또는 담당 부서를 통해 병행 처리 가능 여부를 확인하는 것이 좋습니다." },
+  { q: "신한라이프 상담은 유료입니까?", a: "기본 고객 상담과 보험 관련 안내는 무료로 제공됩니다. 다만 상품 약관과 처리 기준에 따라 별도 수수료가 발생하는 업무는 개별 고지됩니다." },
+  { q: "온라인으로 보험금 청구를 신청할 수 있습니까?", a: "신한라이프 홈페이지와 모바일 앱을 통해 온라인 청구가 가능하며, 추가 서류는 이미지 업로드 또는 별도 제출 방식으로 처리합니다." },
+  { q: "보험금 청구와 계약 변경 요청의 차이는 무엇입니까?", a: "보험금 청구는 사고·진단 등 보장 사유에 대한 지급 심사 업무이고, 계약 변경은 수익자·주소·납입정보 등 계약 정보를 수정하는 업무입니다." },
+  { q: "보험금 지급 완료 후 추가 확인 기간은 얼마나 됩니까?", a: "지급 완료 후에도 정산 내역이나 증빙 확인이 필요한 경우 일정 기간 추가 확인이 진행될 수 있으며, 상품별 기준은 개별 안내됩니다." },
+  { q: "직원이 고객 정보를 외부에 공개할 수 있습니까?", a: "직원은 업무상 취득한 고객 정보를 외부에 공개하거나 제3자에게 제공하는 것이 엄격히 금지되며, 위반 시 내부 제재와 법적 책임이 발생할 수 있습니다." },
+  { q: "보험금 청구 후 처리 기간은 얼마나 됩니까?", a: "접수 후 통상 수일에서 수주 내에 심사 결과가 안내되며, 사안이 복잡하거나 추가 서류가 필요한 경우 더 길어질 수 있습니다." },
 ]
 
-const DEMO_FILE_NAME = "신용회복위원회_정보보안_업무지침_v2.pdf"
+const DEMO_FILE_NAME = "신한라이프_정보보안_업무지침_v2.pdf"
 
 export function FAQPanel() {
   const [files, setFiles] = useState<File[]>([{ name: DEMO_FILE_NAME } as File])
@@ -849,7 +849,7 @@ export function FAQPanel() {
 <html lang="ko"><head><meta charset="UTF-8"/><title>FAQ 생성 결과</title>
 <style>
 body{font-family:'Malgun Gothic',sans-serif;padding:40px;font-size:13px;line-height:1.8;color:#1f2937}
-h1{font-size:17px;border-bottom:2px solid #FF9100;padding-bottom:8px;color:#FF9100;margin-bottom:6px}
+h1{font-size:17px;border-bottom:2px solid #005BAC;padding-bottom:8px;color:#005BAC;margin-bottom:6px}
 .meta{font-size:11px;color:#6b7280;margin-bottom:4px}
 .notice{background:#fffbeb;border:1px solid #fcd34d;padding:8px 12px;border-radius:4px;font-size:11px;color:#92400e;margin-bottom:20px}
 .item{margin-bottom:14px;border:1px solid #e5e7eb;border-radius:6px;overflow:hidden}
@@ -858,7 +858,7 @@ h1{font-size:17px;border-bottom:2px solid #FF9100;padding-bottom:8px;color:#FF91
 .source{font-size:10px;color:#9ca3af;margin-top:20px}
 </style></head><body>
 <h1>FAQ 생성 결과</h1>
-<div class="meta">신용회복위원회 내부 직원 관점 · 근거 문서 기반</div>
+<div class="meta">신한라이프 내부 직원 관점 · 근거 문서 기반</div>
 <div class="notice">⚠ 본 자료는 AI 생성 참고 자료입니다. 근거 문서에 없는 내용은 포함하지 않았으나, 반드시 검토 후 사용해야 합니다.</div>
 ${result.map((item, i) => `<div class="item"><div class="q">Q${i + 1}. ${item.q}</div><div class="a">A. ${item.a}</div></div>`).join("")}
 <div class="source">근거 문서: ${files[0]?.name ?? "업로드 문서"}</div>
@@ -918,7 +918,7 @@ ${result.map((item, i) => `<div class="item"><div class="q">Q${i + 1}. ${item.q}
               max={20}
               value={faqCount}
               onChange={(e) => setFaqCount(Math.min(20, Math.max(1, parseInt(e.target.value) || 1)))}
-              className="w-16 h-8 text-center text-sm font-semibold rounded-lg border border-border bg-card outline-none focus:ring-2 focus:ring-[#FF9100]/30"
+              className="w-16 h-8 text-center text-sm font-semibold rounded-lg border border-border bg-card outline-none focus:ring-2 focus:ring-[#005BAC]/30"
             />
             <button
               type="button"
@@ -935,7 +935,7 @@ ${result.map((item, i) => `<div class="item"><div class="q">Q${i + 1}. ${item.q}
         <Button
           onClick={handleGenerate}
           disabled={!hasFile || isLoading}
-          className="w-full bg-[#FF9100] hover:bg-[#FF9100]/90 text-white h-11"
+          className="w-full bg-[#005BAC] hover:bg-[#005BAC]/90 text-white h-11"
         >
           {isLoading ? (
             <><Loader2 className="h-4 w-4 animate-spin mr-2" />FAQ 생성 중...</>
@@ -947,11 +947,11 @@ ${result.map((item, i) => `<div class="item"><div class="q">Q${i + 1}. ${item.q}
         {/* Result */}
         {result.length > 0 && (
           <div className="space-y-4">
-            <div className="rounded-xl border border-amber-200 dark:border-amber-800 bg-amber-50/60 dark:bg-amber-900/10 px-4 py-3">
-              <p className="text-xs font-semibold text-amber-700 dark:text-amber-400">
+            <div className="rounded-xl border border-sky-200 dark:border-sky-800 bg-sky-50/60 dark:bg-sky-900/10 px-4 py-3">
+              <p className="text-xs font-semibold text-sky-700 dark:text-sky-400">
                 ※ 본 자료는 AI 생성 참고 자료입니다. 해당 내용을 검토 후 사용해야 합니다.
               </p>
-              <p className="text-xs text-amber-600/70 dark:text-amber-500/70 mt-0.5">
+              <p className="text-xs text-sky-600/70 dark:text-sky-500/70 mt-0.5">
                 근거 문서: {files[0]?.name ?? "업로드 문서"} · 총 {result.length}개 생성
               </p>
             </div>
@@ -976,8 +976,8 @@ ${result.map((item, i) => `<div class="item"><div class="q">Q${i + 1}. ${item.q}
             <div className="space-y-3">
               {result.map((item, i) => (
                 <div key={i} className="rounded-xl border bg-card overflow-hidden">
-                  <div className="flex items-start gap-3 px-5 py-4 bg-[#FF9100]/[0.05]">
-                    <span className="shrink-0 flex h-6 w-6 items-center justify-center rounded-full bg-[#FF9100] text-white text-xs font-bold">
+                  <div className="flex items-start gap-3 px-5 py-4 bg-[#005BAC]/[0.05]">
+                    <span className="shrink-0 flex h-6 w-6 items-center justify-center rounded-full bg-[#005BAC] text-white text-xs font-bold">
                       Q
                     </span>
                     <p className="text-sm font-semibold leading-6 pt-0.5">{item.q}</p>
@@ -1000,7 +1000,7 @@ ${result.map((item, i) => `<div class="item"><div class="q">Q${i + 1}. ${item.q}
         <DialogContent className="max-w-md">
           <DialogHeader>
             <DialogTitle className="flex items-center gap-2 text-base">
-              <Settings2 className="h-4 w-4 text-[#FF9100]" />
+              <Settings2 className="h-4 w-4 text-[#005BAC]" />
               자원 관리 설정
             </DialogTitle>
           </DialogHeader>
@@ -1019,7 +1019,7 @@ ${result.map((item, i) => `<div class="item"><div class="q">Q${i + 1}. ${item.q}
                       max={50}
                       value={resourceSettings.maxFaqCount}
                       onChange={(e) => setResourceSettings((s) => ({ ...s, maxFaqCount: Math.min(50, Math.max(1, parseInt(e.target.value) || 1)) }))}
-                      className="w-16 h-7 text-center text-sm font-medium rounded-lg border border-border bg-card outline-none focus:ring-2 focus:ring-[#FF9100]/30"
+                      className="w-16 h-7 text-center text-sm font-medium rounded-lg border border-border bg-card outline-none focus:ring-2 focus:ring-[#005BAC]/30"
                     />
                     <span className="text-xs text-muted-foreground">개</span>
                   </div>
@@ -1029,7 +1029,7 @@ ${result.map((item, i) => `<div class="item"><div class="q">Q${i + 1}. ${item.q}
                   <select
                     value={resourceSettings.defaultFaqCount}
                     onChange={(e) => setResourceSettings((s) => ({ ...s, defaultFaqCount: parseInt(e.target.value) }))}
-                    className="h-7 rounded-lg border border-border bg-card px-2 text-sm outline-none focus:ring-2 focus:ring-[#FF9100]/30"
+                    className="h-7 rounded-lg border border-border bg-card px-2 text-sm outline-none focus:ring-2 focus:ring-[#005BAC]/30"
                   >
                     {[3, 5, 10].map((n) => <option key={n} value={n}>{n}개</option>)}
                   </select>
@@ -1050,7 +1050,7 @@ ${result.map((item, i) => `<div class="item"><div class="q">Q${i + 1}. ${item.q}
                       max={200}
                       value={resourceSettings.maxFileSizeMb}
                       onChange={(e) => setResourceSettings((s) => ({ ...s, maxFileSizeMb: Math.min(200, Math.max(1, parseInt(e.target.value) || 1)) }))}
-                      className="w-16 h-7 text-center text-sm font-medium rounded-lg border border-border bg-card outline-none focus:ring-2 focus:ring-[#FF9100]/30"
+                      className="w-16 h-7 text-center text-sm font-medium rounded-lg border border-border bg-card outline-none focus:ring-2 focus:ring-[#005BAC]/30"
                     />
                     <span className="text-xs text-muted-foreground">MB</span>
                   </div>
@@ -1066,7 +1066,7 @@ ${result.map((item, i) => `<div class="item"><div class="q">Q${i + 1}. ${item.q}
                             type="checkbox"
                             checked={resourceSettings[key]}
                             onChange={(e) => setResourceSettings((s) => ({ ...s, [key]: e.target.checked }))}
-                            className="accent-[#FF9100] h-3.5 w-3.5"
+                            className="accent-[#005BAC] h-3.5 w-3.5"
                           />
                           {label}
                         </label>
@@ -1093,7 +1093,7 @@ ${result.map((item, i) => `<div class="item"><div class="q">Q${i + 1}. ${item.q}
                 <button
                   type="button"
                   onClick={handleResourceSave}
-                  className="flex items-center gap-1.5 rounded-lg bg-[#FF9100] px-3.5 py-1.5 text-xs font-semibold text-white hover:bg-[#FF9100]/90 transition-colors"
+                  className="flex items-center gap-1.5 rounded-lg bg-[#005BAC] px-3.5 py-1.5 text-xs font-semibold text-white hover:bg-[#005BAC]/90 transition-colors"
                 >
                   <Save className="h-3.5 w-3.5" />
                   저장

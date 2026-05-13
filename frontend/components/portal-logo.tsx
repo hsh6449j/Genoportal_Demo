@@ -12,14 +12,14 @@ export function PortalLogo({ compact = false, className }: PortalLogoProps) {
   if (compact) {
     return (
       <div className={cn("relative h-10 w-10", className)}>
-        <Image src="/1-ssrc-logo-orange.png" alt="AI Portal" fill className="object-contain object-left" />
+        <Image src="/shinhanlife-ai-mark.svg" alt="Shinhan Life AI Portal" fill className="object-contain object-left" />
       </div>
     )
   }
 
   return (
     <div className={cn("relative h-14 w-[220px]", className)}>
-      <Image src="/0-ssrc-signature_3.png" alt="AI Portal" fill className="object-contain object-left" />
+      <Image src="/shinhanlife-ai-signature.svg" alt="Shinhan Life AI Portal" fill className="object-contain object-left" />
     </div>
   )
 }

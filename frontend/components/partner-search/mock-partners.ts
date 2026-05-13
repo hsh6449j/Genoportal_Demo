@@ -13,8 +13,8 @@ import type {
 export const mockPartners: Partner[] = [
   {
     id: "p-001",
-    name: "신용회복위원회 서울중앙지부",
-    shortName: "신복위 서울",
+    name: "신한라이프 서울 고객플라자",
+    shortName: "신한라이프 서울",
     region: "서울",
     institutionType: "협회",
     programs: ["개인회생", "새출발기금", "사전채무조정"],
@@ -26,8 +26,8 @@ export const mockPartners: Partner[] = [
   },
   {
     id: "p-002",
-    name: "신용회복위원회 경기남부지부",
-    shortName: "신복위 경기남부",
+    name: "신한라이프 경기남부 고객플라자",
+    shortName: "신한라이프 경기남부",
     region: "경기",
     institutionType: "협회",
     programs: ["개인회생", "사전채무조정", "신용교육"],

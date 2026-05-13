@@ -46,7 +46,7 @@ export function CounselingKnowledgeView() {
           </p>
           <h1 className="text-3xl font-bold text-foreground">상담지식 에이전트</h1>
           <p className="text-sm text-muted-foreground">
-            채무조정·새출발기금·소액대출 등 신용회복 업무 지식을 자연어로 질의할 수 있는 화면입니다.
+            보험금 청구, 계약 변경, 약관 안내 등 신한라이프 상담 업무 지식을 자연어로 질의할 수 있는 화면입니다.
           </p>
         </div>
         {view.step === "initial" ? (

@@ -73,7 +73,14 @@ export function StaffAssignmentTool() {
   const [historyItems, setHistoryItems] = useState<StaffAssignmentSession[]>([])
   const [isHistoryOpen, setIsHistoryOpen] = useState(false)
 
-const activePreset = useMemo(() => getStaffAssignmentPreset(presetId), [presetId])
+  const activePreset = useMemo(() => getStaffAssignmentPreset(presetId), [presetId])
+  const criticalNotice = useMemo(
+    () =>
+      activeSession?.result.notices.find(
+        (item) => item.includes("불일치") || item.includes("업데이트가 필요"),
+      ) ?? null,
+    [activeSession],
+  )
 
   useEffect(() => {
     setHistoryItems(readStoredHistory())
@@ -177,7 +184,7 @@ const activePreset = useMemo(() => getStaffAssignmentPreset(presetId), [presetId
         <div className="mx-auto flex w-full max-w-4xl flex-wrap items-center justify-between gap-4">
           <div className="space-y-1">
             <div className="flex items-center gap-2 text-sm text-muted-foreground">
-              <Users className="h-4 w-4 text-[#FF9100]" />
+              <Users className="h-4 w-4 text-[#005BAC]" />
               <span>업무 지원</span>
             </div>
             <h1 className="text-3xl font-bold tracking-tight">업무담당자 배정</h1>
@@ -201,7 +208,7 @@ const activePreset = useMemo(() => getStaffAssignmentPreset(presetId), [presetId
         <div className="flex flex-wrap items-center justify-between gap-4">
           <div className="space-y-1">
             <div className="flex items-center gap-2 text-sm text-muted-foreground">
-              <Users className="h-4 w-4 text-[#FF9100]" />
+              <Users className="h-4 w-4 text-[#005BAC]" />
               <span>업무 지원</span>
             </div>
             <h1 className="text-3xl font-bold tracking-tight">업무담당자 배정</h1>
@@ -263,7 +270,7 @@ const activePreset = useMemo(() => getStaffAssignmentPreset(presetId), [presetId
                 />
               </div>
 
-              <div className="rounded-2xl border border-dashed border-[#FF9100]/50 bg-[#FF9100]/5 p-4">
+              <div className="rounded-2xl border border-dashed border-[#005BAC]/50 bg-[#005BAC]/5 p-4">
                 <div className="flex flex-wrap items-center gap-3">
                   <Button type="button" variant="outline" onClick={handleDemoUpload}>
                     <Upload className="mr-2 h-4 w-4" />
@@ -309,7 +316,8 @@ const activePreset = useMemo(() => getStaffAssignmentPreset(presetId), [presetId
           </Card>
         </div>
       ) : (
-        <div className="flex flex-col gap-6 lg:flex-row">
+        <div className="space-y-4">
+          <div className="flex flex-col gap-6 lg:flex-row">
           {/* 왼쪽: 입력 요약 + 검증 결과 */}
           <div className="flex min-w-0 flex-1 flex-col gap-4">
             <Card className="flex flex-1 flex-col border-border/70">
@@ -321,14 +329,14 @@ const activePreset = useMemo(() => getStaffAssignmentPreset(presetId), [presetId
                   <div className="text-xs font-medium text-muted-foreground">요청 내용</div>
                   <div className="mt-2 leading-7">{activeSession.request.requestText}</div>
                   {activeSession.request.extraCondition ? (
-                    <div className="mt-4 rounded-lg border border-[#FF9100]/30 bg-[#FF9100]/5 px-3 py-2">
+                    <div className="mt-4 rounded-lg border border-[#005BAC]/30 bg-[#005BAC]/5 px-3 py-2">
                       <div className="text-xs font-medium text-[#C46A00]">추가 고려사항</div>
                       <p className="mt-1 leading-7">{activeSession.request.extraCondition}</p>
                     </div>
                   ) : null}
                 </div>
                 {activeSession.request.uploadedFileName ? (
-                  <div className="rounded-xl border border-dashed border-[#FF9100]/50 bg-[#FF9100]/5 p-4">
+                  <div className="rounded-xl border border-dashed border-[#005BAC]/50 bg-[#005BAC]/5 p-4">
                     <div className="text-xs font-medium text-muted-foreground">첨부 문서</div>
                     <div className="mt-2 flex items-center gap-2">
                       <Badge variant="outline">{activeSession.request.uploadedFileName}</Badge>
@@ -377,8 +385,20 @@ const activePreset = useMemo(() => getStaffAssignmentPreset(presetId), [presetId
                 </div>
               </CardHeader>
               <CardContent className="space-y-5">
+                {criticalNotice ? (
+                  <div className="rounded-2xl border border-sky-300 bg-sky-50 px-5 py-4">
+                    <div className="flex items-start gap-3">
+                      <AlertTriangle className="mt-0.5 h-5 w-5 shrink-0 text-sky-600" />
+                      <div>
+                        <div className="text-sm font-semibold text-sky-900">배정 전 업데이트 필요</div>
+                        <p className="mt-1 text-sm leading-7 text-sky-900">{criticalNotice}</p>
+                      </div>
+                    </div>
+                  </div>
+                ) : null}
+
                 <div className="grid gap-4 xl:grid-cols-2">
-                  <div className="flex h-full flex-col rounded-2xl border border-[#FF9100]/40 bg-[#FF9100]/5 p-5">
+                  <div className="flex h-full flex-col rounded-2xl border border-[#005BAC]/40 bg-[#005BAC]/5 p-5">
                     <div className="flex items-center gap-2 text-sm font-medium text-[#C46A00]">
                       <Building2 className="h-4 w-4" />
                       추천 부서
@@ -464,13 +484,19 @@ const activePreset = useMemo(() => getStaffAssignmentPreset(presetId), [presetId
               </CardHeader>
               <CardContent className="flex-1 space-y-3 overflow-y-auto">
                 {activeSession.result.notices.map((item) => (
-                  <div key={item} className="flex items-start gap-3 rounded-xl border border-[#FF9100]/30 bg-[#FF9100]/5 p-4 text-sm">
-                    <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-[#FF9100]" />
+                  <div key={item} className="flex items-start gap-3 rounded-xl border border-[#005BAC]/30 bg-[#005BAC]/5 p-4 text-sm">
+                    <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-[#005BAC]" />
                     <span className="leading-7">{item}</span>
                   </div>
                 ))}
               </CardContent>
             </Card>
+          </div>
+
+          </div>
+
+          <div className="rounded-xl border border-dashed border-border bg-muted/30 px-4 py-3 text-xs leading-6 text-muted-foreground">
+            ※ AI가 민원 내용, 업무분장 데이터, 인사정보를 종합해 추천한 참고 결과이며 최종 배정 전 담당 부서 확인이 필요합니다.
           </div>
         </div>
       )}

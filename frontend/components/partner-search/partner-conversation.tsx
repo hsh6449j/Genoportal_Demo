@@ -47,7 +47,7 @@ export function PartnerConversation({
           variant="ghost"
           size="sm"
           onClick={onNewConversation}
-          className="gap-1.5 text-muted-foreground hover:text-[#FF9100]"
+          className="gap-1.5 text-muted-foreground hover:text-[#005BAC]"
         >
           <ArrowLeft className="h-4 w-4" />
           새 검색
@@ -70,8 +70,8 @@ export function PartnerConversation({
         <div className="flex w-full items-start gap-4">
           <div className="relative flex h-8 w-8 shrink-0 items-center justify-center">
             <Image
-              src="/1-ssrc-logo-orange.png"
-              alt="협약기관 검색 에이전트"
+              src="/shinhanlife-ai-mark.svg"
+              alt="제휴기관 검색 에이전트"
               width={32}
               height={32}
               className="h-8 w-8 object-contain"
@@ -82,7 +82,7 @@ export function PartnerConversation({
             <SectionCard
               title={
                 <span className="inline-flex items-center gap-2 text-sm font-semibold">
-                  <Filter className="h-4 w-4 text-[#FF9100]" />
+                  <Filter className="h-4 w-4 text-[#005BAC]" />
                   검색 조건 자동 추출
                 </span>
               }
@@ -95,7 +95,7 @@ export function PartnerConversation({
             <SectionCard
               title={
                 <span className="inline-flex items-center gap-2 text-sm font-semibold">
-                  <Database className="h-4 w-4 text-[#FF9100]" />
+                  <Database className="h-4 w-4 text-[#005BAC]" />
                   하이브리드 검색 결과
                 </span>
               }
@@ -103,7 +103,7 @@ export function PartnerConversation({
               headerRight={
                 <Badge
                   variant="outline"
-                  className="gap-1 border-[#FF9100]/40 bg-[#FFF4E6] text-[10px] text-[#1B3A4B]"
+                  className="gap-1 border-[#005BAC]/40 bg-[#EEF7FF] text-[10px] text-[#1B3A4B]"
                 >
                   총 {results.length}건
                 </Badge>

@@ -37,9 +37,9 @@ export function PiiBlockedCard({ onReset }: PiiBlockedCardProps) {
       </div>
 
       {/* 다시 시작 CTA */}
-      <div className="flex flex-col gap-3 rounded-xl border border-[#FF9100]/40 bg-[#FFF4E6]/60 p-4 sm:flex-row sm:items-center sm:justify-between">
+      <div className="flex flex-col gap-3 rounded-xl border border-[#005BAC]/40 bg-[#EEF7FF]/60 p-4 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex items-start gap-3">
-          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#FF9100]/10 text-[#FF9100]">
+          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#005BAC]/10 text-[#005BAC]">
             <RotateCcw className="h-4 w-4" />
           </div>
           <div className="space-y-0.5">
@@ -55,7 +55,7 @@ export function PiiBlockedCard({ onReset }: PiiBlockedCardProps) {
           type="button"
           size="sm"
           onClick={onReset}
-          className="gap-1.5 bg-[#FF9100] text-white hover:bg-[#FF7A00]"
+          className="gap-1.5 bg-[#005BAC] text-white hover:bg-[#004F9E]"
         >
           <RotateCcw className="h-3.5 w-3.5" />
           처음부터 다시 시작

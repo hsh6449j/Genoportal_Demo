@@ -22,6 +22,9 @@ import {
   MessageCircleMore,
   Briefcase,
   Settings2,
+  Bot,
+  Cpu,
+  Activity,
 } from "lucide-react"
 import Link from "next/link"
 import { usePathname, useSearchParams } from "next/navigation"
@@ -29,6 +32,7 @@ import { useAuth } from "@/contexts/auth-context"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { assistantHistoryPresets } from "@/lib/assistant-demo-history"
 import { complianceHistoryPresets } from "@/lib/compliance-demo-history"
+import { generalQaHistoryPresets } from "@/lib/general-qa-demo-history"
 import { staffAssignmentHistoryPresets } from "@/lib/staff-assignment-demo"
 import { documentWritingHistoryPresets } from "@/lib/document-writing-demo-history"
 import { PortalLogo } from "@/components/portal-logo"
@@ -41,15 +45,17 @@ export function Sidebar({ className }: SidebarProps) {
   const [isCollapsed, setIsCollapsed] = useState(false)
   const [showUserMenu, setShowUserMenu] = useState(false)
   const [expandedMenus, setExpandedMenus] = useState<Record<string, boolean>>({
-    "민원상담 어시스턴트": true,
+    "고객상담 어시스턴트": true,
+    "단순 질의응답 챗봇": true,
     "사내규정 검색": true,
     "업무담당자 배정": true,
     "문서작성 지원 에이전트": true,
-    "채권양수도 추론 에이전트": true,
+    "심사이력 추론 에이전트": true,
   })
   const pathname = usePathname()
   const searchParams = useSearchParams()
   const { logout, user } = useAuth()
+  const userFullName = (user as { user_metadata?: { full_name?: string } } | null)?.user_metadata?.full_name
   const menuRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -76,7 +82,10 @@ export function Sidebar({ className }: SidebarProps) {
 
   useEffect(() => {
     if (pathname === "/insight-chat" && agent === "assistant" && feature === "counseling" && preset) {
-      setExpandedMenus((prev) => ({ ...prev, "민원상담 어시스턴트": true }))
+      setExpandedMenus((prev) => ({ ...prev, "고객상담 어시스턴트": true }))
+    }
+    if (pathname === "/insight-chat" && agent === "assistant" && feature === "general-qa" && preset) {
+      setExpandedMenus((prev) => ({ ...prev, "단순 질의응답 챗봇": true }))
     }
     if (pathname === "/insight-chat" && agent === "compliance" && feature === "policy-search" && preset) {
       setExpandedMenus((prev) => ({ ...prev, "사내규정 검색": true }))
@@ -88,7 +97,7 @@ export function Sidebar({ className }: SidebarProps) {
       setExpandedMenus((prev) => ({ ...prev, "문서작성 지원 에이전트": true }))
     }
     if (pathname === "/insight-chat" && agent === "debt-transfer") {
-      setExpandedMenus((prev) => ({ ...prev, "채권양수도 추론 에이전트": true }))
+      setExpandedMenus((prev) => ({ ...prev, "심사이력 추론 에이전트": true }))
     }
   }, [pathname, agent, feature, preset])
 
@@ -98,7 +107,7 @@ export function Sidebar({ className }: SidebarProps) {
       titleIcon: Home,
       items: [
         {
-          name: "GenPortal 홈",
+          name: "AI Portal 홈",
           href: "/",
           icon: Home,
           isActive: pathname === "/" && !searchParams?.get("task"),
@@ -106,11 +115,11 @@ export function Sidebar({ className }: SidebarProps) {
       ],
     },
     {
-      title: "핵심 에이전트",
+      title: "민원 상담 중 활용",
       titleIcon: Headset,
       items: [
         {
-          name: "민원상담 어시스턴트",
+          name: "고객상담 어시스턴트",
           href: "/insight-chat?agent=assistant&feature=counseling",
           icon: Headset,
           isActive: pathname === "/insight-chat" && (!agent || agent === "assistant") && (!feature || feature === "counseling"),
@@ -125,30 +134,25 @@ export function Sidebar({ className }: SidebarProps) {
           })),
         },
         {
+          name: "단순 질의응답 챗봇",
+          href: "/insight-chat?agent=assistant&feature=general-qa",
+          icon: Bot,
+          isActive: pathname === "/insight-chat" && agent === "assistant" && feature === "general-qa",
+          children: generalQaHistoryPresets.map((item) => ({
+            name: item.title,
+            href: `/insight-chat?agent=assistant&feature=general-qa&preset=${item.id}`,
+            isActive:
+              pathname === "/insight-chat" &&
+              agent === "assistant" &&
+              feature === "general-qa" &&
+              preset === item.id,
+          })),
+        },
+        {
           name: "상담지식 에이전트",
           href: "/counseling-knowledge",
           icon: Shield,
           isActive: pathname === "/counseling-knowledge",
-        },
-        {
-          name: "표준 상담 스크립트 개발",
-          href: "/documentation?feature=script-studio",
-          icon: FileText,
-          isActive:
-            pathname === "/documentation" &&
-            searchParams?.get("feature") === "script-studio",
-        },
-      ],
-    },
-    {
-      title: "데이터/지식 활용",
-      titleIcon: BarChart3,
-      items: [
-        {
-          name: "데이터길잡이",
-          href: "/data-guide",
-          icon: BarChart3,
-          isActive: pathname === "/data-guide",
         },
         {
           name: "사내규정 검색",
@@ -166,40 +170,27 @@ export function Sidebar({ className }: SidebarProps) {
           })),
         },
         {
-          name: "채권양수도 추론 에이전트",
-          href: "/debt-transfer?tab=knowledge",
-          icon: GitFork,
-          isActive: pathname === "/debt-transfer" || (pathname === "/insight-chat" && agent === "debt-transfer"),
-          children: [
-            { name: "이력 데이터 관리", href: "/debt-transfer?tab=knowledge", isActive: pathname === "/debt-transfer" },
-            { name: "양수도 추적", href: "/insight-chat?agent=debt-transfer", isActive: pathname === "/insight-chat" && agent === "debt-transfer" },
-          ],
-        },
-        {
           name: "문서분석 지원",
           href: "/translation",
           icon: Search,
           isActive: pathname === "/translation" || (pathname === "/" && searchParams?.get("task") === "translation"),
         },
+        {
+          name: "표준 상담 스크립트 개발",
+          href: "/documentation?feature=script-studio",
+          icon: FileText,
+          isActive:
+            pathname === "/documentation" &&
+            searchParams?.get("feature") === "script-studio",
+        },
       ],
     },
     {
-      title: "업무 지원",
+      title: "민원 상담 후 활용",
       titleIcon: Briefcase,
       items: [
         {
-          name: "문서작성 지원 에이전트",
-          href: "/insight-chat?agent=document-writer&tool=polish",
-          icon: FileText,
-          isActive: pathname === "/insight-chat" && agent === "document-writer",
-          children: [
-            { name: "글다듬이", href: "/insight-chat?agent=document-writer&tool=polish", isActive: pathname === "/insight-chat" && agent === "document-writer" && tool === "polish" },
-            { name: "번역", href: "/insight-chat?agent=document-writer&tool=translation", isActive: pathname === "/insight-chat" && agent === "document-writer" && tool === "translation" },
-            { name: "FAQ 자동생성기", href: "/insight-chat?agent=document-writer&tool=faq", isActive: pathname === "/insight-chat" && agent === "document-writer" && tool === "faq" },
-          ],
-        },
-        {
-          name: "민원처리 지원",
+          name: "고객민원 처리 지원",
           href: "/formatting",
           icon: MessageCircleMore,
           isActive:
@@ -218,10 +209,37 @@ export function Sidebar({ className }: SidebarProps) {
           })),
         },
         {
-          name: "협약기관 검색",
+          name: "제휴기관 검색",
           href: "/partner-search",
           icon: Search,
           isActive: pathname === "/partner-search",
+        },
+        {
+          name: "데이터길잡이",
+          href: "/data-guide",
+          icon: BarChart3,
+          isActive: pathname === "/data-guide",
+        },
+        {
+          name: "심사이력 추론 에이전트",
+          href: "/debt-transfer?tab=knowledge",
+          icon: GitFork,
+          isActive: pathname === "/debt-transfer" || (pathname === "/insight-chat" && agent === "debt-transfer"),
+          children: [
+            { name: "이력 데이터 관리", href: "/debt-transfer?tab=knowledge", isActive: pathname === "/debt-transfer" },
+            { name: "양수도 추적", href: "/insight-chat?agent=debt-transfer", isActive: pathname === "/insight-chat" && agent === "debt-transfer" },
+          ],
+        },
+        {
+          name: "문서작성 지원 에이전트",
+          href: "/insight-chat?agent=document-writer&tool=polish",
+          icon: FileText,
+          isActive: pathname === "/insight-chat" && agent === "document-writer",
+          children: [
+            { name: "글다듬이", href: "/insight-chat?agent=document-writer&tool=polish", isActive: pathname === "/insight-chat" && agent === "document-writer" && tool === "polish" },
+            { name: "번역", href: "/insight-chat?agent=document-writer&tool=translation", isActive: pathname === "/insight-chat" && agent === "document-writer" && tool === "translation" },
+            { name: "FAQ 자동생성기", href: "/insight-chat?agent=document-writer&tool=faq", isActive: pathname === "/insight-chat" && agent === "document-writer" && tool === "faq" },
+          ],
         },
       ],
     },
@@ -232,7 +250,7 @@ export function Sidebar({ className }: SidebarProps) {
         {
           name: "품질 모니터링",
           href: "/admin?feature=quality-monitoring",
-          icon: Shield,
+          icon: Activity,
           isActive: pathname === "/admin" && (!feature || feature === "quality-monitoring"),
         },
         {
@@ -244,7 +262,7 @@ export function Sidebar({ className }: SidebarProps) {
         {
           name: "자원 관리",
           href: "/admin?feature=resource-management",
-          icon: Shield,
+          icon: Cpu,
           isActive: pathname === "/admin" && feature === "resource-management",
         },
       ],
@@ -392,7 +410,7 @@ export function Sidebar({ className }: SidebarProps) {
               <>
                 <div className="flex-1 min-w-0">
                   <p className="text-sm font-medium text-sidebar-foreground truncate">
-                    {extractKoreanName(user?.name || user?.user_metadata?.full_name) ||
+                    {extractKoreanName(user?.name || userFullName) ||
                       user?.email?.split("@")[0] ||
                       "사용자"}
                   </p>

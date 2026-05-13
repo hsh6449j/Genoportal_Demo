@@ -76,7 +76,7 @@ export function ChatInterface({ className, initialTaskMode }: ChatInterfaceProps
   const [attachedDocuments, setAttachedDocuments] = useState<AttachedDocument[]>([
     {
       id: "1",
-      name: "신용회복위원회-상담응대-운영안내.pdf",
+      name: "신한라이프-상담응대-운영안내.pdf",
       content: "/report-pdf/삼성증권-현대차-251001.pdf",
       type: "PDF"
     }
@@ -209,11 +209,11 @@ export function ChatInterface({ className, initialTaskMode }: ChatInterfaceProps
     setIsDragOver(false)
 
     const sampleFiles = [
-      "신용회복위원회-상담응대-운영안내.pdf",
-      "신용회복위원회-채무조정-상담매뉴얼.pdf",
-      "신용회복위원회-사내규정-검색기준.pdf",
-      "신용회복위원회-운영데이터-월간리포트.pdf",
-      "신용회복위원회-민원사례-VOC-요약.pdf"
+      "신한라이프-상담응대-운영안내.pdf",
+      "신한라이프-보험금청구-상담매뉴얼.pdf",
+      "신한라이프-사내규정-검색기준.pdf",
+      "신한라이프-운영데이터-월간리포트.pdf",
+      "신한라이프-민원사례-VOC-요약.pdf"
     ]
 
     const selectedFile = sampleFiles[fileIndex % sampleFiles.length]
@@ -397,7 +397,7 @@ export function ChatInterface({ className, initialTaskMode }: ChatInterfaceProps
               <div
                 className={cn(
                   "relative",
-                  isDragOver && "ring-2 ring-[#FF9100] ring-offset-2 rounded-lg"
+                  isDragOver && "ring-2 ring-[#005BAC] ring-offset-2 rounded-lg"
                 )}
                 onDragEnter={handleDragEnter}
                 onDragLeave={handleDragLeave}
@@ -426,7 +426,7 @@ export function ChatInterface({ className, initialTaskMode }: ChatInterfaceProps
                     size="icon"
                     onClick={handleSend}
                     disabled={!message.trim() || isLoading}
-                    className="h-8 w-8 rounded-full bg-[#FF9100] text-white hover:bg-[#FF7A00]"
+                    className="h-8 w-8 rounded-full bg-[#005BAC] text-white hover:bg-[#004F9E]"
                   >
                     <ArrowUp className="h-4 w-4" />
                   </Button>

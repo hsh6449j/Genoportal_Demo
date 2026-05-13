@@ -83,11 +83,11 @@ export function RiskAnalysisResponse({ content }: RiskAnalysisProps) {
             </em>
           ),
           blockquote: ({ children }) => (
-            <blockquote className="border-l-4 border-amber-400 pl-4 italic text-gray-700 my-4">
+            <blockquote className="border-l-4 border-sky-400 pl-4 italic text-gray-700 my-4">
               {children}
             </blockquote>
           ),
-          hr: () => <hr className="my-6 border-t border-amber-200" />
+          hr: () => <hr className="my-6 border-t border-sky-200" />
         }}
       >
         {content}

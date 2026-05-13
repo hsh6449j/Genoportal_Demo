@@ -324,7 +324,7 @@ export function ResponsibleGamingTool() {
                       }`}
                     >
                       <div className="flex items-start gap-2">
-                        {active ? <Check className="mt-0.5 h-4 w-4 text-[#FF9100]" /> : <span className="mt-1 inline-block h-4 w-4 rounded border" />}
+                        {active ? <Check className="mt-0.5 h-4 w-4 text-[#005BAC]" /> : <span className="mt-1 inline-block h-4 w-4 rounded border" />}
                         <div>
                           <div className="font-medium">{item.title}</div>
                           <div className="mt-0.5 text-xs text-muted-foreground">{item.description}</div>

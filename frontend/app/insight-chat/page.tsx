@@ -15,6 +15,7 @@ import { Message } from "@/lib/event-system"
 import { assistantPromptSuggestions, getAssistantPresetMessages } from "@/lib/assistant-demo-history"
 import { compliancePromptSuggestions, getCompliancePresetMessages } from "@/lib/compliance-demo-history"
 import { developmentPromptSuggestions, getDevelopmentPresetMessages } from "@/lib/development-demo-history"
+import { generalQaHistoryPresets, generalQaPromptSuggestions, getGeneralQaPresetMessages } from "@/lib/general-qa-demo-history"
 import { staffSearchPromptSuggestions, getStaffSearchPresetMessages } from "@/lib/staff-search-demo-history"
 import {
   getDocumentWritingPromptSuggestions,
@@ -170,7 +171,7 @@ function createSeedMessages(agent: string | null, feature: string | null, docume
           "```json",
           "{",
           '  "messageTitle": "민원 안내",',
-          '  "messageBody": "안녕하세요. 신용회복위원회입니다. 상담 일정과 준비 서류를 안내드립니다.",',
+          '  "messageBody": "안녕하세요. 신한라이프입니다. 상담 일정과 준비 서류를 안내드립니다.",',
           '  "channels": ["sms", "kakao"],',
           '  "generatedAt": "2026-03-23T09:01:00+09:00"',
           "}",
@@ -189,7 +190,7 @@ function createSeedMessages(agent: string | null, feature: string | null, docume
         {
           id: "document-writer-translation-user-1",
           role: "user",
-          content: "[구어체 변환 요청]\n\n아래 신용회복위원회 안내 문구를 영어로 번역하고 구어체로 바꿔줘. '안녕하세요, 신용회복위원회입니다. 상담을 시작하기 전에 본인 확인이 필요합니다.'",
+          content: "[구어체 변환 요청]\n\n아래 신한라이프 안내 문구를 영어로 번역하고 구어체로 바꿔줘. '안녕하세요, 신한라이프입니다. 상담을 시작하기 전에 본인 확인이 필요합니다.'",
           timestamp: baseTime,
           sessionId,
         },
@@ -201,13 +202,13 @@ function createSeedMessages(agent: string | null, feature: string | null, docume
             "",
             "| 원문 (좌) | 번역문 (우) |",
             "|-----------|------------|",
-            "| 안녕하세요, 신용회복위원회입니다. | Hello, this is the Credit Counseling & Recovery Service (CCRS). |",
+            "| 안녕하세요, 신한라이프입니다. | Hello, this is Shinhan Life. |",
             "| 상담을 시작하기 전에 본인 확인이 필요합니다. | I'll need to verify your identity before we begin our consultation. |",
             "",
             "**전체 번역문:**",
-            "Hello, this is the Credit Counseling & Recovery Service (CCRS). I'll need to verify your identity before we begin our consultation.",
+            "Hello, this is Shinhan Life. I'll need to verify your identity before we begin our consultation.",
             "",
-            "> 💡 구어체 변환 및 위원회 도메인 영어사전(CCRS 등)이 적용되었습니다.",
+            "> 💡 구어체 변환 및 사내 용어 기준 표현이 적용되었습니다.",
           ].join("\n"),
           timestamp: new Date(baseTime.getTime() + 60_000),
           sessionId,
@@ -221,7 +222,7 @@ function createSeedMessages(agent: string | null, feature: string | null, docume
         {
           id: "document-writer-faq-user-1",
           role: "user",
-          content: "[FAQ 5개 생성] [첨부: 신용회복위원회_운영지침.pdf]\n\n첨부한 규정 문서를 바탕으로 내부 직원(신용회복위원회) 관점의 FAQ 5개를 생성해줘. 문서에 없는 내용은 생성하지 마.",
+          content: "[FAQ 5개 생성] [첨부: 신한라이프_운영지침.pdf]\n\n첨부한 규정 문서를 바탕으로 내부 직원(신한라이프) 관점의 FAQ 5개를 생성해줘. 문서에 없는 내용은 생성하지 마.",
           timestamp: baseTime,
           sessionId,
         },
@@ -229,7 +230,7 @@ function createSeedMessages(agent: string | null, feature: string | null, docume
           id: "document-writer-faq-assistant-1",
           role: "assistant",
           content: [
-            "**[FAQ 자동생성 결과 — 내부 직원(신용회복위원회) 관점]**",
+            "**[FAQ 자동생성 결과 — 내부 직원(신한라이프) 관점]**",
             "",
             "> ⚠️ 본 자료는 AI 생성 참고 자료입니다. 해당 내용을 검토 후 사용해야 합니다.",
             "",
@@ -250,7 +251,7 @@ function createSeedMessages(agent: string | null, feature: string | null, docume
             "A. 정보보안 침해 신고 채널(내선 보안팀)을 통해 즉시 신고하고, 관련 증빙 자료를 보존해야 합니다.",
             "",
             "---",
-            "*근거 문서: 신용회복위원회_운영지침.pdf*",
+            "*근거 문서: 신한라이프_운영지침.pdf*",
           ].join("\n"),
           timestamp: new Date(baseTime.getTime() + 60_000),
           sessionId,
@@ -307,18 +308,20 @@ function InsightChatPageContent() {
     agent === "document-writer"
       ? "문서작성 지원 에이전트"
       : agent === "debt-transfer"
-      ? "채권양수도 추론 에이전트"
+      ? "심사이력 추론 에이전트"
       : agent === "compliance"
       ? feature === "policy-search"
         ? "사내규정 검색"
         : "상담지식 에이전트"
       : agent === "development"
         ? "개발 지원"
+        : feature === "general-qa"
+          ? "단순 질의응답 챗봇"
         : feature === "staff-search"
           ? "업무담당자 검색"
           : feature === "partner-search"
-            ? "협약기관 검색"
-            : "민원상담 어시스턴트"
+            ? "제휴기관 검색"
+            : "고객상담 어시스턴트"
   const historyKey =
     agent === "document-writer"
       ? undefined
@@ -332,6 +335,10 @@ function InsightChatPageContent() {
         ? preset
           ? `genportal.chat.development.preset.${preset}.v1`
           : "genportal.chat.development.current.v1"
+        : feature === "general-qa"
+          ? preset
+            ? `genportal.chat.assistant.general-qa.preset.${preset}.v1`
+            : "genportal.chat.assistant.general-qa.current.v1"
         : feature === "staff-search"
           ? "genportal.chat.assistant.staff-search.current.v1"
           : feature === "partner-search"
@@ -350,6 +357,8 @@ function InsightChatPageContent() {
         ? getDevelopmentPresetMessages(preset)
         : agent === "compliance"
           ? getCompliancePresetMessages(preset)
+          : feature === "general-qa"
+            ? getGeneralQaPresetMessages(preset)
           : feature === "staff-search"
             ? getStaffSearchPresetMessages(preset)
           : feature === "counseling" || !feature
@@ -366,11 +375,13 @@ function InsightChatPageContent() {
       ? developmentPromptSuggestions
         : agent === "compliance"
           ? compliancePromptSuggestions
+        : feature === "general-qa"
+          ? generalQaPromptSuggestions
         : feature === "staff-search"
           ? staffSearchPromptSuggestions
-          : feature === "partner-search"
+        : feature === "partner-search"
             ? [
-                "신용회복 지원 협약기관 검색 예시를 보여줘.",
+                "신한라이프 제휴기관 검색 예시를 보여줘.",
                 "기관명이 정확하지 않을 때 후보 목록을 제시하는 예시를 보여줘.",
                 "협약기관 담당자 정보를 찾는 질의 예시를 보여줘.",
               ]

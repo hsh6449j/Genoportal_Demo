@@ -62,7 +62,7 @@ export function DataAnalysisMode({ className }: DataAnalysisModeProps) {
       {/* 파일 구조 확인 */}
       <section className="space-y-2">
         <div className="flex items-center gap-2 text-sm font-semibold text-foreground">
-          <TableProperties className="h-4 w-4 text-[#FF9100]" />
+          <TableProperties className="h-4 w-4 text-[#005BAC]" />
           파일 구조 확인
         </div>
         <p className="text-xs text-muted-foreground">
@@ -104,7 +104,7 @@ export function DataAnalysisMode({ className }: DataAnalysisModeProps) {
       {/* 분석 결과 */}
       <section className="space-y-3">
         <div className="flex items-center gap-2 text-sm font-semibold text-foreground">
-          <BarChart3 className="h-4 w-4 text-[#FF9100]" />
+          <BarChart3 className="h-4 w-4 text-[#005BAC]" />
           상담유형별 평균 처리시간 분석 결과
         </div>
 
@@ -136,7 +136,7 @@ export function DataAnalysisMode({ className }: DataAnalysisModeProps) {
                   }}
                 />
                 <ReTooltip
-                  cursor={{ fill: "#FF91001A" }}
+                  cursor={{ fill: "#005BAC1A" }}
                   formatter={(value: number, key: string) =>
                     key === "avgMinutes"
                       ? [`${value}분`, "평균 처리시간"]
@@ -146,7 +146,7 @@ export function DataAnalysisMode({ className }: DataAnalysisModeProps) {
                 <Bar
                   dataKey="avgMinutes"
                   radius={[4, 4, 0, 0]}
-                  fill="#FF9100"
+                  fill="#005BAC"
                 />
               </BarChart>
             </ResponsiveContainer>
@@ -181,7 +181,7 @@ export function DataAnalysisMode({ className }: DataAnalysisModeProps) {
       {/* 주요 인사이트 */}
       <section className="space-y-2">
         <div className="flex items-center gap-2 text-sm font-semibold text-foreground">
-          <Lightbulb className="h-4 w-4 text-[#FF9100]" />
+          <Lightbulb className="h-4 w-4 text-[#005BAC]" />
           주요 인사이트
         </div>
         <ul className="space-y-2">
@@ -190,7 +190,7 @@ export function DataAnalysisMode({ className }: DataAnalysisModeProps) {
               key={idx}
               className="flex gap-2 rounded-lg border border-border/50 bg-background px-3 py-2.5 text-xs leading-5 text-foreground"
             >
-              <span className="mt-0.5 inline-flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-[#FFF4E6] text-[10px] font-semibold text-[#FF9100]">
+              <span className="mt-0.5 inline-flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-[#EEF7FF] text-[10px] font-semibold text-[#005BAC]">
                 {idx + 1}
               </span>
               <span>{insight}</span>

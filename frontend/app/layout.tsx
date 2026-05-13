@@ -8,7 +8,7 @@ import { ThemeProvider } from "@/components/theme-provider"
 
 export const metadata: Metadata = {
   title: "AI Portal",
-  description: "Professional AI Research and Analysis Platform",
+  description: "Shinhan Life AI portal demo for customer service, operations, and productivity workflows",
   generator: "v0.app",
 }
 

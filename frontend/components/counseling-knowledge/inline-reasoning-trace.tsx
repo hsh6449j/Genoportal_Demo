@@ -61,7 +61,7 @@ export function InlineReasoningTrace({
       <div className="space-y-1.5 text-[11px] leading-5">
         {intent ? (
           <div className="flex items-start gap-2">
-            <StepDot n={1} color="#FF9100" />
+            <StepDot n={1} color="#005BAC" />
             <div className="min-w-0 flex-1">
               <span className="font-medium text-foreground">의도 분류</span>
               <span className="mx-1 text-muted-foreground">→</span>
@@ -77,7 +77,7 @@ export function InlineReasoningTrace({
                     "ml-1.5 inline-flex items-center gap-1 rounded px-1.5 py-0.5 text-[10px] font-medium",
                     intentOk
                       ? "bg-emerald-100 text-emerald-800"
-                      : "bg-amber-100 text-amber-800",
+                      : "bg-sky-100 text-sky-800",
                   )}
                 >
                   <Gauge className="h-2.5 w-2.5" />
@@ -93,7 +93,7 @@ export function InlineReasoningTrace({
 
         {retrieval ? (
           <div className="flex items-start gap-2">
-            <StepDot n={2} color="#FF9100" />
+            <StepDot n={2} color="#005BAC" />
             <div className="min-w-0 flex-1">
               <span className="font-medium text-foreground">영역별 RAG 검색</span>
               <span className="mx-1 text-muted-foreground">→</span>
@@ -112,7 +112,7 @@ export function InlineReasoningTrace({
               n={3}
               color={
                 relevance.passed || relevance.rewriteLog
-                  ? "#FF9100"
+                  ? "#005BAC"
                   : designColors.nodeGuardrail
               }
             />

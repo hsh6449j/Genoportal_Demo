@@ -22,7 +22,7 @@ interface ChatInputBarProps {
  * 특징:
  * - Textarea 기반 (`min-h-[120px] rounded-3xl`)
  * - 연한 블루 톤 보더 + 블루 글로우 섀도우
- * - 원형 주황 전송 버튼 (`#FF9100` → hover `#FF7A00`)
+ * - 원형 주황 전송 버튼 (`#005BAC` → hover `#004F9E`)
  * - Paperclip · Mic 보조 버튼은 목업 확장 (첨부·음성 인입 자리)
  *
  * 기존 `chat-input.tsx` 와 다르게:
@@ -88,7 +88,7 @@ export function ChatInputBar({
           type="button"
           size="icon"
           disabled={!message.trim()}
-          className="h-10 w-10 rounded-full bg-[#FF9100] text-white hover:bg-[#FF7A00] disabled:bg-[#FF9100]/50"
+          className="h-10 w-10 rounded-full bg-[#005BAC] text-white hover:bg-[#004F9E] disabled:bg-[#005BAC]/50"
           aria-label="전송"
         >
           <ArrowUp className="h-4 w-4" />

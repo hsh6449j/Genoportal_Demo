@@ -38,7 +38,7 @@ export function ChatPanel({ messages, onNewConversation }: ChatPanelProps) {
           variant="ghost"
           size="sm"
           onClick={onNewConversation}
-          className="gap-1.5 text-muted-foreground hover:text-[#FF9100]"
+          className="gap-1.5 text-muted-foreground hover:text-[#005BAC]"
         >
           <ArrowLeft className="h-4 w-4" />
           새 대화 시작
@@ -96,9 +96,9 @@ export function ChatPanel({ messages, onNewConversation }: ChatPanelProps) {
             return (
               <div key={msg.id} className="flex w-full items-start gap-4">
                 <AgentAvatar />
-                <div className="flex max-w-[85%] flex-col gap-3 rounded-2xl border border-[#FF9100]/30 bg-[#FFF4E6]/40 px-4 py-3">
+                <div className="flex max-w-[85%] flex-col gap-3 rounded-2xl border border-[#005BAC]/30 bg-[#EEF7FF]/40 px-4 py-3">
                   <div className="flex items-start gap-2 text-sm leading-relaxed text-foreground">
-                    <Info className="mt-0.5 h-4 w-4 shrink-0 text-[#FF9100]" />
+                    <Info className="mt-0.5 h-4 w-4 shrink-0 text-[#005BAC]" />
                     <p>{msg.text}</p>
                   </div>
                   <div className="flex gap-2">
@@ -111,7 +111,7 @@ export function ChatPanel({ messages, onNewConversation }: ChatPanelProps) {
                         "gap-1.5 text-xs",
                         advisoryConfirmed
                           ? "border-emerald-300 bg-emerald-50 text-emerald-700"
-                          : "bg-[#FF9100] text-white hover:bg-[#FF7A00]",
+                          : "bg-[#005BAC] text-white hover:bg-[#004F9E]",
                       )}
                     >
                       <CheckCircle2 className="h-3.5 w-3.5" />
@@ -170,7 +170,7 @@ function AgentAvatar({ clarify = false }: { clarify?: boolean }) {
       )}
     >
       <Image
-        src="/1-ssrc-logo-orange.png"
+        src="/shinhanlife-ai-mark.svg"
         alt="상담지식 에이전트"
         width={32}
         height={32}

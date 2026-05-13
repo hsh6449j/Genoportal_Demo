@@ -151,7 +151,7 @@ export function CatalystRightPanel({
                         <h4 className="font-medium text-foreground mb-2">예상 시나리오(영향 범위 — 현대차/관련 JV)</h4>
                         <div className="text-sm space-y-1 text-foreground">
                           <p><span className="font-medium text-red-600">단기(1주):</span> 운영·물류 중단·주장·조사로 불확실성 급증 → 가동률·공급 차질로 실적·주가에 소폭~중간 하방 충격 (예: -3% ~ -8% 범위 가능, 이벤트 강도에 따라 다름).</p>
-                          <p><span className="font-medium text-orange-600">중기(1–3개월):</span> 수사·비자·인력복구·공장 안전·허가 이슈로 가동 재개 지연 → 생산 일정·납기 재조정 및 비용 상승(대체인력·지연보상 등). (중기 영향: 매출/공급 차질로 -8% ~ -20% 시나리오).</p>
+                          <p><span className="font-medium text-blue-600">중기(1–3개월):</span> 수사·비자·인력복구·공장 안전·허가 이슈로 가동 재개 지연 → 생산 일정·납기 재조정 및 비용 상승(대체인력·지연보상 등). (중기 영향: 매출/공급 차질로 -8% ~ -20% 시나리오).</p>
                           <p><span className="font-medium text-green-600">장기(6개월+):</span> 외교적 해결·현지 대체인력 확보·현지투자 확대 등이 정리되면 정상화 가능. 다만, 투자 신뢰·정책 리스크로 향후 미국 투자비용(리스크 프리미엄)·운영정책 재설계 필요 — 장기 영향은 회사 대응에 따라 +10%~+30% 또는 회복 지연 시 저성장 시나리오.</p>
                         </div>
                       </div>
@@ -175,7 +175,7 @@ export function CatalystRightPanel({
                         <h4 className="font-medium text-gray-900 mb-2">예상 시나리오</h4>
                         <div className="text-sm space-y-1 text-[#1a2438]">
                           <p><span className="font-medium text-red-600">단기(1주):</span> -2~4% 조정 (금리 영향)</p>
-                          <p><span className="font-medium text-orange-600">중기(1-3개월):</span> -10~15% 대기 (섹터 경쟁 심화)</p>
+                          <p><span className="font-medium text-blue-600">중기(1-3개월):</span> -10~15% 대기 (섹터 경쟁 심화)</p>
                           <p><span className="font-medium text-green-600">장기(6개월+):</span> +20~40% 상승 (기술 혁신과 시장 점유율 확대)</p>
                         </div>
                       </div>

@@ -62,7 +62,7 @@ export const documentWritingTools: DocumentWritingToolDefinition[] = [
     id: "translation",
     label: "번역",
     description: "텍스트 또는 업로드 문서를 번역합니다. 구어체 변환 옵션과 위원회 도메인 영어사전을 지원하며, 원문-번역문 대조 형태로 제공됩니다.",
-    starterPrompt: "아래 신용회복위원회 안내 문구를 영어로 번역하고 구어체로 바꿔줘.",
+    starterPrompt: "아래 신한라이프 안내 문구를 영어로 번역하고 구어체로 바꿔줘.",
     workflow: [
       "번역할 텍스트를 입력하거나, 상단 옵션 바에서 문서 파일(PDF·HWP·DOCX)을 업로드합니다.",
       "상담 스크립트·안내 문구의 경우 '구어체 변환' 버튼을 활성화합니다.",
@@ -77,7 +77,7 @@ export const documentWritingTools: DocumentWritingToolDefinition[] = [
   {
     id: "faq",
     label: "FAQ 자동생성기",
-    description: "업로드된 규정 문서를 바탕으로 내부 직원(신용회복위원회) 관점의 FAQ를 자동 생성합니다. 문서 외 사실은 생성하지 않습니다.",
+    description: "업로드된 규정 문서를 바탕으로 내부 직원(신한라이프) 관점의 FAQ를 자동 생성합니다. 문서 외 사실은 생성하지 않습니다.",
     starterPrompt: "첨부한 규정 문서를 바탕으로 직원용 FAQ 5개를 생성해줘.",
     workflow: [
       "상단 옵션 바에서 기준 규정 문서를 업로드합니다 (PDF·HWP·DOCX, 용량 제한 적용).",
@@ -104,7 +104,7 @@ const promptSuggestionsByTool: Record<DocumentWritingTool, string[]> = {
     "이 상담 스크립트를 자연스러운 외국인 고객 응대용 영어로 번역해줘.",
   ],
   faq: [
-    "입력된 규정 문서에서 내부 직원(신용회복위원회) 관점의 FAQ 5개를 생성해줘.",
+    "입력된 규정 문서에서 내부 직원(신한라이프) 관점의 FAQ 5개를 생성해줘.",
     "새로 개정된 지침서를 바탕으로 실무자가 자주 물어볼 만한 FAQ 10개 만들어줘.",
     "근거 문서에 없는 내용을 생성하지 말고, 핵심 주제에 대해 FAQ 3개를 정리해줄래?",
   ],
@@ -148,13 +148,13 @@ export const documentWritingHistoryPresets: DocumentWritingHistoryPreset[] = [
     messages: buildMessages(
       "document-writing-history-document-translation",
       "2026-03-23T11:30:00+09:00",
-      "[구어체 변환 요청]\n\n아래 상담 스크립트를 외국인 고객 응대를 위해 자연스러운 구어체 영어로 번역해줘. '안녕하세요, 신용회복위원회입니다. 상담을 위해 본인 확인이 먼저 필요한데요, 신분증을 보여주시겠어요?'",
+      "[구어체 변환 요청]\n\n아래 상담 스크립트를 외국인 고객 응대를 위해 자연스러운 구어체 영어로 번역해줘. '안녕하세요, 신한라이프입니다. 상담을 위해 본인 확인이 먼저 필요한데요, 신분증을 보여주시겠어요?'",
       [
         "**[번역 결과 — 구어체 변환 적용 / 위원회 도메인 영어사전 반영]**",
         "",
         "| 원문 (좌) | 번역문 (우) |",
         "|-----------|------------|",
-        "| 안녕하세요, 신용회복위원회입니다. | Hello, this is the Credit Counseling & Recovery Service (CCRS). |",
+        "| 안녕하세요, 신한라이프입니다. | Hello, this is Shinhan Life. |",
         "| 상담을 위해 본인 확인이 먼저 필요한데요, | I'll need to verify your identity before we get started. |",
         "| 신분증을 보여주시겠어요? | Could you please show me your ID? |",
         "",
@@ -173,9 +173,9 @@ export const documentWritingHistoryPresets: DocumentWritingHistoryPreset[] = [
     messages: buildMessages(
       "document-writing-history-rule-faq",
       "2026-03-23T11:50:00+09:00",
-      "[FAQ 3개 생성] [첨부: 정보보안_업무지침_v2.pdf]\n\n첨부된 신규 보안 지침 문서를 바탕으로 내부 직원(신용회복위원회) 관점의 FAQ 3개를 만들어줘. 문서에 없는 내용은 생성하지 말고.",
+      "[FAQ 3개 생성] [첨부: 정보보안_업무지침_v2.pdf]\n\n첨부된 신규 보안 지침 문서를 바탕으로 내부 직원(신한라이프) 관점의 FAQ 3개를 만들어줘. 문서에 없는 내용은 생성하지 말고.",
       [
-        "**[FAQ 자동생성 결과 — 내부 직원(신용회복위원회) 관점]**",
+        "**[FAQ 자동생성 결과 — 내부 직원(신한라이프) 관점]**",
         "",
         "> ⚠️ 본 자료는 AI 생성 참고 자료입니다. 해당 내용을 검토 후 사용해야 합니다.",
         "",

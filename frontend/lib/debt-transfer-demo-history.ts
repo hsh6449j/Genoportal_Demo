@@ -15,7 +15,7 @@ type ChainStep = {
 function buildChainViz(steps: ChainStep[]): string {
   const nodeStyle = (isFinal?: boolean) =>
     isFinal
-      ? `background:#FF9100;color:#ffffff;border-radius:8px;padding:10px 18px;text-align:center;flex-shrink:0;outline:2px solid rgba(255,145,0,0.3);outline-offset:2px`
+      ? `background:#005BAC;color:#ffffff;border-radius:8px;padding:10px 18px;text-align:center;flex-shrink:0;outline:2px solid rgba(255,145,0,0.3);outline-offset:2px`
       : `background:#153AD4;color:#ffffff;border-radius:8px;padding:10px 18px;text-align:center;flex-shrink:0`
 
   const arrowBlock = (period: string, type: string) =>

@@ -61,9 +61,9 @@ export function AnswerCard({
       <div className="flex flex-wrap items-center gap-2">
         <Badge
           variant="outline"
-          className="border-[#FF9100]/50 bg-[#FFF4E6] text-[#1B3A4B]"
+          className="border-[#005BAC]/50 bg-[#EEF7FF] text-[#1B3A4B]"
         >
-          <Sparkles className="mr-1 h-3 w-3 text-[#FF9100]" />
+          <Sparkles className="mr-1 h-3 w-3 text-[#005BAC]" />
           참고 정보
         </Badge>
         <Badge
@@ -134,7 +134,7 @@ export function AnswerCard({
               <li key={idx} className="flex gap-2.5">
                 <span
                   className="mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full text-[10px] font-semibold text-white"
-                  style={{ backgroundColor: "#FF9100" }}
+                  style={{ backgroundColor: "#005BAC" }}
                 >
                   {idx + 1}
                 </span>
@@ -146,9 +146,9 @@ export function AnswerCard({
                     {step.rationale}
                   </p>
                   {step.followUp ? (
-                    <div className="mt-1.5 flex items-start gap-1.5 rounded-md border border-amber-200 bg-amber-50 px-2 py-1.5">
-                      <AlertCircle className="mt-0.5 h-3 w-3 shrink-0 text-amber-700" />
-                      <p className="text-[10.5px] leading-4 text-amber-900">
+                    <div className="mt-1.5 flex items-start gap-1.5 rounded-md border border-sky-200 bg-sky-50 px-2 py-1.5">
+                      <AlertCircle className="mt-0.5 h-3 w-3 shrink-0 text-sky-700" />
+                      <p className="text-[10.5px] leading-4 text-sky-900">
                         <span className="font-semibold">추가 확인 필요 · </span>
                         {step.followUp}
                       </p>
@@ -174,7 +174,7 @@ export function AnswerCard({
             <Badge
               key={c.label}
               variant="outline"
-              className="border-[#FF9100]/40 bg-[#FFF4E6]/70 font-normal text-[#1B3A4B]"
+              className="border-[#005BAC]/40 bg-[#EEF7FF]/70 font-normal text-[#1B3A4B]"
             >
               {c.label}
               <span className="ml-1 text-[10px] text-[#1B3A4B]/60">

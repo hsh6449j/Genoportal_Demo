@@ -39,9 +39,9 @@ export function PartnerSearchView() {
           <p className="text-sm uppercase tracking-[0.3em] text-muted-foreground">
             Partner Search
           </p>
-          <h1 className="text-3xl font-bold text-foreground">협약기관 검색</h1>
+          <h1 className="text-3xl font-bold text-foreground">제휴기관 검색</h1>
           <p className="text-sm text-muted-foreground">
-            자연어 질의로 신용회복 지원 협약기관을 찾아 안내하는 화면입니다.
+            자연어 질의로 신한라이프 제휴기관과 외부 협력사를 찾아 안내하는 화면입니다.
           </p>
         </div>
 

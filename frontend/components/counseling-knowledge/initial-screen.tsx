@@ -24,8 +24,8 @@ export function InitialScreen({ onScenarioStart }: InitialScreenProps) {
   return (
     <div className="flex flex-col gap-6">
       {/* 추천 질문 카드 */}
-      <div className="rounded-xl border border-[#FF9100]/30 bg-white p-6">
-        <div className="mb-1 flex items-center gap-1.5 text-xs font-semibold text-[#FF9100]">
+      <div className="rounded-xl border border-[#005BAC]/30 bg-white p-6">
+        <div className="mb-1 flex items-center gap-1.5 text-xs font-semibold text-[#005BAC]">
           <Sparkles className="h-3.5 w-3.5" />
           추천 질문
         </div>
@@ -44,9 +44,9 @@ export function InitialScreen({ onScenarioStart }: InitialScreenProps) {
                 key={preset.id}
                 type="button"
                 onClick={() => onScenarioStart(preset.id)}
-                className="flex w-full items-start gap-3 rounded-lg border border-[#FF9100]/30 bg-white px-4 py-3 text-left transition hover:border-[#FF9100]/60 hover:bg-[#FFF4E6]/50"
+                className="flex w-full items-start gap-3 rounded-lg border border-[#005BAC]/30 bg-white px-4 py-3 text-left transition hover:border-[#005BAC]/60 hover:bg-[#EEF7FF]/50"
               >
-                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[#FFF4E6] text-[#FF9100]">
+                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[#EEF7FF] text-[#005BAC]">
                   <Headset className="h-4 w-4" />
                 </div>
                 <div className="min-w-0 flex-1 space-y-1">

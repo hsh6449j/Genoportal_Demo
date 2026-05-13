@@ -69,7 +69,7 @@ export const developmentHistoryPresets: DevelopmentHistoryPreset[] = [
         "def generate_counseling_message(payload: CounselingMessageRequest):",
         "    return CounselingMessageResponse(",
         '        message_title=\"상담 안내\",',
-        '        message_body=f\"안녕하세요. 신용회복위원회입니다. {payload.request_date} 상담 안내를 보내드립니다.\",',
+        '        message_body=f\"안녕하세요. 신한라이프입니다. {payload.request_date} 상담 안내를 보내드립니다.\",',
         '        channel=\"kakao\",',
         "    )",
         "```",

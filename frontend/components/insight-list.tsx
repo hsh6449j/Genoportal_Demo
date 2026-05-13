@@ -131,8 +131,8 @@ export default function InsightList({ onSelectInsight }: InsightListProps) {
                                         className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
                                     />
                                 ) : (
-                                    <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-orange-50 to-amber-50 dark:from-orange-950/40 dark:to-amber-950/40">
-                                        <TrendingUp className="h-12 w-12 text-orange-200 dark:text-orange-700" />
+                                    <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-blue-50 to-sky-50 dark:from-blue-950/40 dark:to-sky-950/40">
+                                        <TrendingUp className="h-12 w-12 text-blue-200 dark:text-blue-700" />
                                     </div>
                                 )}
                                 <div className="absolute top-3 left-3">
@@ -153,7 +153,7 @@ export default function InsightList({ onSelectInsight }: InsightListProps) {
                                     </span>
                                 </div>
 
-                                <h3 className="font-bold text-lg mb-2 line-clamp-2 group-hover:text-[#FF9100] transition-colors">
+                                <h3 className="font-bold text-lg mb-2 line-clamp-2 group-hover:text-[#005BAC] transition-colors">
                                     {insight.title}
                                 </h3>
 

@@ -47,34 +47,26 @@ export function PromptDetailModal({ prompt, open, onOpenChange, onLike }: Prompt
 
   const getSectorColor = (sector: string) => {
     const colors = {
-      macro: "bg-blue-100 text-blue-800 border-blue-100",
-      semiconductor: "bg-purple-100 text-purple-800 border-purple-100",
-      game: "bg-green-100 text-green-800 border-green-100",
-      automotive: "bg-red-100 text-red-800 border-red-100",
-      petrochemical: "bg-orange-100 text-orange-800 border-orange-100",
-      shipbuilding: "bg-cyan-100 text-cyan-800 border-cyan-100",
-      aviation: "bg-indigo-100 text-indigo-800 border-indigo-100",
-      steel: "bg-gray-100 text-gray-800 border-gray-100",
-      retail: "bg-pink-100 text-pink-800 border-pink-100",
-      culture: "bg-yellow-100 text-yellow-800 border-yellow-100",
-      finance: "bg-emerald-100 text-emerald-800 border-emerald-100"
+      counseling: "bg-blue-100 text-blue-800 border-blue-100",
+      knowledge: "bg-sky-100 text-sky-800 border-sky-100",
+      document: "bg-blue-100 text-blue-800 border-blue-100",
+      complaint: "bg-rose-100 text-rose-800 border-rose-100",
+      assignment: "bg-cyan-100 text-cyan-800 border-cyan-100",
+      analytics: "bg-emerald-100 text-emerald-800 border-emerald-100",
+      operation: "bg-purple-100 text-purple-800 border-purple-100",
     }
     return colors[sector as keyof typeof colors] || "bg-gray-100 text-gray-800 border-gray-100"
   }
 
   const getSectorDisplayName = (sector: string) => {
     const names = {
-      macro: "매크로",
-      semiconductor: "반도체",
-      game: "게임",
-      automotive: "자동차",
-      petrochemical: "정유/화학",
-      shipbuilding: "조선/해운",
-      aviation: "항공",
-      steel: "철강",
-      retail: "유통",
-      culture: "문화",
-      finance: "금융"
+      counseling: "민원 상담",
+      knowledge: "규정/지식",
+      document: "문서 작성",
+      complaint: "민원 처리",
+      assignment: "담당자 배정",
+      analytics: "데이터 분석",
+      operation: "운영 관리",
     }
     return names[sector as keyof typeof names] || sector
   }
@@ -182,9 +174,9 @@ export function PromptDetailModal({ prompt, open, onOpenChange, onLike }: Prompt
               💡 사용 팁
             </h4>
             <ul className="text-sm text-gray-700 dark:text-gray-300 space-y-1">
-              <li>• 프롬프트를 복사하여 AI 모델에 직접 사용하세요</li>
-              <li>• 필요에 따라 내용을 수정하여 더 구체적으로 만들어보세요</li>
-              <li>• 관련 데이터나 컨텍스트를 추가하면 더 나은 결과를 얻을 수 있습니다</li>
+              <li>• 템플릿을 복사한 뒤 기관명, 규정명, 민원 유형 등 실제 정보로 바꿔 사용하세요</li>
+              <li>• 상담 문구, 규정 검색, 문서 작성 목적에 따라 어조와 출력 형식을 함께 지정하면 좋습니다</li>
+              <li>• 내부 검토가 필요한 문안은 생성 결과를 바로 발송하지 말고 담당자 확인을 거치세요</li>
             </ul>
           </div>
         </div>

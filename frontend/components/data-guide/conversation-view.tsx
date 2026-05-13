@@ -51,7 +51,7 @@ export function ConversationView({
           variant="ghost"
           size="sm"
           onClick={onNewConversation}
-          className="gap-1.5 text-muted-foreground hover:text-[#FF9100]"
+          className="gap-1.5 text-muted-foreground hover:text-[#005BAC]"
         >
           <ArrowLeft className="h-4 w-4" />
           새 대화 시작
@@ -115,7 +115,7 @@ function AgentAvatar({ clarify = false }: { clarify?: boolean }) {
       )}
     >
       <Image
-        src="/1-ssrc-logo-orange.png"
+        src="/shinhanlife-ai-mark.svg"
         alt="데이터길잡이 에이전트"
         width={32}
         height={32}
@@ -178,14 +178,14 @@ function ClarifyBubble({
         className={cn(
           "flex max-w-[85%] flex-col gap-2 rounded-2xl border px-4 py-3",
           isWarning
-            ? "border-amber-300 bg-amber-50/60"
+            ? "border-sky-300 bg-sky-50/60"
             : "border-[#8C8C8C]/40 bg-[#8C8C8C]/10",
         )}
       >
         <div
           className={cn(
             "text-[10px] font-semibold uppercase tracking-wide",
-            isWarning ? "text-amber-700" : "text-[#8C8C8C]",
+            isWarning ? "text-sky-700" : "text-[#8C8C8C]",
           )}
         >
           {label}
@@ -204,9 +204,9 @@ function ClarifyBubble({
  */
 function PiiWarningCard() {
   return (
-    <div className="rounded-xl border border-[#FF9100]/40 bg-white p-5">
+    <div className="rounded-xl border border-[#005BAC]/40 bg-white p-5">
       <div className="flex items-start gap-3">
-        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#FFF4E6] text-[#FF9100]">
+        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#EEF7FF] text-[#005BAC]">
           <ShieldAlert className="h-5 w-5" />
         </div>
         <div className="space-y-2">
@@ -226,13 +226,13 @@ function PiiWarningCard() {
             <div className="flex flex-wrap gap-1.5">
               <Badge
                 variant="outline"
-                className="border-[#FF9100]/40 bg-[#FFF4E6] text-[#1B3A4B]"
+                className="border-[#005BAC]/40 bg-[#EEF7FF] text-[#1B3A4B]"
               >
                 주민등록번호 {piiDetection.rrn}건
               </Badge>
               <Badge
                 variant="outline"
-                className="border-[#FF9100]/40 bg-[#FFF4E6] text-[#1B3A4B]"
+                className="border-[#005BAC]/40 bg-[#EEF7FF] text-[#1B3A4B]"
               >
                 전화번호 {piiDetection.phone}건
               </Badge>
@@ -266,7 +266,7 @@ function FileAttachChip({
   return (
     <div
       className={cn(
-        "inline-flex items-center gap-2 self-end rounded-lg border border-[#FF9100]/40 bg-white px-3 py-1.5 text-[11px] text-[#1B3A4B] shadow-sm",
+        "inline-flex items-center gap-2 self-end rounded-lg border border-[#005BAC]/40 bg-white px-3 py-1.5 text-[11px] text-[#1B3A4B] shadow-sm",
       )}
     >
       <Paperclip className="h-3 w-3 text-muted-foreground" />

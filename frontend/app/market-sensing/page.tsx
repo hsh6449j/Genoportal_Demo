@@ -960,7 +960,7 @@ function MarketSensingPageContent() {
     }
   }, [selectedWord, sourceFilter])
 
-  const tabTriggerClass = "relative h-auto rounded-none border-0 bg-transparent px-0 pb-3 pt-2 text-base font-semibold text-[#7a6a58] transition-colors hover:text-[#FF9100] data-[state=active]:text-[#FF9100] data-[state=active]:bg-transparent data-[state=active]:shadow-none after:absolute after:left-0 after:right-0 after:bottom-[-1px] after:h-[2px] after:bg-transparent data-[state=active]:after:bg-[#FF9100]"
+  const tabTriggerClass = "relative h-auto rounded-none border-0 bg-transparent px-0 pb-3 pt-2 text-base font-semibold text-[#7a6a58] transition-colors hover:text-[#005BAC] data-[state=active]:text-[#005BAC] data-[state=active]:bg-transparent data-[state=active]:shadow-none after:absolute after:left-0 after:right-0 after:bottom-[-1px] after:h-[2px] after:bg-transparent data-[state=active]:after:bg-[#005BAC]"
 
   return (
     <div className="h-full overflow-auto">
@@ -982,7 +982,7 @@ function MarketSensingPageContent() {
               <Button
                 onClick={isGenerating ? handleStopGeneration : handleGenerateInsight}
                 variant={isGenerating ? "destructive" : "default"}
-                className={isGenerating ? "" : "bg-[#FF9100] hover:bg-[#FF7A00] text-white"}
+                className={isGenerating ? "" : "bg-[#005BAC] hover:bg-[#004F9E] text-white"}
               >
                 {isGenerating ? (
                   <>
@@ -1053,10 +1053,10 @@ function MarketSensingPageContent() {
                     >
                       <div className="flex items-start gap-3">
                         <div className={`rounded-full p-2 ${alert.type === 'stock' ? 'bg-green-100' :
-                          alert.type === 'volume' ? 'bg-orange-100' : 'bg-amber-100'
+                          alert.type === 'volume' ? 'bg-blue-100' : 'bg-sky-100'
                           }`}>
                           <IconComponent className={`h-4 w-4 ${alert.type === 'stock' ? 'text-green-600' :
-                            alert.type === 'volume' ? 'text-orange-600' : 'text-amber-600'
+                            alert.type === 'volume' ? 'text-blue-600' : 'text-sky-600'
                             }`} />
                         </div>
                         <div className="flex-1 min-w-0">
@@ -1099,7 +1099,7 @@ function MarketSensingPageContent() {
                     <Button
                       variant="ghost"
                       size="sm"
-                      className="text-sm text-[#FF9100] hover:text-[#FF7A00]"
+                      className="text-sm text-[#005BAC] hover:text-[#004F9E]"
                       onClick={() => setSelectedWord(null)}
                     >
                       선택 초기화
@@ -1118,7 +1118,7 @@ function MarketSensingPageContent() {
                           key={option.value}
                           size="sm"
                           variant={sourceFilter === option.value ? "default" : "outline"}
-                          className={`rounded-full px-4 ${sourceFilter === option.value ? "bg-[#FF9100] text-white hover:bg-[#FF7A00]" : "border-[#ecd7bb] text-[#6f665c]"}`}
+                          className={`rounded-full px-4 ${sourceFilter === option.value ? "bg-[#005BAC] text-white hover:bg-[#004F9E]" : "border-[#C9DDF2] text-[#6f665c]"}`}
                           onClick={() => handleFilterChange("source", option.value)}
                         >
                           {option.label}
@@ -1138,7 +1138,7 @@ function MarketSensingPageContent() {
                           key={option.value}
                           size="sm"
                           variant={timeFilter === option.value ? "default" : "outline"}
-                          className={`rounded-full px-4 ${timeFilter === option.value ? "bg-[#FF9100] text-white hover:bg-[#FF7A00]" : "border-[#ecd7bb] text-[#6f665c]"}`}
+                          className={`rounded-full px-4 ${timeFilter === option.value ? "bg-[#005BAC] text-white hover:bg-[#004F9E]" : "border-[#C9DDF2] text-[#6f665c]"}`}
                           onClick={() => handleFilterChange("time", option.value)}
                         >
                           {option.label}
@@ -1163,14 +1163,14 @@ function MarketSensingPageContent() {
                   <CardHeader className="bg-card pb-3">
                     <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
                       <div>
-                        <Badge variant="outline" className="mb-1 w-fit border-[#FF9100] text-[#FF9100]">
+                        <Badge variant="outline" className="mb-1 w-fit border-[#005BAC] text-[#005BAC]">
                           선택 키워드
                         </Badge>
                         <CardTitle className="text-2xl text-[#1a2a5b]">{selectedWord}</CardTitle>
                       </div>
                       <div className="flex gap-2">
                         {sourceFilter !== "all" && (
-                          <Badge variant="secondary" className="bg-[#FFF4E5] text-[#FF9100]">
+                          <Badge variant="secondary" className="bg-[#EEF7FF] text-[#005BAC]">
                             {sourceFilter.toUpperCase()}
                           </Badge>
                         )}
@@ -1181,7 +1181,7 @@ function MarketSensingPageContent() {
                     </div>
                   </CardHeader>
                   <CardContent className="space-y-4">
-                    <p className="text-xs font-semibold text-[#FF9100]">AI 요약/분석</p>
+                    <p className="text-xs font-semibold text-[#005BAC]">AI 요약/분석</p>
                     <div className="rounded-lg border border-border bg-muted/40 p-4 text-sm leading-relaxed text-foreground">
                       {(() => {
                         const relatedItems = getRelatedItems(selectedWord)
@@ -1220,7 +1220,7 @@ function MarketSensingPageContent() {
                     <Button
                       size="sm"
                       variant={relatedContentTab === "news" ? "default" : "outline"}
-                      className={`rounded-full px-4 ${relatedContentTab === "news" ? "bg-[#FF9100] text-white hover:bg-[#FF7A00]" : "border-[#ecd7bb] text-[#6f665c]"}`}
+                      className={`rounded-full px-4 ${relatedContentTab === "news" ? "bg-[#005BAC] text-white hover:bg-[#004F9E]" : "border-[#C9DDF2] text-[#6f665c]"}`}
                       onClick={() => setRelatedContentTab("news")}
                     >
                       뉴스
@@ -1228,7 +1228,7 @@ function MarketSensingPageContent() {
                     <Button
                       size="sm"
                       variant={relatedContentTab === "sns" ? "default" : "outline"}
-                      className={`rounded-full px-4 ${relatedContentTab === "sns" ? "bg-[#FF9100] text-white hover:bg-[#FF7A00]" : "border-[#ecd7bb] text-[#6f665c]"}`}
+                      className={`rounded-full px-4 ${relatedContentTab === "sns" ? "bg-[#005BAC] text-white hover:bg-[#004F9E]" : "border-[#C9DDF2] text-[#6f665c]"}`}
                       onClick={() => setRelatedContentTab("sns")}
                     >
                       SNS
@@ -1277,7 +1277,7 @@ function MarketSensingPageContent() {
                         {/* AI 요약을 해당 섹션에서 제거하고, 선택 키워드 패널로 이동 */}
 
                         {listToRender.length === 0 ? (
-                          <div className="rounded-lg border border-dashed border-[#f0dcc2] bg-[#fff8f0] p-6 text-center text-sm text-muted-foreground">
+                          <div className="rounded-lg border border-dashed border-[#D4E5F7] bg-[#F5FAFF] p-6 text-center text-sm text-muted-foreground">
                             표시할 {relatedContentTab === "news" ? "뉴스" : "SNS"} 콘텐츠가 없습니다.
                           </div>
                         ) : (
@@ -1285,18 +1285,18 @@ function MarketSensingPageContent() {
                             {listToRender.map(item => (
                               <div
                                 key={item.id}
-                                className="group cursor-pointer rounded-lg border border-[#f0dcc2] p-4 transition hover:border-[#FF9100] hover:shadow-sm"
+                                className="group cursor-pointer rounded-lg border border-[#D4E5F7] p-4 transition hover:border-[#005BAC] hover:shadow-sm"
                                 onClick={() => handleItemClick(item.url)}
                               >
                                 <div className="flex items-center justify-between text-xs text-muted-foreground">
                                   <span>{item.type}</span>
                                   <span>{item.date}</span>
                                 </div>
-                                <h4 className="mt-2 text-sm font-semibold text-[#5f3b16] group-hover:text-[#FF9100]">
+                                <h4 className="mt-2 text-sm font-semibold text-[#5f3b16] group-hover:text-[#005BAC]">
                                   {item.title}
                                 </h4>
                                 <p className="mt-1 text-sm text-[#6f665c] line-clamp-2">{item.content}</p>
-                                <div className="mt-3 flex items-center gap-1 text-xs text-[#FF9100]">
+                                <div className="mt-3 flex items-center gap-1 text-xs text-[#005BAC]">
                                   자세히 보기
                                   <ExternalLink className="h-3 w-3" />
                                 </div>
@@ -1319,14 +1319,14 @@ function MarketSensingPageContent() {
                   {[
                     { symbol: "POL", name: "사내규정 검색" },
                     { symbol: "STA", name: "업무담당자 검색" },
-                    { symbol: "PAR", name: "협약기관 검색" }
+                    { symbol: "PAR", name: "제휴기관 검색" }
                   ].map(stock => (
                     <div key={stock.symbol} className="flex items-center justify-between rounded-lg border border-border p-3 bg-card">
                       <div>
                         <p className="text-sm font-semibold text-[#5f3b16]">{stock.symbol}</p>
                         <p className="text-xs text-muted-foreground">{stock.name}</p>
                       </div>
-                      <Button size="sm" variant="outline" className="border-[#ecd7bb] text-[#FF9100] hover:border-[#FF9100]" onClick={() => handleCorrelationAnalysis(stock.name, stock.symbol)}>
+                      <Button size="sm" variant="outline" className="border-[#C9DDF2] text-[#005BAC] hover:border-[#005BAC]" onClick={() => handleCorrelationAnalysis(stock.name, stock.symbol)}>
                         상관관계 분석
                       </Button>
                     </div>
@@ -1356,7 +1356,7 @@ function MarketSensingPageContent() {
                   placeholder={feature === "debt-transfer" ? "예: 채권양수도 추론 관련 지표를 시범적으로 구성해줘." : "예: 최근 민원 접수량과 상담 완료율 변화를 함께 분석해줘."}
                   className="h-11"
                 />
-                <Button className="h-11 bg-[#FF9100] hover:bg-[#FF7A00] text-white" onClick={runDashboardQuestion}>
+                <Button className="h-11 bg-[#005BAC] hover:bg-[#004F9E] text-white" onClick={runDashboardQuestion}>
                   분석 실행
                 </Button>
               </div>
@@ -1369,7 +1369,7 @@ function MarketSensingPageContent() {
                     onClick={() => applyDashboardScenario(scenario.id)}
                     className={`rounded-full border px-4 py-2 text-sm transition-colors ${
                       selectedDashboardScenarioId === scenario.id
-                        ? "border-[#FF9100] bg-[#FFF4E5]"
+                        ? "border-[#005BAC] bg-[#EEF7FF]"
                         : "border-border bg-card hover:bg-muted"
                     }`}
                   >
@@ -1398,7 +1398,7 @@ function MarketSensingPageContent() {
                           onClick={() => toggleRecommendedMetric(metricKey)}
                           className={`rounded-xl border px-4 py-4 text-left transition-all ${
                             active
-                              ? "border-[#FF9100] bg-[#FFF4E5] shadow-sm"
+                              ? "border-[#005BAC] bg-[#EEF7FF] shadow-sm"
                               : "border-border bg-background hover:bg-muted"
                           }`}
                         >
@@ -1407,7 +1407,7 @@ function MarketSensingPageContent() {
                               <Checkbox checked={active} className="pointer-events-none" />
                               <div className="text-xs text-muted-foreground">{metric.source}</div>
                             </div>
-                            <div className={`rounded-full px-2 py-1 text-[11px] font-medium ${active ? "bg-[#FF9100] text-white" : "bg-muted text-muted-foreground"}`}>
+                            <div className={`rounded-full px-2 py-1 text-[11px] font-medium ${active ? "bg-[#005BAC] text-white" : "bg-muted text-muted-foreground"}`}>
                               {active ? "선택됨" : "선택 안 함"}
                             </div>
                           </div>
@@ -1433,11 +1433,11 @@ function MarketSensingPageContent() {
                           key={message.id}
                           className={`rounded-2xl border px-4 py-4 ${
                             message.role === "user"
-                              ? "ml-8 bg-[#FF9100] text-white border-[#FF9100]"
+                              ? "ml-8 bg-[#005BAC] text-white border-[#005BAC]"
                               : "mr-8 bg-background border-border"
                           }`}
                         >
-                          <div className={`text-xs font-medium ${message.role === "user" ? "text-white/80" : "text-[#FF9100]"}`}>
+                          <div className={`text-xs font-medium ${message.role === "user" ? "text-white/80" : "text-[#005BAC]"}`}>
                             {message.role === "user" ? "질문" : "분석 답변"}
                           </div>
                           {message.role === "user" ? (
@@ -1476,7 +1476,7 @@ function MarketSensingPageContent() {
                         <div className="space-y-3">
                           {followUpResponses.map((item) => (
                             <div key={item.id} className="rounded-lg border bg-background p-4">
-                              <div className="text-xs font-medium text-[#FF9100]">추가 질문</div>
+                              <div className="text-xs font-medium text-[#005BAC]">추가 질문</div>
                               <div className="mt-1 text-sm text-foreground">{item.question}</div>
                               <div className="mt-3 text-xs font-medium text-muted-foreground">분석 답변</div>
                               <div className="mt-1 text-sm leading-6 text-muted-foreground">{item.answer}</div>
@@ -1495,7 +1495,7 @@ function MarketSensingPageContent() {
             <CardHeader className="bg-card">
               <div className="flex items-center justify-between gap-3">
                 <div>
-                  <CardTitle>신용회복위원회 운영 데이터 대시보드</CardTitle>
+                  <CardTitle>신한라이프 운영 데이터 대시보드</CardTitle>
                   <CardDescription>
                     선택한 지표를 기준으로 관련 그래프가 자동으로 구성됩니다.
                   </CardDescription>
@@ -1538,10 +1538,10 @@ function MarketSensingPageContent() {
         >
           <div className="flex items-start gap-3">
             <div className={`rounded-full p-2 ${slidingAlert.type === 'stock' ? 'bg-green-100' :
-              slidingAlert.type === 'volume' ? 'bg-orange-100' : 'bg-amber-100'
+              slidingAlert.type === 'volume' ? 'bg-blue-100' : 'bg-sky-100'
               }`}>
               <slidingAlert.icon className={`h-4 w-4 ${slidingAlert.type === 'stock' ? 'text-green-600' :
-                slidingAlert.type === 'volume' ? 'text-orange-600' : 'text-amber-600'
+                slidingAlert.type === 'volume' ? 'text-blue-600' : 'text-sky-600'
                 }`} />
             </div>
             <div className="flex-1 min-w-0">
@@ -1598,7 +1598,7 @@ function MarketSensingPageContent() {
                 <h2 className="text-lg font-semibold mb-4">1. 이벤트 개요</h2>
                 <p className="mb-4">
                   이번 리포트는 민원 접수, 상담 처리, 담당자 연결, 규정 검색 데이터를 함께 살펴보며
-                  최근 신용회복위원회 주요 업무 흐름의 변화를 요약한 결과입니다. 상담 수요, 민원 처리 지연,
+                  최근 신한라이프 주요 업무 흐름의 변화를 요약한 결과입니다. 상담 수요, 민원 처리 지연,
                   담당자 연결 병목까지 함께 확인하는 데 목적이 있습니다.
                 </p>
 
@@ -1632,8 +1632,8 @@ function MarketSensingPageContent() {
                 </ul>
 
                 <h3 className="text-md font-semibold mb-2">(3) AI 해석 문구</h3>
-                <div className="bg-[#FFF4E5] p-4 rounded-lg mb-6">
-                  <p className="italic">"신용회복위원회 데이터 분석의 핵심은 단순 접수량 집계가 아니라, 상담 병목과 민원 지연 요인을 얼마나 빠르게 발견하고 연결 흐름까지 개선하느냐에 있다."</p>
+                <div className="bg-[#EEF7FF] p-4 rounded-lg mb-6">
+                  <p className="italic">"신한라이프 데이터 분석의 핵심은 단순 접수량 집계가 아니라, 상담 병목과 민원 지연 요인을 얼마나 빠르게 발견하고 고객 경험 개선으로 연결하느냐에 있다."</p>
                 </div>
 
                 <h2 className="text-lg font-semibold mb-4">3. 향후 체크 포인트</h2>
@@ -1667,7 +1667,7 @@ function MarketSensingPageContent() {
 
                 <h2 className="text-lg font-semibold mb-4">4. 종합 평가</h2>
                 <p className="mb-4">
-                  이번 화면은 신용회복위원회 운영 데이터를 한 화면에서 질문하고, 주요 KPI 차트와 AI 요약을 함께 보는
+                  이번 화면은 신한라이프 운영 데이터를 한 화면에서 질문하고, 주요 KPI 차트와 AI 요약을 함께 보는
                   데이터 분석 에이전트의 예시입니다.
                 </p>
                 <p className="mb-4">
@@ -1678,7 +1678,7 @@ function MarketSensingPageContent() {
                   실제 서비스 단계에서는 상담시스템, 규정 문서, 인사정보, 협약기관 DB를 연결해 더 정교한 분석으로 확장할 수 있습니다.
                 </p>
 
-                <div className="bg-yellow-50 p-4 rounded-lg mb-6">
+                <div className="bg-sky-50 p-4 rounded-lg mb-6">
                   <h3 className="font-semibold mb-2">📌 결론</h3>
                   <p>
                     데이터길잡이의 가치는 단순 차트 조회가 아니라, 업무 데이터를 바탕으로
@@ -1702,7 +1702,7 @@ function MarketSensingPageContent() {
                         <div className="flex-1 min-w-0">
                           <div className="flex items-center gap-2 mb-1">
                             <h3 className="font-semibold text-base">민원 접수 급증 시 처리 영향 분석</h3>
-                            <Badge variant="outline" className="bg-[#FFF4E5] text-[#9A4A00] border-[#FFC98A]">
+                            <Badge variant="outline" className="bg-[#EEF7FF] text-[#9A4A00] border-[#FFC98A]">
                               긍정
                             </Badge>
                           </div>

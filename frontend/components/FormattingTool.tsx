@@ -312,7 +312,7 @@ function buildResponseDraft(form: ComplaintForm) {
     : ""
 
   return [
-    `안녕하세요. 신용회복위원회입니다.`,
+    `안녕하세요. 신한라이프입니다.`,
     ``,
     `${submittedAt} 접수된 민원(${form.complaintId || "VOC-XXXX"})에 대해 안내드립니다.`,
     opening,
@@ -595,7 +595,7 @@ export function FormattingTool() {
         {isComposerOnly ? (
           <div className="relative mx-auto max-w-4xl">
             <div className="flex items-center justify-center gap-2">
-              <Headset className="h-5 w-5 text-[#FF9100]" />
+              <Headset className="h-5 w-5 text-[#005BAC]" />
               <h1 className="text-xl font-bold">민원처리 어시스턴트</h1>
             </div>
             <Button variant="outline" size="sm" className="absolute right-0 top-1/2 -translate-y-1/2 text-muted-foreground" onClick={() => setShowHistory(true)}>
@@ -606,7 +606,7 @@ export function FormattingTool() {
         ) : (
           <div className="flex items-center justify-between gap-4">
             <div className="flex items-center gap-2">
-              <Headset className="h-5 w-5 text-[#FF9100]" />
+              <Headset className="h-5 w-5 text-[#005BAC]" />
               <h1 className="text-xl font-bold">민원처리 어시스턴트</h1>
             </div>
             <div className="flex items-center gap-2">
@@ -647,7 +647,7 @@ export function FormattingTool() {
                         key={item.key}
                         onClick={() => setTemplate(item.key)}
                         className={`flex-1 rounded-lg px-2 py-2 text-center text-[11px] font-semibold leading-tight break-keep transition-colors sm:px-3 sm:text-xs ${
-                          active ? "bg-[#FF9100] text-white shadow-sm" : "text-[#8A4B00] hover:bg-white"
+                          active ? "bg-[#005BAC] text-white shadow-sm" : "text-[#0B4F91] hover:bg-white"
                         }`}
                       >
                         {item.title}
@@ -659,7 +659,7 @@ export function FormattingTool() {
                   if (item.key !== template) return null
                   if (isViewingHistory) return null
                   return (
-                    <div key={`${item.key}-description`} className="rounded-lg border border-[#FFE3BF] bg-[#FFF9F2] px-3 py-2 text-sm text-[#8A4B00]">
+                    <div key={`${item.key}-description`} className="rounded-lg border border-[#FFE3BF] bg-[#FFF9F2] px-3 py-2 text-sm text-[#0B4F91]">
                       {item.description}
                     </div>
                   )
@@ -731,26 +731,24 @@ export function FormattingTool() {
                   />
                 </div>
 
-                <div className="flex flex-col gap-3 sm:flex-row">
-                  <Button onClick={generateResult} disabled={isGenerating} className="bg-[#FF9100] hover:bg-[#FF7A00] text-white sm:flex-1">
-                    {isGenerating ? (
-                      <>
-                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                        생성 중...
-                      </>
-                    ) : isViewingHistory ? (
-                      "추가 요청 반영"
-                    ) : (
-                      "민원 처리 지원 실행"
-                    )}
-                  </Button>
-                  {!isViewingHistory ? (
+                {!isViewingHistory ? (
+                  <div className="flex flex-col gap-3 sm:flex-row">
+                    <Button onClick={generateResult} disabled={isGenerating} className="bg-[#005BAC] hover:bg-[#004F9E] text-white sm:flex-1">
+                      {isGenerating ? (
+                        <>
+                          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                          생성 중...
+                        </>
+                      ) : (
+                        "민원 처리 지원 실행"
+                      )}
+                    </Button>
                     <Button variant="outline" onClick={resetRequest} disabled={!hasInput && !result} className="sm:flex-1">
                       <RotateCcw className="mr-2 h-4 w-4" />
                       초기화
                     </Button>
-                  ) : null}
-                </div>
+                  </div>
+                ) : null}
               </CardContent>
             </Card>
           </div>
@@ -801,7 +799,7 @@ export function FormattingTool() {
                     </div>
 
                     <details className="group rounded-xl border border-[#FFE3BF] bg-[#FFF9F2]">
-                      <summary className="flex cursor-pointer list-none items-center justify-between px-4 py-3 text-sm font-semibold text-[#8A4B00]">
+                      <summary className="flex cursor-pointer list-none items-center justify-between px-4 py-3 text-sm font-semibold text-[#0B4F91]">
                         <div className="flex items-center gap-2">
                           <CheckCircle2 className="h-4 w-4" />
                           분석 근거 보기
@@ -861,7 +859,7 @@ export function FormattingTool() {
                   </>
                 ) : (
                   <div className="rounded-xl border border-dashed border-[#FFD39A] bg-[#FFF9F2] p-10 text-center">
-                    <FileText className="mx-auto h-8 w-8 text-[#FF9100]" />
+                    <FileText className="mx-auto h-8 w-8 text-[#005BAC]" />
                     <div className="mt-4 text-base font-semibold">민원처리 지원 결과가 여기에 표시됩니다.</div>
                     <div className="mt-2 text-sm text-muted-foreground">
                       민원 내용을 입력하고 실행하면 유사 민원 사례, 처리 방향, 답변 초안을 함께 확인할 수 있습니다.
@@ -886,7 +884,7 @@ export function FormattingTool() {
                       className={
                         message.role === "assistant"
                           ? "rounded-2xl rounded-tl-md bg-muted px-4 py-3 text-sm leading-6 text-foreground"
-                          : "ml-auto max-w-[90%] rounded-2xl rounded-tr-md bg-[#FFF4E5] px-4 py-3 text-sm leading-6 text-[#8A4B00]"
+                          : "ml-auto max-w-[90%] rounded-2xl rounded-tr-md bg-[#EEF7FF] px-4 py-3 text-sm leading-6 text-[#0B4F91]"
                       }
                     >
                       {message.content}
@@ -900,7 +898,7 @@ export function FormattingTool() {
                     placeholder="예: 제출 서류 목록을 조금 더 명확하게 안내해줘."
                     className="min-h-[120px]"
                   />
-                  <Button onClick={handleFollowUpSubmit} disabled={isGenerating} className="w-full bg-[#FF9100] hover:bg-[#FF7A00] text-white">
+                  <Button onClick={handleFollowUpSubmit} disabled={isGenerating} className="w-full bg-[#005BAC] hover:bg-[#004F9E] text-white">
                     {isGenerating ? (
                       <>
                         <Loader2 className="mr-2 h-4 w-4 animate-spin" />

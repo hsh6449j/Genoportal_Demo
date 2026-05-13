@@ -5,41 +5,41 @@
 
 :root {
   --background: oklch(1 0 0); /* Pure white */
-  --foreground: oklch(0.27 0.03 55); /* Warm dark neutral */
+  --foreground: #10233f;
   --card: oklch(1 0 0); /* Pure white */
-  --card-foreground: oklch(0.27 0.03 55);
+  --card-foreground: #10233f;
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.27 0.03 55);
-  --primary: #ff9100;
+  --popover-foreground: #10233f;
+  --primary: #005bac;
   --primary-foreground: oklch(1 0 0);
-  --secondary: #ffac33;
+  --secondary: #00a3e0;
   --secondary-foreground: oklch(1 0 0);
   --muted: oklch(1 0 0); /* Pure white muted */
-  --muted-foreground: oklch(0.48 0.03 55);
-  --accent: #ffac33;
+  --muted-foreground: #58708f;
+  --accent: #00a3e0;
   --accent-foreground: oklch(1 0 0);
-  --destructive: #e05a00;
+  --destructive: #d64545;
   --destructive-foreground: oklch(1 0 0);
-  --border: #f0dcc2;
-  --input: #fff6eb;
-  --ring: #ff9100;
-  --chart-1: #ff9100;
-  --chart-2: #ffac33;
-  --chart-3: #ff6b00;
-  --chart-4: #ffd7a3;
-  --chart-5: #8a4b08;
+  --border: #d4e5f7;
+  --input: #f3f8fe;
+  --ring: #005bac;
+  --chart-1: #005bac;
+  --chart-2: #00a3e0;
+  --chart-3: #2f80ed;
+  --chart-4: #7cb7ff;
+  --chart-5: #0b2f5b;
   --radius: 0.5rem;
   --sidebar: oklch(1 0 0); /* Pure white sidebar */
-  --sidebar-foreground: oklch(0.27 0.03 55);
-  --sidebar-primary: #ff9100;
+  --sidebar-foreground: #10233f;
+  --sidebar-primary: #005bac;
   --sidebar-primary-foreground: oklch(1 0 0);
-  --sidebar-accent: #ffac33;
+  --sidebar-accent: #00a3e0;
   --sidebar-accent-foreground: oklch(1 0 0);
-  --sidebar-border: #f0dcc2;
-  --sidebar-ring: #ff9100;
-  --insight-partner: #7a3b00;
+  --sidebar-border: #d4e5f7;
+  --sidebar-ring: #005bac;
+  --insight-partner: #0b4f91;
   --insight-partner-foreground: oklch(1 0 0);
-  --supporting-agent: #ffac33;
+  --supporting-agent: #00a3e0;
   --supporting-agent-foreground: oklch(1 0 0);
 }
 
@@ -147,34 +147,34 @@
 /* Citation link styles */
 .citation-link {
   @apply inline-flex items-center px-2 py-1 mx-1 text-xs font-medium rounded-full transition-colors;
-  color: #9a4a00;
-  background-color: #fff1df;
-  border: 1px solid #ffc98a;
+  color: #005bac;
+  background-color: #eef7ff;
+  border: 1px solid #9dcbf5;
 }
 
 .dark .citation-link {
-  color: #ffd7a3;
-  background-color: rgba(255, 145, 0, 0.18);
-  border-color: rgba(255, 172, 51, 0.45);
+  color: #b9ddff;
+  background-color: rgba(0, 91, 172, 0.18);
+  border-color: rgba(0, 163, 224, 0.45);
 }
 
 /* Button chip styles for citations */
 .btn__chip {
   @apply inline-flex items-center px-3 py-1.5 mx-1 text-sm font-medium;
   @apply text-white rounded-full shadow-sm;
-  background-image: linear-gradient(to right, #ff9100, #ff7a00);
-  border: 1px solid #ff9100;
+  background-image: linear-gradient(to right, #005bac, #0077d9);
+  border: 1px solid #005bac;
   @apply hover:shadow-md;
   @apply focus:outline-none focus:ring-2 focus:ring-offset-1;
   @apply transition-all duration-200 ease-in-out;
   @apply cursor-pointer select-none;
   text-decoration: none !important;
-  --tw-ring-color: #ff9100;
+  --tw-ring-color: #005bac;
 }
 
 .btn__chip:hover {
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(255, 145, 0, 0.28);
+  box-shadow: 0 4px 12px rgba(0, 91, 172, 0.22);
 }
 
 .btn__chip strong {
@@ -182,13 +182,13 @@
 }
 
 .dark .btn__chip {
-  color: #fff2df;
-  background-image: linear-gradient(to right, #e56f00, #c95f00);
-  border-color: #f38d22;
+  color: #eaf5ff;
+  background-image: linear-gradient(to right, #004a91, #006bbf);
+  border-color: #2f9be8;
 }
 
 .dark .btn__chip:hover {
-  box-shadow: 0 4px 8px rgba(255, 145, 0, 0.2);
+  box-shadow: 0 4px 8px rgba(0, 91, 172, 0.2);
 }
 
 /* Line clamp utilities */
@@ -298,7 +298,7 @@
 .pdf-citation-icon.available {
   cursor: pointer;
   transition: all 0.2s ease;
-  color: #ff9100;
+  color: #005BAC;
   width: 16px;
   height: 16px;
 }
@@ -314,7 +314,7 @@
 }
 
 .dark .pdf-citation-icon.available {
-  color: #ffac33;
+  color: #00A3E0;
 }
 
 .dark .pdf-citation-icon.unavailable {

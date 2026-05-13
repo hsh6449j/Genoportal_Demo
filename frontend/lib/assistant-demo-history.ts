@@ -29,26 +29,26 @@ function buildMessages(sessionId: string, baseTimeIso: string, userContent: stri
 }
 
 export const assistantPromptSuggestions = [
-  "민원 접수 고객에게 보낼 첫 안내 문구를 정중한 톤으로 정리해 주세요.",
+  "보험금 청구 고객에게 보낼 첫 안내 문구를 정중한 톤으로 정리해 주세요.",
   "상담 예약 안내 문장을 더 친절하고 간결하게 수정해 주세요.",
-  "서류 보완 요청 안내 문구를 짧고 이해하기 쉽게 다듬어 주세요.",
+  "추가 서류 제출 요청 안내 문구를 짧고 이해하기 쉽게 다듬어 주세요.",
 ]
 
 export const assistantHistoryPresets: AssistantHistoryPreset[] = [
   {
     id: "notice-title",
-    title: "민원 안내 문구 정리",
+    title: "보험금 청구 안내 문구 정리",
     description: "초기 안내 메시지를 정중하게 정리",
     messages: buildMessages(
       "assistant-history-notice-title",
       "2026-03-23T09:10:00+09:00",
-      "민원 접수 고객에게 보내는 첫 안내 메시지를 보다 정중하고 간결하게 다듬어 주세요. 상담 절차와 준비 서류를 간단히 포함해 주시기 바랍니다.",
+      "보험금 청구 고객에게 보내는 첫 안내 메시지를 보다 정중하고 간결하게 다듬어 주세요. 접수 절차와 준비 서류를 간단히 포함해 주시기 바랍니다.",
       [
         "아래처럼 정리할 수 있습니다.",
         "",
-        "안녕하세요. 신용회복위원회입니다.",
-        "민원 접수가 정상적으로 완료되었으며, 순차적으로 상담 절차를 안내드릴 예정입니다.",
-        "상담 전 필요한 기본 서류는 별도 안내에 따라 준비해 주시면 보다 원활한 진행이 가능합니다.",
+        "안녕하세요. 신한라이프입니다.",
+        "보험금 청구 접수가 정상적으로 완료되었으며, 순차적으로 심사 절차를 안내드릴 예정입니다.",
+        "심사 전 필요한 기본 서류는 별도 안내에 따라 준비해 주시면 보다 원활한 진행이 가능합니다.",
         "",
         "필요하시면 문자형, 이메일형, 콜센터 후속 안내형으로 나눠 다시 정리드릴 수 있습니다.",
       ].join("\n")
@@ -56,7 +56,7 @@ export const assistantHistoryPresets: AssistantHistoryPreset[] = [
   },
   {
     id: "customer-reply",
-    title: "상담 예약 안내 정리",
+    title: "고객 상담 일정 안내 정리",
     description: "상담 일정을 알리는 문구 정리",
     messages: buildMessages(
       "assistant-history-customer-reply",
@@ -74,7 +74,7 @@ export const assistantHistoryPresets: AssistantHistoryPreset[] = [
   },
   {
     id: "schedule-notice",
-    title: "서류 보완 요청 안내",
+    title: "추가 서류 제출 요청 안내",
     description: "보완 요청 문구를 부드럽게 정리",
     messages: buildMessages(
       "assistant-history-schedule-notice",

@@ -54,8 +54,8 @@ export function InitialScreen({ onScenarioStart }: InitialScreenProps) {
   return (
     <div className="flex flex-col gap-6">
       {/* 1) 파일 업로드 드롭존 — 컴팩트 */}
-      <div className="flex items-center justify-center gap-4 rounded-xl border-2 border-dashed border-border/60 bg-muted/20 px-6 py-6 transition-colors hover:border-[#FF9100]/50 hover:bg-[#FFF4E6]/20">
-        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#FFF4E6] text-[#FF9100]">
+      <div className="flex items-center justify-center gap-4 rounded-xl border-2 border-dashed border-border/60 bg-muted/20 px-6 py-6 transition-colors hover:border-[#005BAC]/50 hover:bg-[#EEF7FF]/20">
+        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#EEF7FF] text-[#005BAC]">
           <UploadCloud className="h-5 w-5" />
         </div>
         <div className="space-y-0.5 text-left">
@@ -73,7 +73,7 @@ export function InitialScreen({ onScenarioStart }: InitialScreenProps) {
 
       {/* 3) 분석 유형 안내 카드 — X 버튼으로 닫기 가능 */}
       {showGuide ? (
-        <div className="relative rounded-xl border border-[#FF9100]/30 bg-white p-6">
+        <div className="relative rounded-xl border border-[#005BAC]/30 bg-white p-6">
           {/* 닫기 버튼 */}
           <button
             type="button"
@@ -84,7 +84,7 @@ export function InitialScreen({ onScenarioStart }: InitialScreenProps) {
             <X className="h-3.5 w-3.5" />
           </button>
 
-          <div className="mb-1 flex items-center gap-1.5 text-xs font-semibold text-[#FF9100]">
+          <div className="mb-1 flex items-center gap-1.5 text-xs font-semibold text-[#005BAC]">
             <Sparkles className="h-3.5 w-3.5" />
             이렇게 활용해 보세요
           </div>
@@ -107,7 +107,7 @@ export function InitialScreen({ onScenarioStart }: InitialScreenProps) {
                   onClick={() => onScenarioStart(scenario.id)}
                   className="flex w-full items-start gap-3 rounded-lg border border-border/50 bg-white px-4 py-3 text-left"
                 >
-                  <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[#FFF4E6] text-[#FF9100]">
+                  <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[#EEF7FF] text-[#005BAC]">
                     <Icon className="h-4 w-4" />
                   </div>
                   <div className="min-w-0 flex-1 space-y-0.5">
@@ -148,7 +148,7 @@ function DataArchiveToggle() {
         className="flex w-full items-center justify-between gap-3 px-4 py-3 text-left transition-colors hover:bg-muted/30"
       >
         <div className="flex items-center gap-2.5">
-          <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[#FFF4E6] text-[#FF9100]">
+          <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[#EEF7FF] text-[#005BAC]">
             <Archive className="h-4 w-4" />
           </div>
           <div className="space-y-0.5">

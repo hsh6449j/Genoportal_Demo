@@ -453,7 +453,7 @@ function KnowledgeBasePanel() {
                 <td className="px-4 py-2.5 whitespace-nowrap">
                   <span className={`rounded-full border px-2 py-0.5 text-[10px] font-semibold ${
                     r.transferType === "합병"
-                      ? "border-amber-400 bg-amber-50 text-amber-700 dark:bg-amber-900/20 dark:text-amber-400"
+                      ? "border-sky-400 bg-sky-50 text-sky-700 dark:bg-sky-900/20 dark:text-sky-400"
                       : "border-emerald-400 bg-emerald-50 text-emerald-700 dark:bg-emerald-900/20 dark:text-emerald-400"
                   }`}>{r.transferType}</span>
                 </td>
@@ -577,8 +577,8 @@ function InferencePanel() {
               <span className="text-xs text-muted-foreground">{results.length}개 기관</span>
             </div>
 
-            <div className="rounded-xl border border-amber-200 dark:border-amber-800 bg-amber-50/60 dark:bg-amber-900/10 px-4 py-3">
-              <p className="text-xs text-amber-700 dark:text-amber-400">
+            <div className="rounded-xl border border-sky-200 dark:border-sky-800 bg-sky-50/60 dark:bg-sky-900/10 px-4 py-3">
+              <p className="text-xs text-sky-700 dark:text-sky-400">
                 ⚠ 본 결과는 과거 양수도 이력 기반 AI 추론이며, 실제 현황과 다를 수 있습니다. 반드시 공식 확인 후 활용하세요.
               </p>
             </div>
@@ -654,7 +654,7 @@ function InferencePanel() {
                       {Array.from(new Set(item.edgeTypes)).map((t) => (
                         <span key={t} className={`text-[10px] rounded-full border px-2 py-0.5 font-semibold ${
                           t === "합병"
-                            ? "border-amber-400 bg-amber-50 text-amber-700 dark:bg-amber-900/20 dark:text-amber-400"
+                            ? "border-sky-400 bg-sky-50 text-sky-700 dark:bg-sky-900/20 dark:text-sky-400"
                             : "border-emerald-400 bg-emerald-50 text-emerald-700 dark:bg-emerald-900/20 dark:text-emerald-400"
                         }`}>{t}</span>
                       ))}
@@ -778,8 +778,8 @@ function ReverseSearchPanel() {
               <span className="text-xs text-muted-foreground">{results.length}개 채권군</span>
             </div>
 
-            <div className="rounded-xl border border-amber-200 dark:border-amber-800 bg-amber-50/60 dark:bg-amber-900/10 px-4 py-3">
-              <p className="text-xs text-amber-700 dark:text-amber-400">
+            <div className="rounded-xl border border-sky-200 dark:border-sky-800 bg-sky-50/60 dark:bg-sky-900/10 px-4 py-3">
+              <p className="text-xs text-sky-700 dark:text-sky-400">
                 ⚠ 역방향 탐색 결과는 과거 양수도 이력 기반 추론입니다. 실제 보유 현황은 공식 확인이 필요합니다.
               </p>
             </div>
@@ -822,7 +822,7 @@ function ReverseSearchPanel() {
                                 <ArrowRight className="h-3 w-3 text-muted-foreground shrink-0 rotate-180" />
                                 <span className={`text-[9px] rounded px-1 py-0.5 font-semibold leading-none ${
                                   reversedEdgeTypes[ni] === "합병"
-                                    ? "bg-amber-50 text-amber-700 border border-amber-300 dark:bg-amber-900/20 dark:text-amber-400"
+                                    ? "bg-sky-50 text-sky-700 border border-sky-300 dark:bg-sky-900/20 dark:text-sky-400"
                                     : "bg-emerald-50 text-emerald-700 border border-emerald-300 dark:bg-emerald-900/20 dark:text-emerald-400"
                                 }`}>{reversedEdgeTypes[ni]}</span>
                               </span>
