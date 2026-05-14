@@ -272,23 +272,23 @@ export function Sidebar({ className }: SidebarProps) {
   return (
     <div
       className={cn(
-        "relative flex flex-col bg-sidebar border-r border-sidebar-border transition-all duration-300",
+        "relative flex flex-col border-r border-[#1e3f73] bg-[#214f94] text-white shadow-[4px_0_18px_rgba(15,35,65,0.2)] transition-all duration-300",
         className,
       )}
       style={{
-        width: isCollapsed ? "4rem" : "13rem",
+        width: isCollapsed ? "3.75rem" : "13.75rem",
       }}
     >
       <Button
         variant="ghost"
         size="icon"
-        className="absolute -right-3 top-6 z-10 h-6 w-6 rounded-full border bg-background shadow-md hover:bg-accent"
+        className="absolute -right-3 top-4 z-10 h-6 w-6 rounded-full border border-[#8fb4df] bg-white text-[#0b4f91] shadow-md hover:bg-[#edf6ff]"
         onClick={() => setIsCollapsed(!isCollapsed)}
       >
         {isCollapsed ? <ChevronRight className="h-3 w-3" /> : <ChevronLeft className="h-3 w-3" />}
       </Button>
 
-      <div className="flex h-16 items-center px-3">
+      <div className="flex h-[76px] items-center border-b border-white/15 bg-[#163f7d] px-3">
         <Link href="/" className="flex w-full items-center justify-start pl-1">
           {isCollapsed ? (
             <PortalLogo compact />
@@ -298,11 +298,11 @@ export function Sidebar({ className }: SidebarProps) {
         </Link>
       </div>
 
-      <div className="flex-1 overflow-y-auto py-4">
+      <div className="flex-1 overflow-y-auto py-3">
         {serviceSections.map((section, index) => (
           <div key={section.title}>
             {!isCollapsed && (
-              <div className="flex items-center gap-2 px-3 pb-2 pt-4 text-[11px] font-medium text-sidebar-foreground/60">
+              <div className="flex items-center gap-2 px-3 pb-2 pt-4 text-[11px] font-bold tracking-tight text-white/65">
                 {section.titleIcon ? <section.titleIcon className="h-3.5 w-3.5" /> : null}
                 <span>{section.title}</span>
               </div>
@@ -312,16 +312,16 @@ export function Sidebar({ className }: SidebarProps) {
                 <div key={item.name}>
                   <div
                     className={cn(
-                      "flex items-center gap-1 rounded-lg pr-1 transition-colors",
+                      "flex items-center gap-1 rounded-md pr-1 transition-colors",
                       item.isActive
-                        ? "bg-sidebar-accent text-sidebar-accent-foreground"
-                        : "text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
+                        ? "bg-white text-[#0b4f91] shadow-sm"
+                        : "text-white/90 hover:bg-white/12 hover:text-white",
                     )}
                   >
                     <Link
                       href={item.href}
                       className={cn(
-                        "flex min-w-0 flex-1 items-center gap-3 rounded-lg px-3 py-2 text-sm transition-colors",
+                        "flex min-w-0 flex-1 items-center gap-3 rounded-md px-3 py-2 text-sm transition-colors",
                         item.isActive ? "font-bold" : "",
                       )}
                     >
@@ -356,10 +356,10 @@ export function Sidebar({ className }: SidebarProps) {
                           key={child.name}
                           href={child.href}
                           className={cn(
-                            "block rounded-md px-3 py-2 text-xs leading-5 transition-colors",
+                            "block rounded-md border-l-2 px-3 py-2 text-xs leading-5 transition-colors",
                             child.isActive
-                              ? "bg-sidebar-accent/80 font-medium text-sidebar-accent-foreground"
-                              : "text-sidebar-foreground/75 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
+                              ? "border-white bg-white/18 font-semibold text-white"
+                              : "border-transparent text-white/70 hover:bg-white/12 hover:text-white",
                           )}
                         >
                           {child.name}
@@ -370,17 +370,17 @@ export function Sidebar({ className }: SidebarProps) {
                 </div>
               ))}
             </nav>
-            {index < serviceSections.length - 1 && <div className="mx-4 my-4 border-t border-sidebar-border" />}
+            {index < serviceSections.length - 1 && <div className="mx-4 my-4 border-t border-white/15" />}
           </div>
         ))}
       </div>
 
-      <div ref={menuRef} className="border-t border-sidebar-border relative">
+      <div ref={menuRef} className="relative border-t border-white/15 bg-[#163f7d]">
         {showUserMenu && !isCollapsed && (
-          <div className="absolute bottom-full left-0 right-0 bg-background border border-sidebar-border rounded-t-lg shadow-lg p-2 mb-1">
+          <div className="absolute bottom-full left-0 right-0 mb-1 rounded-t-lg border border-[#c4cfdd] bg-white p-2 shadow-lg">
             <ThemeToggle
               showLabel
-              className="w-full justify-start hover:bg-accent text-foreground mb-1"
+              className="mb-1 w-full justify-start text-foreground hover:bg-[#edf6ff]"
             />
             <div className="my-1 border-t border-border" />
             <Button
@@ -401,21 +401,21 @@ export function Sidebar({ className }: SidebarProps) {
         <div className="p-4">
           <button
             onClick={() => setShowUserMenu(!showUserMenu)}
-            className="flex items-center gap-3 w-full text-left hover:bg-muted rounded-lg p-2 transition-colors"
+            className="flex w-full items-center gap-3 rounded-lg p-2 text-left transition-colors hover:bg-white/12"
           >
-            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-muted">
+            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-white/15 text-white">
               <User className="h-4 w-4" />
             </div>
             {!isCollapsed && (
               <>
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium text-sidebar-foreground truncate">
+                  <p className="truncate text-sm font-medium text-white">
                     {extractKoreanName(user?.name || userFullName) ||
                       user?.email?.split("@")[0] ||
                       "사용자"}
                   </p>
                 </div>
-                <ChevronUp className={cn("h-4 w-4 transition-transform", showUserMenu ? "rotate-180" : "")} />
+                <ChevronUp className={cn("h-4 w-4 text-white/75 transition-transform", showUserMenu ? "rotate-180" : "")} />
               </>
             )}
           </button>

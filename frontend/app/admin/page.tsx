@@ -1,6 +1,6 @@
 "use client"
 
-import { type ComponentType, useMemo, useState } from "react"
+import { Suspense, type ComponentType, useMemo, useState } from "react"
 import { useSearchParams } from "next/navigation"
 import {
   Activity,
@@ -64,7 +64,7 @@ function StatCard({
   )
 }
 
-export default function AdminPage() {
+function AdminPageContent() {
   const { isAuthenticated, isLoading } = useAuth()
   const searchParams = useSearchParams()
   const [seed, setSeed] = useState(1)
@@ -473,5 +473,13 @@ export default function AdminPage() {
         )}
       </div>
     </div>
+  )
+}
+
+export default function AdminPage() {
+  return (
+    <Suspense fallback={<div className="p-8 text-sm text-muted-foreground">운영 관리 화면을 불러오는 중입니다.</div>}>
+      <AdminPageContent />
+    </Suspense>
   )
 }
