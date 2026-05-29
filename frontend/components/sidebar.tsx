@@ -27,6 +27,7 @@ import Link from "next/link"
 import { usePathname, useSearchParams } from "next/navigation"
 import { useAuth } from "@/contexts/auth-context"
 import { ThemeToggle } from "@/components/theme-toggle"
+import { getAuditSection } from "@/lib/sidebar/audit-section"
 import { complianceHistoryPresets } from "@/lib/compliance-demo-history"
 import { generalQaHistoryPresets } from "@/lib/general-qa-demo-history"
 import { staffAssignmentHistoryPresets } from "@/lib/staff-assignment-demo"
@@ -245,6 +246,7 @@ export function Sidebar({ className }: SidebarProps) {
         },
       ],
     },
+    getAuditSection(pathname, searchParams?.get("mode") ?? null),
     {
       title: "운영 관리",
       titleIcon: Settings2,
