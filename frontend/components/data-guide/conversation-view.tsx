@@ -85,7 +85,7 @@ export function ConversationView({
               {/* 사용자 재답변 */}
               <UserMessageBubble text={clarify.userFollowUp} />
             </>
-          ),
+          )
         ) : null}
 
         {/* Agent 최종 응답 */}

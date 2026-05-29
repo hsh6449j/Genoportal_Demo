@@ -14,7 +14,6 @@ import {
   ChevronUp,
   Shield,
   Home,
-  Languages,
   FileText,
   GitFork,
   Headset,
@@ -23,18 +22,14 @@ import {
   Briefcase,
   Settings2,
   Bot,
-  Cpu,
-  Activity,
 } from "lucide-react"
 import Link from "next/link"
 import { usePathname, useSearchParams } from "next/navigation"
 import { useAuth } from "@/contexts/auth-context"
 import { ThemeToggle } from "@/components/theme-toggle"
-import { assistantHistoryPresets } from "@/lib/assistant-demo-history"
 import { complianceHistoryPresets } from "@/lib/compliance-demo-history"
 import { generalQaHistoryPresets } from "@/lib/general-qa-demo-history"
 import { staffAssignmentHistoryPresets } from "@/lib/staff-assignment-demo"
-import { documentWritingHistoryPresets } from "@/lib/document-writing-demo-history"
 import { PortalLogo } from "@/components/portal-logo"
 
 interface SidebarProps {
@@ -51,6 +46,7 @@ export function Sidebar({ className }: SidebarProps) {
     "업무담당자 배정": true,
     "문서작성 지원 에이전트": true,
     "심사이력 추론 에이전트": true,
+    "운영 대시보드": true,
   })
   const pathname = usePathname()
   const searchParams = useSearchParams()
@@ -99,6 +95,9 @@ export function Sidebar({ className }: SidebarProps) {
     if (pathname === "/insight-chat" && agent === "debt-transfer") {
       setExpandedMenus((prev) => ({ ...prev, "심사이력 추론 에이전트": true }))
     }
+    if (pathname === "/admin" || pathname === "/prompt-hub") {
+      setExpandedMenus((prev) => ({ ...prev, "운영 대시보드": true }))
+    }
   }, [pathname, agent, feature, preset])
 
   const serviceSections = [
@@ -123,15 +122,6 @@ export function Sidebar({ className }: SidebarProps) {
           href: "/insight-chat?agent=assistant&feature=counseling",
           icon: Headset,
           isActive: pathname === "/insight-chat" && (!agent || agent === "assistant") && (!feature || feature === "counseling"),
-          children: assistantHistoryPresets.map((item) => ({
-            name: item.title,
-            href: `/insight-chat?agent=assistant&feature=counseling&preset=${item.id}`,
-            isActive:
-              pathname === "/insight-chat" &&
-              (!agent || agent === "assistant") &&
-              (!feature || feature === "counseling") &&
-              preset === item.id,
-          })),
         },
         {
           name: "단순 질의응답 챗봇",
@@ -198,6 +188,18 @@ export function Sidebar({ className }: SidebarProps) {
             (pathname === "/" && searchParams?.get("task") === "formatting"),
         },
         {
+          name: "SMS 자동생성 Agent",
+          href: "/sms-agent",
+          icon: MessageCircleMore,
+          isActive: pathname === "/sms-agent",
+        },
+        {
+          name: "문서 요약/생성 Agent",
+          href: "/doc-summary-agent",
+          icon: FileText,
+          isActive: pathname === "/doc-summary-agent",
+        },
+        {
           name: "업무담당자 배정",
           href: "/staff-assignment?view=new",
           icon: MessageSquare,
@@ -248,22 +250,19 @@ export function Sidebar({ className }: SidebarProps) {
       titleIcon: Settings2,
       items: [
         {
-          name: "품질 모니터링",
-          href: "/admin?feature=quality-monitoring",
-          icon: Activity,
-          isActive: pathname === "/admin" && (!feature || feature === "quality-monitoring"),
-        },
-        {
-          name: "프롬프트 라이브러리",
-          href: "/prompt-hub",
-          icon: FileText,
-          isActive: pathname === "/prompt-hub",
-        },
-        {
-          name: "자원 관리",
-          href: "/admin?feature=resource-management",
-          icon: Cpu,
-          isActive: pathname === "/admin" && feature === "resource-management",
+          name: "운영 대시보드",
+          href: "/admin",
+          icon: Settings2,
+          isActive: pathname === "/admin" || pathname === "/prompt-hub",
+          children: [
+            { name: "통합 운영 현황", href: "/admin", isActive: pathname === "/admin" && !feature },
+            { name: "AI활용 및 통계", href: "/admin?feature=ai-usage", isActive: pathname === "/admin" && feature === "ai-usage" },
+            { name: "로그 관리", href: "/admin?feature=log-management", isActive: pathname === "/admin" && feature === "log-management" },
+            { name: "상담 모니터링", href: "/admin?feature=counseling-monitoring", isActive: pathname === "/admin" && feature === "counseling-monitoring" },
+            { name: "상담이력관리", href: "/admin?feature=counseling-history", isActive: pathname === "/admin" && feature === "counseling-history" },
+            { name: "품질 모니터링", href: "/admin?feature=quality-monitoring", isActive: pathname === "/admin" && feature === "quality-monitoring" },
+            { name: "프롬프트 라이브러리", href: "/prompt-hub", isActive: pathname === "/prompt-hub" },
+          ],
         },
       ],
     },
